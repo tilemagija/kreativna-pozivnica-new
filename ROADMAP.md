@@ -1,0 +1,130 @@
+# ROADMAP — Kreativna Pozivnica
+
+Build through summer → **launch in January.** Thorough, not endless. Each phase has a clear
+**"NE radimo (yet)"** and **"Gotovo kad..."** so no session drifts into scope creep.
+
+Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra care + plain explanations)
+
+---
+
+## PHASE 0 — TEMELJI (Foundation)  🟢
+Set up the empty, themed, bilingual shell — the ground everything stands on.
+
+**Batches:**
+- 0.1 Project scaffold: Next.js + TS + Tailwind + tokens, deploy to Vercel.
+- 0.2 i18n (next-intl): sr-Cyrl default + en, language switch.
+- 0.3 Sanity connected + Studio reachable; empty schemas skeleton.
+- 0.4 Layout shell: semantic `<nav>/<main>/<footer>`, the one motion pattern, mobile-first.
+- 0.5 Brand session → lock design tokens (colors/fonts from real brand photos).
+
+**NE radimo:** any product, any payment, any real content.
+**Gotovo kad:** an empty, on-brand site deploys to Vercel in BOTH languages, Sanity Studio opens.
+
+---
+
+## PHASE 1 — LANDING + POVERENJE (Content & trust)  🟢 (+🟡 first form)
+The single-scroll landing + the first real "door" (contact form).
+
+**Batches:**
+- 1.1 Landing sections from Sanity: hero (poruka + koncept) → gallery → "zašto baš mi" → kontakt.
+- 1.2 Gallery driven by Sanity (the moat — real custom invitations).
+- 1.3 **Smart Inquiry v1** (the reusable component): saves to Sanity + emails owner. 🟡
+- 1.4 Security pass on the form: rate limit + validation + sanitize + honeypot. 🟡
+- 1.5 "Kako se pravi" page with YouTube embeds.
+- 1.6 SEO baseline: metadata from Sanity, heading hierarchy, hreflang.
+
+**NE radimo:** configurator, payment, World B.
+**Gotovo kad:** a visitor can learn about you, browse the gallery, and send an inquiry that lands
+in Sanity + email — in both languages, and the form is guarded.
+
+---
+
+## PHASE 2 — SVET B: Umetnost & pokloni (Showcase)  🟢
+The organic-reach magnet. Showcase → Smart Inquiry. (Aligns with the January slava launch.)
+
+**Batches:**
+- 2.1 World B section/tab: illustrations, slava gifts, frames — showcase gallery from Sanity.
+- 2.2 Smart Inquiry on each item ("zanima me TA slika" + image, saved + emailed). Reuses Phase 1.3.
+- 2.3 Strong SEO for World B (this is where organic traffic lands).
+
+**NE radimo:** online buying of World B items, prices on World B.
+**Gotovo kad:** World B is browsable and every item triggers a product-specific saved inquiry.
+
+---
+
+## PHASE 3 — KONFIGURATOR: Fizička pozivnica (no payment yet)  🟡
+The guided physical-invitation builder with live price. Payment gets wired in Phase 5.
+
+**Batches:**
+- 3.1 Configurator steps: model → paper → wrapper (koverta/paus/bez) → seal (bez/otisak+boja) → gold leaf → torn edges.
+- 3.2 Option visuals: hover popups / dropdowns with swatch images (heavy one-time asset setup, easy after).
+- 3.3 **Live price** from Sanity pricing config (translated from the Excel). 🟡
+- 3.4 Upsell popup at the end → Smart Inquiry for extras (manual discount by business).
+- 3.5 Order summary captured (ends in "pending payment" — real charge added in Phase 5).
+
+**NE radimo:** charging money yet, automatic discounts, text-position/font editing.
+**Gotovo kad:** a customer builds a physical invitation and sees the correct live price; config is captured.
+
+---
+
+## PHASE 4 — KONFIGURATOR: Digitalna pozivnica + PDF  🟡
+Live text editor + personalized PDF.
+
+**Batches:**
+- 4.1 Model pick + live text editor (text only; font/position fixed) → live preview.
+- 4.2 PDF generation from template + customer text (test mode). 🟡
+- 4.3 Evidence record in Sanity (not an "active order").
+
+**NE radimo:** charging money yet (Phase 5), design freedom beyond text.
+**Gotovo kad:** a customer personalizes a digital invite, previews it, and a correct PDF is generated (test).
+
+---
+
+## PHASE 5 — PLAĆANJE (Payment)  🟡🟡  — biggest new-territory phase
+Wire real money in, securely, for both flows.
+
+**Batches:**
+- 5.1 **Decision + setup: Serbian payment gateway** (WSPay / Monri / AllSecure / bank) — needs your merchant account.
+- 5.2 Digital: pay 100% → on success email the PDF + save evidence.
+- 5.3 Physical: pay 50% deposit → save order + email; remainder is cash-on-delivery.
+- 5.4 Security hard pass: rate limit, server-side secrets, **recompute price on server**, verify webhook. 🟡
+- 5.5 Customer + owner emails (confirmation, PDF delivery).
+
+**NE radimo:** mixing digital + physical in one payment; subscriptions.
+**Gotovo kad:** a real test transaction completes end-to-end for BOTH digital and physical,
+with evidence saved + emails sent + every payment door guarded.
+
+---
+
+## PHASE 6 — POLIRANJE + PRED-LANSIRANJE (Polish & pre-launch)  🟢
+Only now — per CLAUDE.md, polish comes after functionality is solid.
+
+**Batches:**
+- 6.1 Motion/interaction polish (the one pattern, refined).
+- 6.2 SEO tightening + Core Web Vitals + full mobile pass.
+- 6.3 **Pre-launch checklist:** no placeholder/fake functionality; all content from CMS; both languages complete.
+- 6.4 Full security review over every door (Phase 1–5 inputs).
+
+**NE radimo:** new features. Feature-freeze — polish + verify only.
+**Gotovo kad:** the pre-launch checklist passes and the site is ready, held for the January launch.
+
+---
+
+## INTERNAL CHECKPOINTS (so "far deadline" ≠ "no deadline")
+Rough guide across the summer→January runway (adjust as we go):
+
+| Checkpoint | Target | Phases |
+|---|---|---|
+| CP1 | end of first build month | Phase 0 + 1 (shell + landing + inquiry) |
+| CP2 | mid-summer | Phase 2 + 3 (World B + physical configurator) |
+| CP3 | late summer | Phase 4 (digital + PDF) |
+| CP4 | autumn | Phase 5 (payment) — the hard one |
+| CP5 | pre-January | Phase 6 (polish, security review, pre-launch checklist) |
+| LAUNCH | January | slava line goes live |
+
+---
+
+## OPEN DECISIONS (flagged, not blocking)
+1. **Payment gateway choice** (Phase 5.1) — you'll confirm your bank/merchant setup.
+2. **Smart Inquiry vs pure Instagram DM** — recommendation is Smart Inquiry (saves the lead, as you asked). Veto if you disagree.
+3. **Final brand tokens** (Phase 0.5) — colors/fonts from your photos.
