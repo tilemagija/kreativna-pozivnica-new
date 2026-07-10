@@ -7,6 +7,26 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ---
 
+## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
+
+**Gde smo:** Faza 0.3 (brend u kod: tokeni + fontovi) — sledeće.
+**Projekat na disku:** `C:\Users\Tile\kreativna-pozivnica` (pokreni Claude Code IZ ovog foldera → CLAUDE.md se učita sam).
+**GitHub:** https://github.com/tilemagija/kreativna-pozivnica-new · **Vercel:** kreativna-pozivnica-new.vercel.app
+**Okruženje:** Node v24.18.0, npm 11.16.0, git 2.55 — sve instalirano i radi.
+**Stack stvarno:** Next.js 16 + TS + Tailwind v4 + App Router + src/ + next-intl.
+**Sledeća akcija:** ubaciti §11 tokene u Tailwind + učitati fontove (Cormorant Garamond, Lora, Marck Script) sa ćiriličnim subsetom.
+
+### Napredak (Faza 0)
+- [x] 0.1 Skela (Next.js 16 + TS + Tailwind) — commit, push, deploy ✅
+- [x] 0.2 Dva jezika (next-intl: sr=ćirilica na `/`, en na `/en`) — verifikovano uživo ✅
+- [ ] 0.3 Brend u kod (tokeni iz §11 + fontovi Cormorant/Lora/Marck) ← OVDE SMO
+- [ ] 0.4 Sanity povezan (Studio na /studio, prazne šeme)
+- [ ] 0.5 Kostur strane (semantic nav/main/footer + motion pattern)
+
+> Posle /clear: otvori Claude Code u folderu projekta i reci „pročitaj ROADMAP.md, nastavljamo".
+
+---
+
 ## PHASE 0 — TEMELJI (Foundation)  🟢
 Set up the empty, themed, bilingual shell — the ground everything stands on.
 
