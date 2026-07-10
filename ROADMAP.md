@@ -48,6 +48,7 @@ Set up the empty, themed, bilingual shell — the ground everything stands on.
 The single-scroll landing + the first real "door" (contact form).
 
 **Batches:**
+- 1.0 Intro „otvaranje" overlay → hero reveal (on-brand cover: gold lotus + „kliknite"). Content SSR underneath (SEO), reduced-motion fallback. See CLAUDE.md §12.
 - 1.1 Landing sections from Sanity: hero (poruka + koncept) → gallery → "zašto baš mi" → kontakt.
 - 1.2 Gallery driven by Sanity (the moat — real custom invitations).
 - 1.3 **Smart Inquiry v1** (the reusable component): saves to Sanity + emails owner. 🟡

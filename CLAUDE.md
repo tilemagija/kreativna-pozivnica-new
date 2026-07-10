@@ -189,6 +189,10 @@ Aesthetic: **warm, airy, editorial. Cream whitespace, antique-gold + sage accent
 
 One consistent, **subtle, premium** pattern (framer-motion + lenis): gentle fade/rise of sections on scroll, restrained. No flashy effects. Define once, apply everywhere. Polish only after functionality (Layer 1 §4).
 
+**Intro / entry overlay — „otvaranje pozivnice" (signature interaction):** on load, the site opens with a full-screen cover that feels like a *closed invitation* (gold lotus + short prompt). The visitor clicks to "open" → the cover animates away → the hero is revealed. Deeply on-brand (the invitation literally opens). **Build in Phase 1 (batch 1.0), not before.**
+- **Must-not-break rules (flag):** the real page content stays **server-rendered underneath** the overlay (so Google + SEO see the hero; the overlay is only a visual layer, never a gate that hides content from crawlers). Provide a **reduced-motion / accessibility fallback** (respect `prefers-reduced-motion`; keyboard-openable; never trap the user).
+- **Decide at build time:** show once per session (cookie/localStorage) vs every visit; skippable; behavior on direct deep-links to other tabs (overlay only on landing, not on every page).
+
 ## 13. SEO STANDARDS (this site targets organic growth)
 
 Every page must:
