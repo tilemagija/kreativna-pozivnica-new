@@ -1,26 +1,44 @@
 @import "tailwindcss";
 
+/* Brand design tokens — source of truth: CLAUDE.md §11 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --c-cream: #f5eee0;
+  --c-greige: #e7e0d0;
+  --c-kraft: #e8d6bb;
+  --c-gold: #b7995a;
+  --c-gold-deep: #927741;
+  --c-sage: #9b9e76;
+  --c-sage-deep: #797b54;
+  --c-terracotta: #c08a6a;
+  --c-ink: #3d352a;
+  --c-ink-muted: #6c6049;
+  --c-line: #dcd1bb;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* Colors → utilities: bg-cream, text-ink, text-gold, border-line, bg-sage, ... */
+  --color-cream: var(--c-cream);
+  --color-greige: var(--c-greige);
+  --color-kraft: var(--c-kraft);
+  --color-gold: var(--c-gold);
+  --color-gold-deep: var(--c-gold-deep);
+  --color-sage: var(--c-sage);
+  --color-sage-deep: var(--c-sage-deep);
+  --color-terracotta: var(--c-terracotta);
+  --color-ink: var(--c-ink);
+  --color-ink-muted: var(--c-ink-muted);
+  --color-line: var(--c-line);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Fonts → utilities: font-serif (headings), font-body (text), font-script (accents).
+     The --font-* vars are injected by next/font in the layout. */
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-lora), Georgia, serif;
+  --font-script: var(--font-marck), cursive;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--c-cream);
+  color: var(--c-ink);
+  font-family: var(--font-body);
 }
