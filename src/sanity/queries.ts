@@ -28,3 +28,20 @@ const HERO_QUERY = `*[_type == "homePage"][0]{
 export async function getHero(): Promise<HeroData> {
   return client.fetch(HERO_QUERY, {}, { next: { revalidate: 60 } });
 }
+
+// --- "Zašto baš mi" (why us) ---
+export type Reason = { icon?: string; title?: LocaleValue; text?: LocaleValue };
+export type WhyData = {
+  whyKicker?: LocaleValue;
+  whyHeading?: LocaleValue;
+  whyReasons?: Reason[];
+} | null;
+
+const WHY_QUERY = `*[_type == "homePage"][0]{
+  whyKicker, whyHeading,
+  whyReasons[]{ icon, title, text }
+}`;
+
+export async function getWhy(): Promise<WhyData> {
+  return client.fetch(WHY_QUERY, {}, { next: { revalidate: 60 } });
+}

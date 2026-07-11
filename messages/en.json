@@ -10,6 +10,24 @@
     "aria": "Open the invitation to enter the site",
     "skip": "Skip"
   },
+  "WhyUs": {
+    "kicker": "Why us",
+    "heading": "Every invitation is your story",
+    "reasons": [
+      {
+        "title": "Hand-illustrated",
+        "text": "We draw every invitation by hand — your church, the two of you. No identical one exists anywhere in the world."
+      },
+      {
+        "title": "Unique and uncopyable",
+        "text": "Your story turned into art that no one else has. That is the heart of what we do."
+      },
+      {
+        "title": "Finest materials",
+        "text": "Handmade paper, gold, wax and seal — every detail chosen with care, so its value is felt in the hand."
+      }
+    ]
+  },
   "Nav": {
     "configurator": "Make your own",
     "howItsMade": "How it's made",
