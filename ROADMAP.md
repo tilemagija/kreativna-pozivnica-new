@@ -9,13 +9,16 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
-**Gde smo:** ✅ FAZA 0 KOMPLETNA. ✅ Faza 1 batch 1.0 (intro „otvaranje" overlay) GOTOV. Sledeće: **Faza 1 batch 1.1 — landing sekcije iz Sanity** (hero → galerija → „zašto baš mi" → testimonijali → kontakt), toplo-bogato/anti-template (§11a).
+**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro overlay. ✅ 1.1 KORAK 1: Sanity model za CEO landing + Hero uživo (carousel). Sledeće: **1.1 korak 2 — izgled ostalih sekcija** (galerija-mozaik, „zašto baš mi", društveni dokaz/brojač+paketi, kontakt) iz istog modela. Vlasnikova žena u međuvremenu puni sadržaj kroz Studio.
 **Projekat na disku:** `C:\Users\Tile\kreativna-pozivnica` (pokreni Claude Code IZ ovog foldera → CLAUDE.md se učita sam).
 **GitHub:** https://github.com/tilemagija/kreativna-pozivnica-new · **Vercel:** kreativna-pozivnica-new.vercel.app
 **Sanity:** projectId `oil2tj3x`, dataset `production`. Studio na `/studio`. CORS: localhost:3000 + vercel domen dodati. Vercel env vars (3x NEXT_PUBLIC_SANITY_*) postavljeni.
 **Okruženje:** Node v24.18.0, npm 11.16.0, git 2.55 — sve instalirano i radi.
 **Stack stvarno:** Next.js 16 + TS + Tailwind v4 + App Router + src/ + next-intl + brend + Sanity + framer-motion + lenis. Kostur: Header/nav + main + Footer, `Reveal` (motion pattern), `SmoothScroll` (oba poštuju reduced-motion).
-**Sledeća akcija:** Faza 1 — batch 1.1: landing sekcije (hero/galerija/„zašto baš mi"/testimonijali/kontakt) iz Sanity + kasnije Smart Inquiry forma (1.3). Intro overlay (1.0) je gotov: `src/components/intro/IntroOverlay.tsx` + `src/components/brand/Lotus.tsx`, uvezan SAMO u landing `page.tsx`, jednom po sesiji (sessionStorage), reduced-motion + tastatura, sadržaj SSR ispod (SEO OK, verifikovano).
+**Sledeća akcija:** 1.1 korak 2 — render sekcija iz Sanity: (a) galerija-mozaik iz `galleryItem`; (b) „zašto baš mi" iz `homePage.whyReasons`; (c) DRUŠTVENI DOKAZ „Postanite deo priče": brojač raste do `counterTarget`+`counterSuffix` za 2-3s (reduced-motion → odmah), UPOREDO „padaju" paketi (vlasnik šalje skicu paketa — ČEKA SE), telefon sa IG mrežom (`instagramImages`), „Utisci" iz `testimonial`; (d) kontakt sekcija (forma tek u 1.3). Niša rečenica ispod brojača: preporuka „2.000+ porodica u našoj priči" (uredivo u Sanity `counterLabel`).
+
+**Sanity model (gotov, 1.1 k1):** `localeString`/`localeText` (dvojezično sr+en), singletoni `siteSettings` + `homePage` (fieldsetovi po sekcijama), liste `galleryItem` + `testimonial`. Studio desk: `src/sanity/structure.ts`. Čitanje: `src/sanity/queries.ts` + `pick()` iz `src/sanity/locale.ts`. Hero: `src/components/sections/Hero.tsx` + `HeroCarousel.tsx` (next/image cross-fade). Slike sa `cdn.sanity.io` (next.config).
+**Intro (1.0):** `src/components/intro/IntroOverlay.tsx` + `brand/Lotus.tsx`, samo landing, jednom po sesiji, SSR ispod.
 **Placeholder linkovi (znati):** nav vodi na /napravite-svoju, /kako-se-pravi, /umetnost, /kontakt — te strane još NE postoje (404 dok ih ne napravimo po fazama).
 **Napomena za dev/preview:** `node`/`npm` NISU na PATH-u u tool-shell-ovima; osveži PATH pre npm komandi:
 `$env:Path=[Environment]::GetEnvironmentVariable("Path","Machine")+";"+[Environment]::GetEnvironmentVariable("Path","User")`. Preview MCP alat ne radi (pokreće iz home, ne iz projekta) — verifikuj preko background `npm run dev` + Invoke-WebRequest.
@@ -31,7 +34,7 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ### Napredak (Faza 1)
 - [x] 1.0 Intro „otvaranje" overlay → hero reveal (§12) — build prošao, SSR-ispod verifikovan ✅
-- [ ] 1.1 Landing sekcije iz Sanity (hero → galerija → „zašto baš mi" → testimonijali → kontakt), §11a
+- [~] 1.1 Landing sekcije iz Sanity — KORAK 1 gotov (Sanity model za sve + Hero uživo/carousel); korak 2 = izgled ostalih sekcija
 - [ ] 1.2 Galerija iz Sanity
 - [ ] 1.3 Smart Inquiry v1 (Sanity + email) 🟡
 - [ ] 1.4 Security pass na formu (rate limit + validacija + sanitizacija + honeypot) 🟡
