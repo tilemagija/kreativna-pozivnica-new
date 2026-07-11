@@ -18,6 +18,7 @@ export default function IntroOverlay() {
   const reduce = useReducedMotion();
   const t = useTranslations("Intro");
   const videoRef = useRef<HTMLVideoElement>(null);
+  const bgRef = useRef<HTMLVideoElement>(null);
   const coverRef = useRef<HTMLButtonElement>(null);
   const [state, setState] = useState<State>("cover");
 
@@ -66,6 +67,7 @@ export default function IntroOverlay() {
   const open = () => {
     if (reduce) return dismiss();
     setState("playing");
+    bgRef.current?.play().catch(() => {});
     videoRef.current?.play().catch(dismiss);
   };
 
@@ -79,6 +81,20 @@ export default function IntroOverlay() {
         if (state === "revealing") setState("closed");
       }}
     >
+      {/* Blurred copy fills the empty sides on wide screens (portrait video) so it
+          reads as full-bleed and premium — the sharp copy stays centered on top. */}
+      <video
+        ref={bgRef}
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full scale-110 object-cover blur-2xl"
+        src="/intro/otvaranje.mp4"
+        muted
+        playsInline
+        preload="auto"
+        tabIndex={-1}
+      />
+      <div aria-hidden="true" className="absolute inset-0 bg-cream/30" />
+
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-contain"
