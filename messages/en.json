@@ -1,7 +1,9 @@
 {
   "Home": {
     "title": "Creative Invitation",
-    "tagline": "For the most beautiful memories — handmade, with love"
+    "tagline": "For the most beautiful memories — handmade, with love",
+    "ctaPrimary": "Make your own",
+    "ctaSecondary": "See our work"
   },
   "Intro": {
     "welcome": "Welcome",

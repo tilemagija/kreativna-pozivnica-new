@@ -1,5 +1,18 @@
 import { type SchemaTypeDefinition } from "sanity";
+import { localeString } from "./objects/localeString";
+import { localeText } from "./objects/localeText";
+import { siteSettings } from "./documents/siteSettings";
+import { homePage } from "./documents/homePage";
+import { galleryItem } from "./documents/galleryItem";
+import { testimonial } from "./documents/testimonial";
 
-// Empty skeleton. Content types get added per roadmap phase:
-// models (invitations), gallery, inquiries, pricing config, etc.
-export const schemaTypes: SchemaTypeDefinition[] = [];
+export const schemaTypes: SchemaTypeDefinition[] = [
+  // reusable objects
+  localeString,
+  localeText,
+  // content
+  siteSettings,
+  homePage,
+  galleryItem,
+  testimonial,
+];
