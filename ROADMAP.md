@@ -9,12 +9,13 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
-**Gde smo:** Faza 0.4 (Sanity CMS povezan) — sledeće.
+**Gde smo:** Faza 0.4 (Sanity) — KOD gotov + lokalno verifikovan (/studio = HTTP 200). Čeka 2 korisničke dashboard radnje pa push; onda 0.5.
 **Projekat na disku:** `C:\Users\Tile\kreativna-pozivnica` (pokreni Claude Code IZ ovog foldera → CLAUDE.md se učita sam).
 **GitHub:** https://github.com/tilemagija/kreativna-pozivnica-new · **Vercel:** kreativna-pozivnica-new.vercel.app
+**Sanity:** projectId `oil2tj3x`, dataset `production` (u .env.local; NIJE komitovan).
 **Okruženje:** Node v24.18.0, npm 11.16.0, git 2.55 — sve instalirano i radi.
-**Stack stvarno:** Next.js 16 + TS + Tailwind v4 + App Router + src/ + next-intl + brend tokeni/fontovi.
-**Sledeća akcija:** povezati Sanity (nov projekat), Studio na `/studio`, prazan kostur šema (modeli, galerija, upiti, cene). Trebaće Sanity projectId + dataset u `.env`.
+**Stack stvarno:** Next.js 16 + TS + Tailwind v4 + App Router + src/ + next-intl + brend + Sanity (Studio na /studio).
+**Sledeća akcija:** (1) korisnik: dodati CORS origine u sanity.io/manage + 3 env vars u Vercel; (2) push; (3) Faza 0.5 (kostur strane).
 **Napomena za dev/preview:** `node`/`npm` NISU na PATH-u u tool-shell-ovima; osveži PATH pre npm komandi:
 `$env:Path=[Environment]::GetEnvironmentVariable("Path","Machine")+";"+[Environment]::GetEnvironmentVariable("Path","User")`. Preview MCP alat ne radi (pokreće iz home, ne iz projekta) — verifikuj preko background `npm run dev` + Invoke-WebRequest.
 
@@ -22,7 +23,7 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 - [x] 0.1 Skela (Next.js 16 + TS + Tailwind) — commit, push, deploy ✅
 - [x] 0.2 Dva jezika (next-intl: sr=ćirilica na `/`, en na `/en`) — verifikovano uživo ✅
 - [x] 0.3 Brend u kod (§11 tokeni + Cormorant/Lora/Marck, ćirilica) — verifikovano ✅
-- [ ] 0.4 Sanity povezan (Studio na /studio, prazne šeme) ← OVDE SMO
+- [~] 0.4 Sanity — kod gotov + lokalno verifikovan; čeka CORS + Vercel env pa push ← OVDE SMO
 - [ ] 0.5 Kostur strane (semantic nav/main/footer + motion pattern)
 
 > Posle /clear: otvori Claude Code u folderu projekta i reci „pročitaj ROADMAP.md, nastavljamo".
