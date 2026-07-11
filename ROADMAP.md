@@ -53,7 +53,7 @@ The single-scroll landing + the first real "door" (contact form).
 
 **Batches:**
 - 1.0 Intro „otvaranje" overlay → hero reveal (on-brand cover: gold lotus + „kliknite"). Content SSR underneath (SEO), reduced-motion fallback. See CLAUDE.md §12.
-- 1.1 Landing sections from Sanity: hero (poruka + koncept) → gallery → "zašto baš mi" → kontakt.
+- 1.1 Landing sections from Sanity: hero → gallery → "zašto baš mi" → **testimonijali / društveni dokaz** → kontakt. Direction: **toplo-bogato, editorial/asimetrično, anti-template** — vidi CLAUDE.md §11a. Testimonijali: Sanity-editable; pozicija/izgled po vlasnikovoj zamisli.
 - 1.2 Gallery driven by Sanity (the moat — real custom invitations).
 - 1.3 **Smart Inquiry v1** (the reusable component): saves to Sanity + emails owner. 🟡
 - 1.4 Security pass on the form: rate limit + validation + sanitize + honeypot. 🟡

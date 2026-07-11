@@ -183,7 +183,17 @@ Aesthetic: **warm, airy, editorial. Cream whitespace, antique-gold + sage accent
 
 **Rules:** lots of cream whitespace; gold + sage as *accents/lines*, not big fills; text is warm brown; watercolor/kraft textures only as occasional accents, not everywhere.
 
-> These are starter values read from the logo + card. Fine-tune exact hex/fonts during Phase 0.5. Per Layer 1, they live as tokens from day 1 — no inline styles.
+> These are starter values read from the logo + card. Per Layer 1, they live as tokens from day 1 — no inline styles.
+
+## 11a. DESIGN DIRECTION & DIFFERENTIATION  (warm-rich, anti-template)
+
+**Overall direction: WARM & RICH, not minimalist** (owner's call). Lean into texture, ornament, and layered detail so the site feels like a handmade, tactile artifact (paper, watercolor, gold) — not a clean SaaS page. Warmth over sparseness. (Rich ≠ cluttered — the §4 quality bar still holds.)
+
+**Escape the "default AI-generated site" look.** There is a recognizable generic template aesthetic; we deliberately avoid it.
+- ❌ **Avoid:** generic sans (Inter/system); everything centered; uniform rounded cards in tidy 3-col grids (the #1 tell); flat solid-only backgrounds; default buttons + generic drop shadows.
+- ✅ **Do:** editorial / **asymmetric** layouts (offset text, images bleeding off-edge, varied rhythm); **gallery as a mosaic** (varied sizes / overlap), not a uniform grid; real **material texture** (paper/watercolor/kraft, subtle grain) on the warm cream base; **bespoke details** (gold-lotus dividers, gold-leaf accents, hand-torn edges, the signature intro "otvaranje" overlay, possibly a custom cursor); **typography-led** hierarchy (big serif + script accents, Cyrillic-first — our biggest differentiator, push it) with generous, irregular whitespace.
+
+> Test for every section: *"Could a random AI template have produced this?"* If yes, add craft until the answer is no.
 
 ## 12. MOTION / INTERACTION PATTERN
 
@@ -209,7 +219,7 @@ Every page must:
 > **CORRECTION to the original CLAUDE.md:** the original said checkout/payment is NOT in scope. That was an oversight. **Payment IS in scope and front-and-center.**
 
 **IN SCOPE (launch):**
-- Landing (hero + gallery + "zašto baš mi" + contact form).
+- Landing (hero + gallery + "zašto baš mi" + **testimonials / social proof** + contact form). Testimonials are Sanity-editable; exact placement/look TBD with owner (he has ideas).
 - "Kako se pravi" page (YouTube embeds).
 - **Digital invitation:** pick model → edit text (live preview) → **pay 100% online** → PDF emailed. Record kept in Sanity (as evidence, not an "active order").
 - **Physical invitation:** guided configurator (paper / wrapper / seal / gold leaf / torn edges) → live price → **pay 50% deposit online, remainder cash-on-delivery** → upsell popup (Smart Inquiry for extras).
