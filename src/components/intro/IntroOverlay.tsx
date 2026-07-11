@@ -81,7 +81,7 @@ export default function IntroOverlay() {
     >
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-contain"
         src="/intro/otvaranje.mp4"
         muted
         playsInline
