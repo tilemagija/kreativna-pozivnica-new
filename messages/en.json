@@ -6,9 +6,9 @@
     "ctaSecondary": "See our work"
   },
   "Intro": {
-    "welcome": "Welcome",
     "prompt": "Click to open",
-    "aria": "Open the invitation to enter the site"
+    "aria": "Open the invitation to enter the site",
+    "skip": "Skip"
   },
   "Nav": {
     "configurator": "Make your own",

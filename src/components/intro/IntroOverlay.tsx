@@ -3,111 +3,115 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import Lotus from "@/components/brand/Lotus";
 
-// Signature "otvaranje pozivnice" cover (CLAUDE.md §12).
-// - The real page is server-rendered UNDERNEATH this layer (SEO-safe): this is only
-//   a visual cover, never a gate that hides content from crawlers.
-// - Shows once per browser session (sessionStorage), skippable by click or keyboard.
-// - Respects prefers-reduced-motion (instant, no animation) and never traps the user.
+// Signature "otvaranje pozivnice" intro (CLAUDE.md §12), driven by the brand's own
+// rendered video: the sealed envelope (first frame) → click → the wax seal lifts and
+// the flap opens → a light bloom masks the cut to the hero underneath.
+// - The real page stays server-rendered UNDERNEATH (SEO-safe); this is only a cover.
+// - Shows once per session (sessionStorage), skippable by button/keyboard.
+// - Reduced-motion: no video playback, click enters instantly. Never traps.
 const SEEN_KEY = "kp-intro-seen";
+
+type State = "cover" | "playing" | "revealing" | "closed";
 
 export default function IntroOverlay() {
   const reduce = useReducedMotion();
   const t = useTranslations("Intro");
-  const btnRef = useRef<HTMLButtonElement>(null);
-  // Cover is shown by default so first-time visitors see the closed invitation with
-  // no flash of the hero. SSR and first client render agree → no hydration mismatch.
-  const [state, setState] = useState<"open" | "closing" | "closed">("open");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const coverRef = useRef<HTMLButtonElement>(null);
+  const [state, setState] = useState<State>("cover");
 
-  // Already opened it this session → remove instantly, no animation.
+  // Already opened it this session → skip straight to the page.
   useEffect(() => {
     try {
       if (sessionStorage.getItem(SEEN_KEY)) setState("closed");
     } catch {
-      /* private mode / storage blocked → just show the cover */
+      /* storage blocked → show the cover */
     }
   }, []);
 
-  // Lock background scroll while the cover is up; focus the cover for keyboard users.
+  // Lock background scroll + focus the cover for keyboard users while it's up.
   useEffect(() => {
     if (state === "closed") return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    btnRef.current?.focus({ preventScroll: true });
+    if (state === "cover") coverRef.current?.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") dismiss();
+    };
+    window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
   if (state === "closed") return null;
 
-  const open = () => {
+  const markSeen = () => {
     try {
       sessionStorage.setItem(SEEN_KEY, "1");
     } catch {
       /* ignore */
     }
-    setState(reduce ? "closed" : "closing");
+  };
+
+  // Leave the overlay: fade out (bloom masks the cut), or instant for reduced motion.
+  const dismiss = () => {
+    markSeen();
+    setState(reduce ? "closed" : "revealing");
+  };
+
+  const open = () => {
+    if (reduce) return dismiss();
+    setState("playing");
+    videoRef.current?.play().catch(dismiss);
   };
 
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-cream"
+      className="fixed inset-0 z-[60] overflow-hidden bg-cream"
       initial={false}
-      animate={
-        state === "closing"
-          ? { opacity: 0, y: -18, scale: 1.03 }
-          : { opacity: 1, y: 0, scale: 1 }
-      }
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      animate={{ opacity: state === "revealing" ? 0 : 1 }}
+      transition={{ duration: 0.6, ease: "easeInOut" }}
       onAnimationComplete={() => {
-        if (state === "closing") setState("closed");
-      }}
-      style={{
-        backgroundImage:
-          "radial-gradient(120% 120% at 50% 35%, transparent 55%, rgba(146,119,65,0.10) 100%)",
+        if (state === "revealing") setState("closed");
       }}
     >
-      <button
-        ref={btnRef}
-        type="button"
-        onClick={open}
-        onKeyDown={(e) => {
-          if (e.key === "Escape") open();
-        }}
-        aria-label={t("aria")}
-        className="group absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-6 px-6 text-center focus:outline-none"
-      >
-        {/* Inset double-line frame — the "card" feel */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-4 rounded-sm border border-line sm:inset-8"
-        />
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-6 rounded-sm border border-gold/30 sm:inset-10"
-        />
+      <video
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/intro/otvaranje.mp4"
+        muted
+        playsInline
+        preload="auto"
+        onEnded={dismiss}
+      />
 
-        <span className="font-script text-2xl text-sage-deep sm:text-3xl">
-          {t("welcome")}
-        </span>
-
-        <motion.span
-          aria-hidden="true"
-          className="text-gold"
-          animate={reduce || state === "closing" ? {} : { scale: [1, 1.05, 1] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      {state === "cover" && (
+        <button
+          ref={coverRef}
+          type="button"
+          onClick={open}
+          aria-label={t("aria")}
+          className="group absolute inset-0 flex flex-col items-center justify-end pb-[14vh] focus:outline-none"
         >
-          <Lotus className="h-16 w-24 sm:h-20 sm:w-32" />
-        </motion.span>
+          <span className="rounded-full bg-cream/70 px-6 py-2 font-serif text-xs uppercase tracking-[0.3em] text-ink backdrop-blur-sm transition-colors group-hover:text-gold sm:text-sm">
+            {t("prompt")}
+          </span>
+        </button>
+      )}
 
-        <span className="h-px w-12 bg-gold/60" />
-
-        <span className="font-serif text-xs uppercase tracking-[0.3em] text-ink-muted transition-colors group-hover:text-gold sm:text-sm">
-          {t("prompt")}
-        </span>
-      </button>
+      {state === "playing" && (
+        <button
+          type="button"
+          onClick={dismiss}
+          className="absolute right-4 top-4 rounded-full bg-cream/70 px-4 py-1.5 font-sans text-xs uppercase tracking-widest text-ink-muted backdrop-blur-sm transition-colors hover:text-gold"
+        >
+          {t("skip")}
+        </button>
+      )}
     </motion.div>
   );
 }
