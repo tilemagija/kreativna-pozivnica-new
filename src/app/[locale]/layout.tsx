@@ -4,6 +4,9 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { cormorant, lora, marck } from "../fonts";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import Header from "@/components/site/Header";
+import Footer from "@/components/site/Footer";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -34,7 +37,12 @@ export default async function LocaleLayout({
       className={`${cormorant.variable} ${lora.variable} ${marck.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-ink font-body">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <SmoothScroll />
+          <Header />
+          <main className="flex flex-1 flex-col">{children}</main>
+          <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

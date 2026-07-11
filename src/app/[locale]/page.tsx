@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import LocaleSwitcher from "@/components/LocaleSwitcher";
+import Reveal from "@/components/motion/Reveal";
 
 export default async function Home({
   params,
@@ -11,15 +11,18 @@ export default async function Home({
   const t = await getTranslations("Home");
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-5 p-10 text-center">
-      <h1 className="font-serif text-4xl font-medium uppercase tracking-[0.18em] text-gold sm:text-5xl">
-        {t("title")}
-      </h1>
+    <section className="flex flex-1 flex-col items-center justify-center gap-5 px-6 py-24 text-center">
+      <Reveal>
+        <h1 className="font-serif text-5xl font-medium uppercase tracking-[0.18em] text-gold sm:text-6xl">
+          {t("title")}
+        </h1>
+      </Reveal>
       <div className="h-px w-16 bg-gold" />
-      <p className="font-script text-3xl text-ink-muted sm:text-4xl">
-        {t("tagline")}
-      </p>
-      <LocaleSwitcher />
-    </main>
+      <Reveal delay={0.1}>
+        <p className="font-script text-3xl text-ink-muted sm:text-4xl">
+          {t("tagline")}
+        </p>
+      </Reveal>
+    </section>
   );
 }

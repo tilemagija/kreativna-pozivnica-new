@@ -2,5 +2,15 @@
   "Home": {
     "title": "Creative Invitation",
     "tagline": "For the most beautiful memories — handmade, with love"
+  },
+  "Nav": {
+    "configurator": "Make your own",
+    "howItsMade": "How it's made",
+    "art": "Art & gifts",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "tagline": "Handmade, with love",
+    "rights": "All rights reserved"
   }
 }
