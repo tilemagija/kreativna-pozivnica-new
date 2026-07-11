@@ -31,6 +31,7 @@ This file has **two layers**:
 - **Do NOT install new packages/dependencies without explicit approval.** Propose it, tell me why, wait.
 - **Component size limit:** if a component passes **~200 lines**, that's a signal to split it. Flag it.
 - **Scope discipline:** every work chunk gets an explicit **"what we are NOT doing"** and a **"done when..."** criterion, stated up front. This prevents scope creep inside one session.
+- **Fully responsive by default (mobile-first) — non-negotiable.** EVERY section/component/page must work and look right on **phone, tablet, and desktop** — checked as part of "done", never deferred to a later pass. Design mobile-first (start ~360px wide and scale up). No horizontal scroll, no cut-off text, tap targets big enough for a finger. The majority of this audience arrives on a phone (Instagram); a section that only looks right on desktop is **not done.**
 - **Don't research well-documented, well-known tools.** If it's standard (Next.js, Sanity, common libraries), just use it — don't burn time/tokens researching what's already known.
 
 ## 3. SECURITY — THE MOST IMPORTANT PART  ⚠️
