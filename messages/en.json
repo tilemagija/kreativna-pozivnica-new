@@ -3,6 +3,11 @@
     "title": "Creative Invitation",
     "tagline": "For the most beautiful memories — handmade, with love"
   },
+  "Intro": {
+    "welcome": "Welcome",
+    "prompt": "Click to open",
+    "aria": "Open the invitation to enter the site"
+  },
   "Nav": {
     "configurator": "Make your own",
     "howItsMade": "How it's made",

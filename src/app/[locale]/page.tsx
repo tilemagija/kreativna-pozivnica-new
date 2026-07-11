@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import Reveal from "@/components/motion/Reveal";
+import IntroOverlay from "@/components/intro/IntroOverlay";
 
 export default async function Home({
   params,
@@ -11,7 +12,9 @@ export default async function Home({
   const t = await getTranslations("Home");
 
   return (
-    <section className="flex flex-1 flex-col items-center justify-center gap-5 px-6 py-24 text-center">
+    <>
+      <IntroOverlay />
+      <section className="flex flex-1 flex-col items-center justify-center gap-5 px-6 py-24 text-center">
       <Reveal>
         <h1 className="font-serif text-5xl font-medium uppercase tracking-[0.18em] text-gold sm:text-6xl">
           {t("title")}
@@ -23,6 +26,7 @@ export default async function Home({
           {t("tagline")}
         </p>
       </Reveal>
-    </section>
+      </section>
+    </>
   );
 }
