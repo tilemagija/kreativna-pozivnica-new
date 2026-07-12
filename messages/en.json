@@ -29,10 +29,14 @@
     ]
   },
   "Nav": {
-    "configurator": "Make your own",
+    "configurator": "Design your own",
+    "gallery": "Gallery",
     "howItsMade": "How it's made",
     "art": "Art & gifts",
-    "contact": "Contact"
+    "about": "About us",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close"
   },
   "Footer": {
     "tagline": "Handmade, with love",

@@ -31,7 +31,7 @@ export default async function Hero({ locale }: { locale: string }) {
     }));
 
   return (
-    <section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-16 md:grid-cols-2 md:gap-14 md:py-24">
+    <section className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 pb-16 pt-28 md:grid-cols-2 md:gap-14 md:pb-24 md:pt-32">
       <div className="flex flex-col gap-5 md:pr-6">
         {kicker && (
           <Reveal>
