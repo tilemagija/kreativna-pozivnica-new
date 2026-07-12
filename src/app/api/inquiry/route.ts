@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeClient } from "@/sanity/lib/serverClient";
+import { client } from "@/sanity/lib/client";
 import { rateLimit } from "@/lib/rateLimit";
+import { sendOwnerEmail } from "@/lib/email";
 
 export const runtime = "nodejs";
 
@@ -65,7 +67,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "save_failed" }, { status: 500 });
   }
 
-  // TODO (1.3b): email the owner via provider once configured.
+  // Notify the owner by email (non-blocking: the inquiry is already saved).
+  try {
+    const to = await client.fetch<string | null>(
+      `*[_type == "siteSettings"][0].contactEmail`,
+    );
+    if (to) await sendOwnerEmail({ name, contact, message, context }, to);
+  } catch (err) {
+    console.error("Owner email failed (inquiry still saved):", err);
+  }
 
   return NextResponse.json({ ok: true });
 }
