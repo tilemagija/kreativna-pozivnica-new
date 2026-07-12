@@ -30,11 +30,9 @@
   },
   "Nav": {
     "akcija": "Sale",
-    "about": "About us",
-    "gallery": "Gallery",
     "process": "Process",
     "workshop": "Workshop",
-    "contact": "Contact",
+    "art": "Art & gifts",
     "configurator": "Design your own",
     "menu": "Menu",
     "close": "Close"

@@ -164,7 +164,7 @@ Rough guide across the summer→January runway (adjust as we go):
 ---
 
 ## OPEN DECISIONS (flagged, not blocking)
-0. **„Уметност и поклони" (Свет Б) у навигацији** — izbačen iz nava na zahtev („kao stari sajt"), ali je po spec §8a/§14 ključan (organski magnet, slava jan.). Čeka se vlasnikova odluka: zasebna stavka, pod Galerijom, ili namerno izostavljeno. Nav rute koje treba napraviti (trenutno 404): /akcija, /o-nama, /galerija, /proces, /radionica, /kontakt, /napravite-svoju.
+0. **Nav = SAMO linkovi ka posebnim stranicama** (vlasnikovo pravilo). Nav: Акција · Процес · Радионица · Уметност и поклони · Дизајнирајте сами. Landing scroll-sekcije (О нама, Галерија, Контакт, друштвени доказ) NISU u navu — grade se kao sekcije na landingu (CMS). Rute za napraviti (trenutno 404): /akcija, /proces, /radionica, /umetnost, /napravite-svoju.
 
 1. **Payment gateway choice** (Phase 5.1) — you'll confirm your bank/merchant setup.
 2. **Smart Inquiry vs pure Instagram DM** — recommendation is Smart Inquiry (saves the lead, as you asked). Veto if you disagree.

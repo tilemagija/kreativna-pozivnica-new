@@ -10,12 +10,12 @@ import Lotus from "@/components/brand/Lotus";
 // Fixed header: transparent over the hero, gains a soft cream backdrop once scrolled.
 // Desktop: logo left, links right. Mobile/tablet: logo + hamburger → full-screen menu.
 // "Акција" (first) and "Дизајнирајте сами" (last) are the two accented, eye-catching items.
+// Nav links lead ONLY to separate pages. Landing scroll-sections (about/gallery/contact)
+// are NOT in the nav by design.
 const NAV_ITEMS = [
-  { href: "/o-nama", key: "about" },
-  { href: "/galerija", key: "gallery" },
   { href: "/proces", key: "process" },
   { href: "/radionica", key: "workshop" },
-  { href: "/kontakt", key: "contact" },
+  { href: "/umetnost", key: "art" },
 ] as const;
 
 export default function Header() {
