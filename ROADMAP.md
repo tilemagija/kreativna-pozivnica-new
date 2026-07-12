@@ -9,7 +9,7 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
-**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro overlay. ✅ 1.1 KORAK 1: Sanity model za CEO landing + Hero uživo (carousel). Sledeće: **1.1 korak 2 — izgled ostalih sekcija** (galerija-mozaik, „zašto baš mi", društveni dokaz/brojač+paketi, kontakt) iz istog modela. Vlasnikova žena u međuvremenu puni sadržaj kroz Studio.
+**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro (video). ✅ 1.1 + 1.2 KOSTUR LANDINGA KOMPLETAN — sve sekcije rade iz Sanity (Hero/carousel, Galerija/mozaik, Zašto baš mi, O nama, Postanite deo priče/brojač+paketi-ilustracija, Kontakt) + nav (fiksni, Akcija festive). Sledeće: **1.3 Smart Inquiry forma** (prva prava „vrata": čuva u Sanity + email) pa **1.4 security** (rate limit/validacija/honeypot). Žena u međuvremenu puni sadržaj kroz Studio. Nav strane (/akcija, /proces, /radionica, /umetnost, /napravite-svoju) još 404 — grade se po fazama (Svet B = Faza 2).
 **Projekat na disku:** `C:\Users\Tile\kreativna-pozivnica` (pokreni Claude Code IZ ovog foldera → CLAUDE.md se učita sam).
 **GitHub:** https://github.com/tilemagija/kreativna-pozivnica-new · **Vercel:** kreativna-pozivnica-new.vercel.app
 **Sanity:** projectId `oil2tj3x`, dataset `production`. Studio na `/studio`. CORS: localhost:3000 + vercel domen dodati. Vercel env vars (3x NEXT_PUBLIC_SANITY_*) postavljeni.
@@ -34,7 +34,10 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ### Napredak (Faza 1)
 - [x] 1.0 Intro „otvaranje" overlay → hero reveal (§12) — build prošao, SSR-ispod verifikovan ✅
-- [~] 1.1 Landing sekcije iz Sanity — KORAK 1 gotov (Sanity model za sve + Hero uživo/carousel); korak 2 = izgled ostalih sekcija
+- [x] 1.1 Landing sekcije iz Sanity — SVE sekcije rade (Hero, Galerija, Zašto baš mi, O nama, Postanite deo priče, Kontakt) ✅
+- [x] 1.2 Galerija-mozaik iz Sanity (CSS columns, placeholder dok prazno) ✅
+- [ ] 1.3 Smart Inquiry v1 (forma → Sanity + email) 🟡 — SLEDEĆE
+- [ ] 1.4 Security pass na formu (rate limit + validacija + sanitizacija + honeypot) 🟡
 - [ ] 1.2 Galerija iz Sanity
 - [ ] 1.3 Smart Inquiry v1 (Sanity + email) 🟡
 - [ ] 1.4 Security pass na formu (rate limit + validacija + sanitizacija + honeypot) 🟡
