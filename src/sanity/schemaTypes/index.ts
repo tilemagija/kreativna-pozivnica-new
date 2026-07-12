@@ -5,6 +5,7 @@ import { siteSettings } from "./documents/siteSettings";
 import { homePage } from "./documents/homePage";
 import { galleryItem } from "./documents/galleryItem";
 import { testimonial } from "./documents/testimonial";
+import { inquiry } from "./documents/inquiry";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // reusable objects
@@ -15,4 +16,5 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   homePage,
   galleryItem,
   testimonial,
+  inquiry,
 ];

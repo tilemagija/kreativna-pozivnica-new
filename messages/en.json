@@ -42,7 +42,18 @@
     "kicker": "Contact",
     "heading": "Let's create yours",
     "text": "Have a question, or ready to begin? Write to us — we reply quickly and gladly.",
-    "instagramCta": "Message us on Instagram"
+    "orDirect": "Or reach us directly:"
+  },
+  "Inquiry": {
+    "name": "Your name",
+    "contact": "Email or phone",
+    "message": "Your message (optional)",
+    "submit": "Send inquiry",
+    "sending": "Sending…",
+    "thanksTitle": "Thank you!",
+    "thanksBody": "Your inquiry has arrived. We'll get back to you soon.",
+    "errorPrefix": "Something went wrong.",
+    "errorInstagram": "Message us on Instagram"
   },
   "SocialProof": {
     "kicker": "Join us",
