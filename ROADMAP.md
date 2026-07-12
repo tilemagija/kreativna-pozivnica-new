@@ -9,7 +9,8 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
-**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro (video). ✅ 1.1 + 1.2 KOSTUR LANDINGA KOMPLETAN — sve sekcije rade iz Sanity (Hero/carousel, Galerija/mozaik, Zašto baš mi, O nama, Postanite deo priče/brojač+paketi-ilustracija, Kontakt) + nav (fiksni, Akcija festive). Sledeće: **1.3 Smart Inquiry forma** (prva prava „vrata": čuva u Sanity + email) pa **1.4 security** (rate limit/validacija/honeypot). Žena u međuvremenu puni sadržaj kroz Studio. Nav strane (/akcija, /proces, /radionica, /umetnost, /napravite-svoju) još 404 — grade se po fazama (Svet B = Faza 2).
+**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro (video). ✅ 1.1 + 1.2 KOSTUR LANDINGA KOMPLETAN — sve sekcije rade iz Sanity (Hero/carousel, Galerija/mozaik, Zašto baš mi, O nama, Postanite deo priče/brojač+paketi-ilustracija, Kontakt) + nav (fiksni, Akcija festive). ✅ 1.3 Smart Inquiry (forma → Sanity, verifikovano; email preko Resend čeka RESEND_API_KEY) + 1.4 security guards. Sledeće: **1.5 „Kako se pravi" (YouTube)** i **1.6 SEO baseline**, pa **Faza 2 (Svet B)** i ostale nav strane (/akcija, /proces, /radionica, /umetnost, /napravite-svoju — još 404). Žena u međuvremenu puni sadržaj kroz Studio.
+**Env/setup:** SANITY_API_WRITE_TOKEN postavljen (Vercel Production + .env.local) — ⚠️ rotirati (bio u chatu). RESEND: napraviti nalog + RESEND_API_KEY (Vercel + .env.local); primalac mejla = „Мејл за упите" u Sanity Podešavanjima. Email „from" u test modu (onboarding@resend.dev) šalje samo na tvoj Resend nalog dok ne verifikuješ domen.
 **Projekat na disku:** `C:\Users\Tile\kreativna-pozivnica` (pokreni Claude Code IZ ovog foldera → CLAUDE.md se učita sam).
 **GitHub:** https://github.com/tilemagija/kreativna-pozivnica-new · **Vercel:** kreativna-pozivnica-new.vercel.app
 **Sanity:** projectId `oil2tj3x`, dataset `production`. Studio na `/studio`. CORS: localhost:3000 + vercel domen dodati. Vercel env vars (3x NEXT_PUBLIC_SANITY_*) postavljeni.
@@ -36,8 +37,8 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 - [x] 1.0 Intro „otvaranje" overlay → hero reveal (§12) — build prošao, SSR-ispod verifikovan ✅
 - [x] 1.1 Landing sekcije iz Sanity — SVE sekcije rade (Hero, Galerija, Zašto baš mi, O nama, Postanite deo priče, Kontakt) ✅
 - [x] 1.2 Galerija-mozaik iz Sanity (CSS columns, placeholder dok prazno) ✅
-- [ ] 1.3 Smart Inquiry v1 (forma → Sanity + email) 🟡 — SLEDEĆE
-- [ ] 1.4 Security pass na formu (rate limit + validacija + sanitizacija + honeypot) 🟡
+- [x] 1.3 Smart Inquiry v1 — forma čuva u Sanity (token postavljen), email preko Resend (čeka RESEND_API_KEY) ✅
+- [x] 1.4 Security na formu: rate-limit 5/min/IP, validacija+sanitizacija, honeypot, token samo na serveru — verifikovano ✅ (kasnije: shared rate-limit store + verifikovan domen za mejl)
 - [ ] 1.2 Galerija iz Sanity
 - [ ] 1.3 Smart Inquiry v1 (Sanity + email) 🟡
 - [ ] 1.4 Security pass na formu (rate limit + validacija + sanitizacija + honeypot) 🟡
