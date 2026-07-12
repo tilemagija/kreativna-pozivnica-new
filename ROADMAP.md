@@ -9,7 +9,7 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
-**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro (video). ✅ 1.1 + 1.2 KOSTUR LANDINGA KOMPLETAN — sve sekcije rade iz Sanity (Hero/carousel, Galerija/mozaik, Zašto baš mi, O nama, Postanite deo priče/brojač+paketi-ilustracija, Kontakt) + nav (fiksni, Akcija festive). ✅ 1.3 Smart Inquiry (forma → Sanity, verifikovano; email preko Resend čeka RESEND_API_KEY) + 1.4 security guards. Sledeće: **1.5 „Kako se pravi" (YouTube)** i **1.6 SEO baseline**, pa **Faza 2 (Svet B)** i ostale nav strane (/akcija, /proces, /radionica, /umetnost, /napravite-svoju — još 404). Žena u međuvremenu puni sadržaj kroz Studio.
+**Gde smo:** ✅ FAZA 0. ✅ 1.0 intro (video). ✅ 1.1 + 1.2 KOSTUR LANDINGA KOMPLETAN — sve sekcije rade iz Sanity (Hero/carousel, Galerija/mozaik, Zašto baš mi, O nama, Postanite deo priče/brojač+paketi-ilustracija, Kontakt) + nav (fiksni, Akcija festive). ✅ 1.3 Smart Inquiry (forma → Sanity + email preko Resend — CEO ceo lanac verifikovan uživo). ✅ FAZA 2 (Svet B): /umetnost showcase + Smart Inquiry popup (InquiryDialog) + SEO metadata. Sledeće: preostale nav strane — **/proces (Kako se pravi, YouTube = 1.5)**, **/akcija**, **/radionica** (+ potvrditi da li Akcija/Radionica uopšte postoje), pa **1.6 SEO baseline** (sitemap/robots/OG), pa **Faza 3 (konfigurator /napravite-svoju)** — velika. Žena puni sadržaj kroz Studio (sad i „Уметност и поклони (радови)" + „Страница: Уметност и поклони").
 **Env/setup:** SANITY_API_WRITE_TOKEN postavljen (Vercel Production + .env.local) — ⚠️ rotirati (bio u chatu). RESEND: napraviti nalog + RESEND_API_KEY (Vercel + .env.local); primalac mejla = „Мејл за упите" u Sanity Podešavanjima. Email „from" u test modu (onboarding@resend.dev) šalje samo na tvoj Resend nalog dok ne verifikuješ domen.
 **Projekat na disku:** `C:\Users\Tile\kreativna-pozivnica` (pokreni Claude Code IZ ovog foldera → CLAUDE.md se učita sam).
 **GitHub:** https://github.com/tilemagija/kreativna-pozivnica-new · **Vercel:** kreativna-pozivnica-new.vercel.app
@@ -92,6 +92,8 @@ The organic-reach magnet. Showcase → Smart Inquiry. (Aligns with the January s
 
 **NE radimo:** online buying of World B items, prices on World B.
 **Gotovo kad:** World B is browsable and every item triggers a product-specific saved inquiry.
+
+**✅ FAZA 2 GOTOVA:** `/umetnost` (artwork lista + artPage singleton iz Sanity), `InquiryDialog` popup po stavci (reuse SmartInquiry), `generateMetadata` SEO. Preostaje: kad žena unese radove — proveriti izgled.
 
 ---
 
