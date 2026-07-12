@@ -150,3 +150,51 @@ const CONTACT_QUERY = `*[_type == "homePage"][0]{
 export async function getContact(): Promise<ContactData> {
   return client.fetch(CONTACT_QUERY, {}, { next: { revalidate: 60 } });
 }
+
+// --- World B: "Umetnost i pokloni" ---
+export type ArtPageData = {
+  kicker?: LocaleValue;
+  heading?: LocaleValue;
+  intro?: LocaleValue;
+  seoTitle?: LocaleValue;
+  seoDescription?: LocaleValue;
+} | null;
+
+const ART_PAGE_QUERY = `*[_type == "artPage"][0]{
+  kicker, heading, intro, seoTitle, seoDescription
+}`;
+
+export async function getArtPage(): Promise<ArtPageData> {
+  return client.fetch(ART_PAGE_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export type Artwork = {
+  name?: LocaleValue;
+  category?: string;
+  description?: LocaleValue;
+  url?: string;
+  dim?: { width: number; height: number };
+  alt?: LocaleValue;
+};
+
+const ARTWORKS_QUERY = `*[_type == "artwork"] | order(order asc){
+  name, category, description,
+  "url": image.asset->url,
+  "dim": image.asset->metadata.dimensions,
+  "alt": image.alt
+}`;
+
+export async function getArtworks(): Promise<Artwork[]> {
+  return client.fetch(ARTWORKS_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+// Instagram URL for inquiry fallbacks.
+export async function getInstagramUrl(): Promise<string> {
+  const handle = await client.fetch<string | null>(
+    `*[_type == "siteSettings"][0].instagramHandle`,
+    {},
+    { next: { revalidate: 60 } },
+  );
+  const clean = (handle || "kreativna_pozivnica").replace(/^@/, "");
+  return `https://instagram.com/${clean}`;
+}
