@@ -3,12 +3,13 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import PackageIllustration from "@/components/brand/PackageIllustration";
 
 type Pkg = { url: string; alt: string };
 
-// Loose overlapping pile of real package photos that "drop in" one by one as the
-// section scrolls into view (in sync with the counter). Reduced motion = static pile.
-// When no images are set yet, kraft-colored placeholders keep the layout intact.
+// Loose overlapping pile of packages that "drop in" one by one as the section scrolls
+// into view (in sync with the counter). Reduced motion = static pile. Default packages
+// are the kraft illustration; real photos from Sanity take over when present.
 const SLOTS = [
   { left: "6%", top: "4%", rot: -8 },
   { left: "50%", top: "0%", rot: 7 },
@@ -41,8 +42,8 @@ export default function PackagesDrop({ images }: { images: Pkg[] }) {
           }
           transition={{ duration: 0.6, delay: i * 0.25, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md shadow-lg shadow-black/30">
-            {img ? (
+          {img ? (
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md shadow-lg shadow-black/30">
               <Image
                 src={img.url}
                 alt={img.alt}
@@ -50,10 +51,10 @@ export default function PackagesDrop({ images }: { images: Pkg[] }) {
                 sizes="(max-width: 768px) 40vw, 180px"
                 className="object-cover"
               />
-            ) : (
-              <div className="h-full w-full bg-kraft" />
-            )}
-          </div>
+            </div>
+          ) : (
+            <PackageIllustration withTag={i % 2 === 0} className="w-full drop-shadow-lg" />
+          )}
         </motion.div>
       ))}
     </div>
