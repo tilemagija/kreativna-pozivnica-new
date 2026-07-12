@@ -9,11 +9,12 @@ import Lotus from "@/components/brand/Lotus";
 
 // Fixed header: transparent over the hero, gains a soft cream backdrop once scrolled.
 // Desktop: logo left, links right. Mobile/tablet: logo + hamburger → full-screen menu.
+// "Акција" (first) and "Дизајнирајте сами" (last) are the two accented, eye-catching items.
 const NAV_ITEMS = [
-  { href: "/galerija", key: "gallery" },
-  { href: "/umetnost", key: "art" },
-  { href: "/kako-se-pravi", key: "howItsMade" },
   { href: "/o-nama", key: "about" },
+  { href: "/galerija", key: "gallery" },
+  { href: "/proces", key: "process" },
+  { href: "/radionica", key: "workshop" },
   { href: "/kontakt", key: "contact" },
 ] as const;
 
@@ -42,18 +43,7 @@ export default function Header() {
     };
   }, [menuOpen]);
 
-  const Wordmark = (
-    <Link
-      href="/"
-      onClick={() => setMenuOpen(false)}
-      className="flex items-center gap-2 text-gold"
-    >
-      <Lotus className="h-6 w-9" />
-      <span className="font-serif text-lg font-medium uppercase tracking-[0.15em]">
-        Креативна позивница
-      </span>
-    </Link>
-  );
+  const close = () => setMenuOpen(false);
 
   return (
     <header
@@ -64,9 +54,22 @@ export default function Header() {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-        {Wordmark}
+        <Link href="/" onClick={close} className="flex items-center gap-2 text-gold">
+          <Lotus className="h-6 w-9" />
+          <span className="font-serif text-lg font-medium uppercase tracking-[0.15em]">
+            Креативна позивница
+          </span>
+        </Link>
 
         <div className="flex items-center gap-6">
+          {/* Акција — accented, festive on hover */}
+          <Link
+            href="/akcija"
+            className="akcija-link hidden font-serif text-[15px] italic tracking-wide lg:inline-block"
+          >
+            {t("akcija")}
+          </Link>
+
           <ul className="hidden items-center gap-6 text-sm text-ink-muted lg:flex">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
@@ -83,7 +86,7 @@ export default function Header() {
 
           <Link
             href="/napravite-svoju"
-            className="hidden rounded-sm bg-gold px-5 py-2 font-sans text-xs uppercase tracking-wider text-cream transition-colors hover:bg-gold-deep lg:inline-block"
+            className="hidden rounded-sm bg-gold px-5 py-2 font-serif text-sm italic text-cream transition-colors hover:bg-gold-deep lg:inline-block"
           >
             {t("configurator")}
           </Link>
@@ -105,18 +108,25 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="fixed inset-0 top-[65px] z-40 flex flex-col gap-6 bg-cream px-8 py-10 lg:hidden"
+            className="fixed inset-0 top-[65px] z-40 flex flex-col gap-5 bg-cream px-8 py-10 lg:hidden"
             initial={reduce ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
+            <Link
+              href="/akcija"
+              onClick={close}
+              className="akcija-link w-fit font-serif text-3xl italic"
+            >
+              {t("akcija")}
+            </Link>
             <ul className="flex flex-col gap-5">
               {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={close}
                     className="font-serif text-2xl text-ink transition-colors hover:text-gold"
                   >
                     {t(item.key)}
@@ -126,8 +136,8 @@ export default function Header() {
             </ul>
             <Link
               href="/napravite-svoju"
-              onClick={() => setMenuOpen(false)}
-              className="mt-2 inline-block w-fit rounded-sm bg-gold px-6 py-3 font-sans text-sm uppercase tracking-wider text-cream"
+              onClick={close}
+              className="mt-2 inline-block w-fit rounded-sm bg-gold px-6 py-3 font-serif text-lg italic text-cream"
             >
               {t("configurator")}
             </Link>

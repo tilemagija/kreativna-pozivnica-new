@@ -29,12 +29,13 @@
     ]
   },
   "Nav": {
-    "configurator": "Design your own",
-    "gallery": "Gallery",
-    "howItsMade": "How it's made",
-    "art": "Art & gifts",
+    "akcija": "Sale",
     "about": "About us",
+    "gallery": "Gallery",
+    "process": "Process",
+    "workshop": "Workshop",
     "contact": "Contact",
+    "configurator": "Design your own",
     "menu": "Menu",
     "close": "Close"
   },

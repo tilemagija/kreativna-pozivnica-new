@@ -42,3 +42,37 @@ body {
   color: var(--c-ink);
   font-family: var(--font-body);
 }
+
+/* Festive „Акција" nav accent — gold/terracotta gradient text that shimmers on hover. */
+.akcija-link {
+  background-image: linear-gradient(
+    90deg,
+    var(--c-gold-deep),
+    var(--c-terracotta),
+    var(--c-gold),
+    var(--c-gold-deep)
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.akcija-link:hover,
+.akcija-link:focus-visible {
+  animation: akcija-shimmer 1.2s linear infinite;
+}
+@keyframes akcija-shimmer {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .akcija-link:hover,
+  .akcija-link:focus-visible {
+    animation: none;
+  }
+}
