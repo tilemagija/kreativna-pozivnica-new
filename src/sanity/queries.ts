@@ -83,3 +83,70 @@ const SOCIAL_QUERY = `*[_type == "homePage"][0]{
 export async function getSocial(): Promise<SocialData> {
   return client.fetch(SOCIAL_QUERY, {}, { next: { revalidate: 60 } });
 }
+
+// --- Gallery ---
+export type GalleryEntry = {
+  title?: LocaleValue;
+  category?: string;
+  url?: string;
+  dim?: { width: number; height: number };
+  alt?: LocaleValue;
+};
+export type GalleryData = {
+  galleryKicker?: LocaleValue;
+  galleryHeading?: LocaleValue;
+  gallerySubheading?: LocaleValue;
+  items?: GalleryEntry[];
+} | null;
+
+const GALLERY_QUERY = `*[_type == "homePage"][0]{
+  galleryKicker, galleryHeading, gallerySubheading,
+  "items": *[_type == "galleryItem"] | order(order asc){
+    title, category,
+    "url": image.asset->url,
+    "dim": image.asset->metadata.dimensions,
+    "alt": image.alt
+  }
+}`;
+
+export async function getGallery(): Promise<GalleryData> {
+  return client.fetch(GALLERY_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+// --- About ("O nama") ---
+export type AboutData = {
+  aboutKicker?: LocaleValue;
+  aboutHeading?: LocaleValue;
+  aboutText?: LocaleValue;
+  aboutImage?: SanityImage;
+} | null;
+
+const ABOUT_QUERY = `*[_type == "homePage"][0]{
+  aboutKicker, aboutHeading, aboutText,
+  aboutImage{ asset, alt }
+}`;
+
+export async function getAbout(): Promise<AboutData> {
+  return client.fetch(ABOUT_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+// --- Contact ---
+export type ContactData = {
+  contactKicker?: LocaleValue;
+  contactHeading?: LocaleValue;
+  contactText?: LocaleValue;
+  email?: string;
+  instagramHandle?: string;
+  instagramUrl?: string;
+} | null;
+
+const CONTACT_QUERY = `*[_type == "homePage"][0]{
+  contactKicker, contactHeading, contactText,
+  "email": *[_type == "siteSettings"][0].contactEmail,
+  "instagramHandle": *[_type == "siteSettings"][0].instagramHandle,
+  "instagramUrl": *[_type == "siteSettings"][0].instagramUrl
+}`;
+
+export async function getContact(): Promise<ContactData> {
+  return client.fetch(CONTACT_QUERY, {}, { next: { revalidate: 60 } });
+}

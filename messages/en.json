@@ -28,6 +28,22 @@
       }
     ]
   },
+  "Gallery": {
+    "kicker": "Our work",
+    "heading": "Every story, illustrated",
+    "subheading": "A selection of hand-illustrated invitations and art pieces."
+  },
+  "About": {
+    "kicker": "About us",
+    "heading": "Behind every illustration",
+    "text": "We are a small team turning your most beautiful moments into hand-painted art. Every invitation begins with a blank page and your story — your church, the two of you — and becomes something no one else has.\n\nWhat began as invitations grew into art and gifts for life's dearest occasions."
+  },
+  "Contact": {
+    "kicker": "Contact",
+    "heading": "Let's create yours",
+    "text": "Have a question, or ready to begin? Write to us — we reply quickly and gladly.",
+    "instagramCta": "Message us on Instagram"
+  },
   "SocialProof": {
     "kicker": "Join us",
     "heading": "Become part of the story",

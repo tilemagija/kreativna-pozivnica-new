@@ -11,8 +11,9 @@ export const homePage = defineType({
     { name: "hero", title: "1 · Hero (врх стране)", options: { collapsible: true } },
     { name: "gallery", title: "2 · Галерија (наслов секције)", options: { collapsible: true, collapsed: true } },
     { name: "why", title: "3 · Зашто баш ми", options: { collapsible: true, collapsed: true } },
-    { name: "social", title: "4 · Постаните део приче (друштвени доказ)", options: { collapsible: true, collapsed: true } },
-    { name: "contact", title: "5 · Контакт (наслов секције)", options: { collapsible: true, collapsed: true } },
+    { name: "about", title: "4 · О нама", options: { collapsible: true, collapsed: true } },
+    { name: "social", title: "5 · Постаните део приче (друштвени доказ)", options: { collapsible: true, collapsed: true } },
+    { name: "contact", title: "6 · Контакт (наслов секције)", options: { collapsible: true, collapsed: true } },
   ],
   fields: [
     // 1 · HERO
@@ -70,7 +71,20 @@ export const homePage = defineType({
       ],
     }),
 
-    // 4 · SOCIAL PROOF ("Постаните део приче")
+    // 4 · ABOUT ("О нама")
+    defineField({ name: "aboutKicker", title: "Надтекст", type: "localeString", fieldset: "about" }),
+    defineField({ name: "aboutHeading", title: "Наслов", type: "localeString", fieldset: "about" }),
+    defineField({ name: "aboutText", title: "Текст (прича о вама)", type: "localeText", fieldset: "about" }),
+    defineField({
+      name: "aboutImage",
+      title: "Слика",
+      type: "image",
+      fieldset: "about",
+      options: { hotspot: true },
+      fields: [{ name: "alt", title: "Опис слике", type: "localeString" }],
+    }),
+
+    // 5 · SOCIAL PROOF ("Постаните део приче")
     defineField({ name: "socialKicker", title: "Надтекст", type: "localeString", fieldset: "social" }),
     defineField({ name: "socialHeading", title: "Наслов (нпр. Постаните део приче)", type: "localeString", fieldset: "social" }),
     defineField({
