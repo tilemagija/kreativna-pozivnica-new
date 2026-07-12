@@ -13,6 +13,7 @@
   --c-ink: #3d352a;
   --c-ink-muted: #6c6049;
   --c-line: #dcd1bb;
+  --c-forest: #22342a; /* deep green — dramatic band for the social-proof section */
 }
 
 @theme inline {
@@ -28,6 +29,7 @@
   --color-ink: var(--c-ink);
   --color-ink-muted: var(--c-ink-muted);
   --color-line: var(--c-line);
+  --color-forest: var(--c-forest);
 
   /* Fonts → utilities: font-serif (headings), font-body (text), font-script (accents).
      The --font-* vars are injected by next/font in the layout. */

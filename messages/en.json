@@ -28,6 +28,14 @@
       }
     ]
   },
+  "SocialProof": {
+    "kicker": "Join us",
+    "heading": "Become part of the story",
+    "counterLabel": "happy families",
+    "counterTagline": "Every one wrapped with care and heart",
+    "testimonialsKicker": "Your words",
+    "testimonialsHeading": "Testimonials"
+  },
   "Nav": {
     "akcija": "Sale",
     "process": "Process",

@@ -45,3 +45,41 @@ const WHY_QUERY = `*[_type == "homePage"][0]{
 export async function getWhy(): Promise<WhyData> {
   return client.fetch(WHY_QUERY, {}, { next: { revalidate: 60 } });
 }
+
+// --- Social proof ("Postanite deo priče") ---
+export type TestimonialItem = {
+  quote?: LocaleValue;
+  authorName?: string;
+  authorDetail?: LocaleValue;
+  photo?: SanityImage;
+};
+export type SocialData = {
+  socialKicker?: LocaleValue;
+  socialHeading?: LocaleValue;
+  counterTarget?: number;
+  counterSuffix?: string;
+  counterLabel?: LocaleValue;
+  counterTagline?: LocaleValue;
+  packageImages?: SanityImage[];
+  instagramImages?: SanityImage[];
+  instagramHandle?: string;
+  testimonialsKicker?: LocaleValue;
+  testimonialsHeading?: LocaleValue;
+  testimonials?: TestimonialItem[];
+} | null;
+
+const SOCIAL_QUERY = `*[_type == "homePage"][0]{
+  socialKicker, socialHeading,
+  counterTarget, counterSuffix, counterLabel, counterTagline,
+  packageImages[]{ asset, alt },
+  instagramImages[]{ asset },
+  testimonialsKicker, testimonialsHeading,
+  "instagramHandle": *[_type == "siteSettings"][0].instagramHandle,
+  "testimonials": *[_type == "testimonial"] | order(order asc){
+    quote, authorName, authorDetail, photo
+  }
+}`;
+
+export async function getSocial(): Promise<SocialData> {
+  return client.fetch(SOCIAL_QUERY, {}, { next: { revalidate: 60 } });
+}

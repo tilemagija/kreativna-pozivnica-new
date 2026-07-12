@@ -28,6 +28,14 @@
       }
     ]
   },
+  "SocialProof": {
+    "kicker": "Придружите нам се",
+    "heading": "Постаните део приче",
+    "counterLabel": "задовољних породица",
+    "counterTagline": "Свако упаковано са пажњом и срцем",
+    "testimonialsKicker": "Ваше речи",
+    "testimonialsHeading": "Утисци"
+  },
   "Nav": {
     "akcija": "Акција",
     "process": "Процес",

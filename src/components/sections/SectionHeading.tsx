@@ -6,21 +6,32 @@ import Lotus from "@/components/brand/Lotus";
 export default function SectionHeading({
   kicker,
   heading,
+  tone = "dark",
 }: {
   kicker?: string;
   heading: string;
+  tone?: "dark" | "light";
 }) {
+  const light = tone === "light";
   return (
     <div className="flex flex-col items-center gap-4 text-center">
       {kicker && (
         <Reveal>
-          <span className="font-sans text-xs uppercase tracking-[0.3em] text-sage-deep">
+          <span
+            className={`font-sans text-xs uppercase tracking-[0.3em] ${
+              light ? "text-sage" : "text-sage-deep"
+            }`}
+          >
             {kicker}
           </span>
         </Reveal>
       )}
       <Reveal delay={0.05}>
-        <h2 className="max-w-2xl font-serif text-3xl leading-tight text-ink sm:text-4xl md:text-5xl">
+        <h2
+          className={`max-w-2xl font-serif text-3xl leading-tight sm:text-4xl md:text-5xl ${
+            light ? "text-cream" : "text-ink"
+          }`}
+        >
           {heading}
         </h2>
       </Reveal>

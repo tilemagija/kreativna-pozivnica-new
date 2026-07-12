@@ -82,14 +82,25 @@ export const homePage = defineType({
       validation: (r) => r.min(0),
     }),
     defineField({ name: "counterSuffix", title: "Бројач — наставак (нпр. +)", type: "string", fieldset: "social", initialValue: "+" }),
-    defineField({ name: "counterLabel", title: "Бројач — текст испод (нпр. породица у нашој причи)", type: "localeString", fieldset: "social" }),
+    defineField({ name: "counterLabel", title: "Бројач — текст испод (нпр. задовољних породица)", type: "localeString", fieldset: "social" }),
+    defineField({ name: "counterTagline", title: "Бројач — слоган испод (нпр. Свако упаковано са пажњом и срцем)", type: "localeString", fieldset: "social" }),
+    defineField({
+      name: "packageImages",
+      title: "Слике пакета (падају док расте бројач)",
+      type: "array",
+      fieldset: "social",
+      description: "Праве фотографије упакованих поруџбина. Препоручено 5–8.",
+      of: [defineArrayMember({ type: "image", options: { hotspot: true } })],
+    }),
     defineField({
       name: "instagramImages",
       title: "Слике за Instagram мрежу (у телефону)",
       type: "array",
       fieldset: "social",
+      description: "6 слика за мрежу у телефону.",
       of: [defineArrayMember({ type: "image", options: { hotspot: true } })],
     }),
+    defineField({ name: "testimonialsKicker", title: "Надтекст за утиске (нпр. ВАШЕ РЕЧИ)", type: "localeString", fieldset: "social" }),
     defineField({ name: "testimonialsHeading", title: "Наслов за утиске (нпр. Утисци)", type: "localeString", fieldset: "social" }),
 
     // 5 · CONTACT heading
