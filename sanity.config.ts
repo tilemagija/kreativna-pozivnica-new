@@ -8,7 +8,14 @@ import { schemaTypes } from "./src/sanity/schemaTypes";
 import { structure } from "./src/sanity/structure";
 
 // Single documents that must never be duplicated from the global "create" menu.
-const singletons = ["siteSettings", "homePage", "artPage", "nastanakPage", "salePage"];
+const singletons = [
+  "siteSettings",
+  "homePage",
+  "artPage",
+  "nastanakPage",
+  "salePage",
+  "pricing",
+];
 
 export default defineConfig({
   name: "default",

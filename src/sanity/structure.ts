@@ -32,5 +32,12 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("sale").title("Акције (ставке)"),
       S.documentTypeListItem("testimonial").title("Утисци"),
       S.divider(),
+      S.listItem()
+        .title("Ценовник — правила и додаци")
+        .id("pricing")
+        .child(S.document().schemaType("pricing").documentId("pricing")),
+      S.documentTypeListItem("paperOption").title("Ценовник — папири"),
+      S.documentTypeListItem("envelopeOption").title("Ценовник — коверте"),
+      S.divider(),
       S.documentTypeListItem("inquiry").title("Упити"),
     ]);

@@ -7,11 +7,25 @@ import { cormorant, lora, marck } from "../fonts";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 export const metadata: Metadata = {
-  title: "Kreativna pozivnica",
-  description: "Ručno rađene pozivnice i umetnost — za najlepše uspomene.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Креативна позивница — ручно рађене позивнице и уметност",
+    template: "%s · Креативна позивница",
+  },
+  description:
+    "Ручно илустроване позивнице по вашој причи, уметност и славски поклони. За најлепше успомене — ручно и са љубављу.",
+  alternates: { languages: { "sr-Cyrl": "/", en: "/en" } },
+  openGraph: {
+    type: "website",
+    siteName: "Креативна позивница",
+    locale: "sr_RS",
+    alternateLocale: "en_US",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export function generateStaticParams() {
