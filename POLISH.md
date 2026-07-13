@@ -16,6 +16,10 @@
 - [ ] Desktop: eventualno landscape verzija videa umesto zamućene popune (opciono)
 - [ ] Sitni twikovi po vlasnikovoj želji (napomenuo da ih ima)
 
+## SEO
+- [ ] OG share slika (og.png/dinamička) — sad nema slike pri deljenju na FB/IG/Viber
+- [ ] Puni per-page hreflang (sad baseline na layout nivou + sitemap)
+
 ## Hero
 - [ ] (dodati kad se primeti)
 
