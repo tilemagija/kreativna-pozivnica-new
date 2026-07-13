@@ -13,8 +13,7 @@ import Lotus from "@/components/brand/Lotus";
 // Nav links lead ONLY to separate pages. Landing scroll-sections (about/gallery/contact)
 // are NOT in the nav by design.
 const NAV_ITEMS = [
-  { href: "/proces", key: "process" },
-  { href: "/radionica", key: "workshop" },
+  { href: "/nastanak", key: "nastanak" },
   { href: "/umetnost", key: "art" },
 ] as const;
 

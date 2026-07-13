@@ -64,6 +64,12 @@
     "intro": "Hand-illustrated pieces, slava gifts and framed keepsakes. Each is made to order — write to us for details and ordering.",
     "empty": "Pieces coming soon. For inquiries, message us on Instagram."
   },
+  "Nastanak": {
+    "kicker": "Behind every piece",
+    "heading": "The making",
+    "intro": "See how each invitation and art piece comes to life — from the first sketch to the finished, hand-painted work.",
+    "empty": "Videos coming soon."
+  },
   "SocialProof": {
     "kicker": "Join us",
     "heading": "Become part of the story",
@@ -74,8 +80,7 @@
   },
   "Nav": {
     "akcija": "Sale",
-    "process": "Process",
-    "workshop": "Workshop",
+    "nastanak": "The making",
     "art": "Art & gifts",
     "configurator": "Design your own",
     "menu": "Menu",

@@ -188,6 +188,31 @@ export async function getArtworks(): Promise<Artwork[]> {
   return client.fetch(ARTWORKS_QUERY, {}, { next: { revalidate: 60 } });
 }
 
+// --- "Nastanak" (how it's made) ---
+export type NastanakVideo = {
+  title?: LocaleValue;
+  youtube?: string;
+  description?: LocaleValue;
+};
+export type NastanakData = {
+  kicker?: LocaleValue;
+  heading?: LocaleValue;
+  intro?: LocaleValue;
+  videos?: NastanakVideo[];
+  seoTitle?: LocaleValue;
+  seoDescription?: LocaleValue;
+} | null;
+
+const NASTANAK_QUERY = `*[_type == "nastanakPage"][0]{
+  kicker, heading, intro,
+  videos[]{ title, youtube, description },
+  seoTitle, seoDescription
+}`;
+
+export async function getNastanak(): Promise<NastanakData> {
+  return client.fetch(NASTANAK_QUERY, {}, { next: { revalidate: 60 } });
+}
+
 // Instagram URL for inquiry fallbacks.
 export async function getInstagramUrl(): Promise<string> {
   const handle = await client.fetch<string | null>(
