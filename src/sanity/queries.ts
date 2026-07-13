@@ -188,6 +188,43 @@ export async function getArtworks(): Promise<Artwork[]> {
   return client.fetch(ARTWORKS_QUERY, {}, { next: { revalidate: 60 } });
 }
 
+// --- "Akcija" (sale) ---
+export type SalePageData = {
+  kicker?: LocaleValue;
+  heading?: LocaleValue;
+  intro?: LocaleValue;
+  seoTitle?: LocaleValue;
+  seoDescription?: LocaleValue;
+} | null;
+
+const SALE_PAGE_QUERY = `*[_type == "salePage"][0]{
+  kicker, heading, intro, seoTitle, seoDescription
+}`;
+
+export async function getSalePage(): Promise<SalePageData> {
+  return client.fetch(SALE_PAGE_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export type SaleItem = {
+  title?: LocaleValue;
+  description?: LocaleValue;
+  discountPercent?: number;
+  validUntil?: string;
+  url?: string;
+  alt?: LocaleValue;
+};
+
+// Only active items; expiry (validUntil) is filtered in the page (date compare).
+const SALES_QUERY = `*[_type == "sale" && active == true] | order(order asc){
+  title, description, discountPercent, validUntil,
+  "url": image.asset->url,
+  "alt": image.alt
+}`;
+
+export async function getSales(): Promise<SaleItem[]> {
+  return client.fetch(SALES_QUERY, {}, { next: { revalidate: 60 } });
+}
+
 // --- "Nastanak" (how it's made) ---
 export type NastanakVideo = {
   title?: LocaleValue;

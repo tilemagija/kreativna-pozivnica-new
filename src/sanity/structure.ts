@@ -22,9 +22,14 @@ export const structure: StructureResolver = (S) =>
         .title("Страница: Настанак")
         .id("nastanakPage")
         .child(S.document().schemaType("nastanakPage").documentId("nastanakPage")),
+      S.listItem()
+        .title("Страница: Акција")
+        .id("salePage")
+        .child(S.document().schemaType("salePage").documentId("salePage")),
       S.divider(),
       S.documentTypeListItem("galleryItem").title("Галерија"),
       S.documentTypeListItem("artwork").title("Уметност и поклони (радови)"),
+      S.documentTypeListItem("sale").title("Акције (ставке)"),
       S.documentTypeListItem("testimonial").title("Утисци"),
       S.divider(),
       S.documentTypeListItem("inquiry").title("Упити"),

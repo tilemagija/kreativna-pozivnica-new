@@ -70,6 +70,13 @@
     "intro": "See how each invitation and art piece comes to life — from the first sketch to the finished, hand-painted work.",
     "empty": "Videos coming soon."
   },
+  "SalePage": {
+    "kicker": "Currently on sale",
+    "heading": "Sale",
+    "intro": "Current discounts — grab them while they last.",
+    "until": "Until",
+    "empty": "No active sales right now."
+  },
   "SocialProof": {
     "kicker": "Join us",
     "heading": "Become part of the story",

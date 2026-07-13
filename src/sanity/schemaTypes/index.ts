@@ -9,6 +9,8 @@ import { inquiry } from "./documents/inquiry";
 import { artwork } from "./documents/artwork";
 import { artPage } from "./documents/artPage";
 import { nastanakPage } from "./documents/nastanakPage";
+import { sale } from "./documents/sale";
+import { salePage } from "./documents/salePage";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
   // reusable objects
@@ -23,4 +25,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   artwork,
   artPage,
   nastanakPage,
+  sale,
+  salePage,
 ];
