@@ -19,6 +19,10 @@ export const structure: StructureResolver = (S) =>
         .id("artPage")
         .child(S.document().schemaType("artPage").documentId("artPage")),
       S.listItem()
+        .title("Страница: Додаци")
+        .id("dodaciPage")
+        .child(S.document().schemaType("dodaciPage").documentId("dodaciPage")),
+      S.listItem()
         .title("Страница: Настанак")
         .id("nastanakPage")
         .child(S.document().schemaType("nastanakPage").documentId("nastanakPage")),
@@ -29,6 +33,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
       S.documentTypeListItem("galleryItem").title("Галерија"),
       S.documentTypeListItem("artwork").title("Уметност и поклони (радови)"),
+      S.documentTypeListItem("dodaciItem").title("Додаци (ставке)"),
       S.documentTypeListItem("sale").title("Акције (ставке)"),
       S.documentTypeListItem("testimonial").title("Утисци"),
       S.divider(),
@@ -39,5 +44,11 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("paperOption").title("Ценовник — папири"),
       S.documentTypeListItem("envelopeOption").title("Ценовник — коверте"),
       S.divider(),
+      S.documentTypeListItem("invitationTemplate").title("Позивнице — шаблони"),
+      S.documentTypeListItem("category").title("Позивнице — категорије"),
+      S.documentTypeListItem("sealMotif").title("Печат — мотиви"),
+      S.documentTypeListItem("sealColor").title("Печат — боје воска"),
+      S.divider(),
+      S.documentTypeListItem("order").title("Наруџбине"),
       S.documentTypeListItem("inquiry").title("Упити"),
     ]);

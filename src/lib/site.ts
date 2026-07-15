@@ -5,4 +5,4 @@ export const SITE_URL = (
 ).replace(/\/$/, "");
 
 // Public routes that exist today (Latin slugs, §13). "" = landing.
-export const ROUTES = ["", "/umetnost", "/nastanak", "/akcija"];
+export const ROUTES = ["", "/umetnost", "/dodaci", "/nastanak", "/akcija"];

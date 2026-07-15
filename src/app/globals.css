@@ -45,6 +45,31 @@ body {
   font-family: var(--font-body);
 }
 
+/* --- Configurator preview (§5): template image + editable text overlay. Positions and
+   font sizes are all in % of the preview width (cqw), so it stays 1:1 on any screen. --- */
+.tp-canvas {
+  container-type: inline-size;
+}
+.tp-field {
+  outline: none;
+  word-break: break-word;
+}
+.tp-field--clickable {
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tp-field--clickable:hover,
+.tp-field--clickable:focus-visible {
+  background-color: color-mix(in srgb, var(--c-gold) 14%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-gold) 40%, transparent);
+}
+/* Faint hint shown where an editable field is currently empty. */
+.tp-field__placeholder {
+  opacity: 0.4;
+  font-style: italic;
+}
+
 /* Festive „Акција" nav accent — gold/terracotta gradient text that shimmers on hover. */
 .akcija-link {
   background-image: linear-gradient(

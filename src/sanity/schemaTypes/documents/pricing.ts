@@ -8,6 +8,7 @@ export const pricing = defineType({
   type: "document",
   fieldsets: [
     { name: "rules", title: "Правила количине", options: { collapsible: true } },
+    { name: "wrapper", title: "Омот", options: { collapsible: true } },
     { name: "addons", title: "Додаци на позивницу (по комаду)", options: { collapsible: true } },
     { name: "seal", title: "Печат, тракице, нитне (по комаду)", options: { collapsible: true } },
   ],
@@ -29,9 +30,26 @@ export const pricing = defineType({
       fieldset: "rules",
     }),
 
+    defineField({
+      name: "pausOmotPrice",
+      title: "Паус омот (по комаду)",
+      type: "number",
+      initialValue: 40,
+      description: "Цена ако купац изабере паус омот (уместо коверте).",
+      fieldset: "wrapper",
+    }),
+
     defineField({ name: "addonDoubleSided", title: "Двострана штампа", type: "number", initialValue: 20, fieldset: "addons" }),
     defineField({ name: "addonTornEdges", title: "Ручно цепкане ивице", type: "number", initialValue: 20, fieldset: "addons" }),
     defineField({ name: "addonRoundedEdges", title: "Заобљене ивице", type: "number", initialValue: 10, fieldset: "addons" }),
+    defineField({
+      name: "addonGoldEdges",
+      title: "Златне ивице (златни листићи на ивицама)",
+      type: "number",
+      initialValue: 30,
+      description: "Цена по комаду. Промени на тачну вредност.",
+      fieldset: "addons",
+    }),
 
     defineField({ name: "sealBase", title: "Печат", type: "number", initialValue: 40, fieldset: "seal" }),
     defineField({ name: "sealGoldLeaf", title: "Печат + златни листићи", type: "number", initialValue: 50, fieldset: "seal" }),

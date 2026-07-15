@@ -82,6 +82,7 @@ Never spend time on visual polish before the underlying functionality is complet
 
 - **Never trust a price sent from the browser.** Always recalculate the final amount on the server before charging — a user can edit what the browser sends.
 - **Don't promise platform behavior we can't verify.** (E.g. Instagram cannot pre-fill a DM with text+image via a link — Meta blocks it. Check the platform limit before designing around it.)
+- **Live text-over-image editor: keep the text CONTROLLED from one React state (single source of truth).** Do NOT mix `contentEditable` + writing state back into it — the text resets/fights the caret (this fragility sank the first configurator attempt). Edit via real input fields (mobile-reliable); clicking the text on the image just focuses its field. Verify live in a browser, not only via SSR/build.
 
 ---
 

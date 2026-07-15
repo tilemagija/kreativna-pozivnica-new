@@ -15,6 +15,7 @@ import Lotus from "@/components/brand/Lotus";
 const NAV_ITEMS = [
   { href: "/nastanak", key: "nastanak" },
   { href: "/umetnost", key: "art" },
+  { href: "/dodaci", key: "dodaci" },
 ] as const;
 
 export default function Header() {

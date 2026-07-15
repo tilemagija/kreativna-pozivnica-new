@@ -1,5 +1,6 @@
 import { client } from "./lib/client";
 import type { LocaleValue } from "./locale";
+import type { PricingConfig } from "@/lib/configuratorPricing";
 
 // --- Types (only the fields we read on the landing) ---
 export type SanityImage = {
@@ -188,6 +189,42 @@ export async function getArtworks(): Promise<Artwork[]> {
   return client.fetch(ARTWORKS_QUERY, {}, { next: { revalidate: 60 } });
 }
 
+// --- "Dodaci" (World A supporting stationery — showcase → Instagram) ---
+export type DodaciPageData = {
+  kicker?: LocaleValue;
+  heading?: LocaleValue;
+  intro?: LocaleValue;
+  ctaLabel?: LocaleValue;
+  seoTitle?: LocaleValue;
+  seoDescription?: LocaleValue;
+} | null;
+
+const DODACI_PAGE_QUERY = `*[_type == "dodaciPage"][0]{
+  kicker, heading, intro, ctaLabel, seoTitle, seoDescription
+}`;
+
+export async function getDodaciPage(): Promise<DodaciPageData> {
+  return client.fetch(DODACI_PAGE_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export type DodaciItem = {
+  caption?: LocaleValue;
+  url?: string;
+  dim?: { width: number; height: number };
+  alt?: LocaleValue;
+};
+
+const DODACI_ITEMS_QUERY = `*[_type == "dodaciItem"] | order(order asc){
+  caption,
+  "url": image.asset->url,
+  "dim": image.asset->metadata.dimensions,
+  "alt": image.alt
+}`;
+
+export async function getDodaciItems(): Promise<DodaciItem[]> {
+  return client.fetch(DODACI_ITEMS_QUERY, {}, { next: { revalidate: 60 } });
+}
+
 // --- "Akcija" (sale) ---
 export type SalePageData = {
   kicker?: LocaleValue;
@@ -249,6 +286,133 @@ const NASTANAK_QUERY = `*[_type == "nastanakPage"][0]{
 export async function getNastanak(): Promise<NastanakData> {
   return client.fetch(NASTANAK_QUERY, {}, { next: { revalidate: 60 } });
 }
+
+// --- Configurator: invitation templates (Faza 3) ---
+export type TemplateTextField = {
+  key: string;
+  label?: LocaleValue;
+  defaultText?: string;
+  fontKey?: string;
+  fontSizePct?: number;
+  color?: string;
+  align?: "left" | "center" | "right";
+  xPct?: number;
+  yPct?: number;
+  widthPct?: number;
+  lineHeight?: number;
+  multiline?: boolean;
+  maxLength?: number;
+};
+
+export type InvitationTemplate = {
+  _id: string;
+  name?: LocaleValue;
+  slug?: string;
+  category?: string;
+  active?: boolean;
+  doubleSided?: boolean;
+  imageUrl?: string;
+  /** width / height, from image metadata; may be undefined for some assets. */
+  aspect?: number;
+  textFields?: TemplateTextField[];
+  /** Back side (only for double-sided designs). */
+  backImageUrl?: string;
+  backAspect?: number;
+  backTextFields?: TemplateTextField[];
+};
+
+// --- Gallery (catalog) ---
+export type GalleryTemplate = {
+  _id: string;
+  name?: LocaleValue;
+  slug?: string;
+  doubleSided?: boolean;
+  imageUrl?: string;
+  categorySlugs?: string[];
+};
+export type GalleryCategory = { name?: LocaleValue; slug?: string };
+export type CatalogData = { templates: GalleryTemplate[]; categories: GalleryCategory[] };
+
+export const CATALOG_QUERY = `{
+  "templates": *[_type == "invitationTemplate" && active == true] | order(order asc){
+    _id, name, "slug": slug.current, doubleSided,
+    "imageUrl": image.asset->url,
+    "categorySlugs": categories[]->slug.current
+  },
+  "categories": *[_type == "category"] | order(order asc){ name, "slug": slug.current }
+}`;
+
+const TEXTFIELDS_PROJECTION = `{
+  key, label, defaultText, fontKey, fontSizePct, color, align,
+  xPct, yPct, widthPct, lineHeight, multiline, maxLength
+}`;
+
+export const TEMPLATE_BY_SLUG_QUERY = `*[_type == "invitationTemplate" && slug.current == $slug][0]{
+  _id, name, "slug": slug.current, doubleSided,
+  "imageUrl": image.asset->url,
+  "aspect": image.asset->metadata.dimensions.aspectRatio,
+  textFields[]${TEXTFIELDS_PROJECTION},
+  "backImageUrl": backImage.asset->url,
+  "backAspect": backImage.asset->metadata.dimensions.aspectRatio,
+  backTextFields[]${TEXTFIELDS_PROJECTION}
+}`;
+
+const TEMPLATES_QUERY = `*[_type == "invitationTemplate" && active == true] | order(order asc){
+  _id, name, category,
+  "imageUrl": image.asset->url,
+  "aspect": image.asset->metadata.dimensions.aspectRatio,
+  textFields[]{
+    key, label, defaultText, fontKey, fontSizePct, color, align,
+    xPct, yPct, widthPct, lineHeight, multiline, maxLength
+  }
+}`;
+
+export async function getInvitationTemplates(): Promise<InvitationTemplate[]> {
+  return client.fetch(TEMPLATES_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+// --- Configurator: options + pricing (paper / envelope / seal + rules) ---
+export type PricedOption = {
+  _id: string;
+  name?: LocaleValue;
+  pricePerPiece?: number;
+  description?: LocaleValue;
+  swatchUrl?: string;
+};
+export type SealMotifOption = { _id: string; name?: LocaleValue; imageUrl?: string };
+export type SealColorOption = { _id: string; name?: LocaleValue; swatchUrl?: string };
+
+export type ConfiguratorOptions = {
+  pricing: PricingConfig | null;
+  papers: PricedOption[];
+  envelopes: PricedOption[];
+  sealMotifs: SealMotifOption[];
+  sealColors: SealColorOption[];
+};
+
+export const OPTIONS_QUERY = `{
+  "pricing": *[_type == "pricing"][0]{
+    minQuantity, setupFee, pausOmotPrice, addonDoubleSided,
+    addonTornEdges, addonGoldEdges, addonRoundedEdges,
+    sealBase, sealGoldLeaf, sealTatarika
+  },
+  "papers": *[_type == "paperOption"] | order(order asc){
+    _id, name, pricePerPiece, description, "swatchUrl": swatch.asset->url
+  },
+  "envelopes": *[_type == "envelopeOption"] | order(order asc){
+    _id, name, pricePerPiece, description, "swatchUrl": swatch.asset->url
+  },
+  "sealMotifs": *[_type == "sealMotif"] | order(order asc){
+    _id, name, "imageUrl": image.asset->url
+  },
+  "sealColors": *[_type == "sealColor"] | order(order asc){
+    _id, name, "swatchUrl": swatch.asset->url
+  }
+}`;
+
+// NOTE: paperOption/envelopeOption/sealMotif/sealColor are NOT in this dataset's public
+// read grant (only pricing/invitationTemplate/etc. are). Read them server-side instead —
+// see getConfiguratorOptionsServer() in serverQueries.ts. (OPTIONS_QUERY is shared.)
 
 // Instagram URL for inquiry fallbacks.
 export async function getInstagramUrl(): Promise<string> {

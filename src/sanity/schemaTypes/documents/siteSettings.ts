@@ -29,6 +29,41 @@ export const siteSettings = defineType({
       title: "Текст у футеру",
       type: "localeText",
     }),
+
+    // Bank transfer (Faza 5) — shown to the customer at checkout + used for the IPS QR.
+    defineField({ name: "bankRecipient", title: "Прималац (назив)", type: "string", fieldset: "bank" }),
+    defineField({
+      name: "bankAccount",
+      title: "Број рачуна",
+      type: "string",
+      description: "Нпр. 160-0000000000000-00 (18 цифара; цртице су ок).",
+      fieldset: "bank",
+    }),
+    defineField({ name: "bankName", title: "Банка", type: "string", fieldset: "bank" }),
+    defineField({
+      name: "bankModel",
+      title: "Модел позива на број",
+      type: "string",
+      initialValue: "00",
+      description: "Обично 00 (без контролне цифре).",
+      fieldset: "bank",
+    }),
+    defineField({
+      name: "bankPaymentCode",
+      title: "Шифра плаћања",
+      type: "string",
+      initialValue: "289",
+      description: "3 цифре. 289 = уплата по фактури/услуга.",
+      fieldset: "bank",
+    }),
+    defineField({
+      name: "bankPurpose",
+      title: "Сврха уплате",
+      type: "string",
+      initialValue: "Депозит за позивнице",
+      fieldset: "bank",
+    }),
   ],
+  fieldsets: [{ name: "bank", title: "Уплата на рачун (депозит)", options: { collapsible: true } }],
   preview: { prepare: () => ({ title: "Подешавања сајта" }) },
 });
