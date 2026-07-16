@@ -9,6 +9,22 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
+### ▶ NASTAVAK SUTRA (kraj sesije 15.07) — čitaj OVO prvo
+**Gde smo stali:** upravo završen **mejl potvrde kupcu** (commit `1d0b2dc`, push-ovan). Sesija je bila: Google Sheet evidencija → „Додаци" strana → World B nadogradnja → funkcionalni review → AI FAQ chatbot (odobren za kasnije) → mejl kupcu.
+**⏳ OTVORENO (pitati vlasnika na početku):**
+- (1) Odobrenje **teksta mejla kupcu** (vlasnik gледао, da potvrdi/tweak-uje reč-dve).
+- (2) Odluka: **mejl obavezan u checkoutu?** (sad telefon ILI mejl; preporuka = ostaviti opciono).
+**★ SLEDEĆE (vlasnik bira) — sve spремно, ništa ne blokira osim gde piše „čeka":**
+- **World B estetika** (redizajn izgleda, po mogućstvu sa ženom; `data-world="b"` hook postavljen)
+- **(B) „Прилагодите баш вама" + posebne vitrine → upit** (može ODMAH, ne zavisi od vlasnika)
+- **Analitika** (Vercel Analytics/Plausible — biznis vrti IG reklame, ne vidi šta konvertuje) ⭐ nova rupa iz review-a
+- **Kontakt kanali** (Viber/WhatsApp dugme; sad samo Instagram) — nova rupa iz review-a
+- **Custom 404** — sitno
+- **(A) Faza 4 digitalna+PDF** — čeka vlasnikove hi-res dizajne + fontove
+- **AI FAQ chatbot** — čeka FAQ sadržaj + Anthropic API nalog (spec u parkiranom bloku)
+- nastavak bulletproof-a · font-library
+**Vlasnik TODO pre launcha:** `docs/vlasnik-todo.md` (banka, Resend [pokreće OBA mejla], brisanje test podataka test-*, rotacija tokena).
+
 ### ★★ NAJSVEŽIJE (15.07) — čitaj prvo, detalji u blokovima ispod
 **+ MEJL POTVRDE KUPCU GOTOV (15.07):** posle narudžbe kupac dobija automatski mejl (broj narudžbe + iznos/depozit + PUNI podaci za uplatu na račun/poziv na broj) da ima pisani trag i posle zatvaranja ekrana. `lib/email.ts::sendCustomerOrderEmail` (šalje na `customer.email`, reply-to = vlasnikov contactEmail; skip ako nema Resend ključa ILI kupac nije ostavio mejl — checkout dozvoljava samo-telefon). `/api/order` hoistovao `payment` blok (jedan izvor za ekran + mejl), poziva non-blocking posle mejla vlasniku. Verifikovano: typecheck + build; **živi test mejla čeka Resend nalog.** ⚠️ Opciono: ako želiš da SVAKI kupac dobije mejl → mejl u checkoutu učiniti obaveznim (sad je telefon ILI mejl).
 
