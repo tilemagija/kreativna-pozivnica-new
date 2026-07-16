@@ -169,24 +169,62 @@ export async function getArtPage(): Promise<ArtPageData> {
   return client.fetch(ART_PAGE_QUERY, {}, { next: { revalidate: 60 } });
 }
 
+export type ArtworkFrame = { name?: LocaleValue; swatchUrl?: string };
 export type Artwork = {
   name?: LocaleValue;
+  slug?: string;
   category?: string;
   description?: LocaleValue;
+  priceFrom?: number;
   url?: string;
   dim?: { width: number; height: number };
   alt?: LocaleValue;
+  dimensions?: string[];
+  frames?: ArtworkFrame[];
 };
 
+// Fuller shape for the per-item page (adds extra photos).
+export type ArtworkDetail = Artwork & {
+  gallery?: { url?: string; dim?: { width: number; height: number } }[];
+};
+
+// The gallery list includes dimensions + frames so the lightbox can show them
+// without a second fetch (one showcase page, cheap).
 const ARTWORKS_QUERY = `*[_type == "artwork"] | order(order asc){
-  name, category, description,
+  name, "slug": slug.current, category, description, priceFrom,
   "url": image.asset->url,
   "dim": image.asset->metadata.dimensions,
-  "alt": image.alt
+  "alt": image.alt,
+  dimensions,
+  frames[]{ name, "swatchUrl": swatch.asset->url }
 }`;
 
 export async function getArtworks(): Promise<Artwork[]> {
   return client.fetch(ARTWORKS_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+const ARTWORK_BY_SLUG_QUERY = `*[_type == "artwork" && slug.current == $slug][0]{
+  name, "slug": slug.current, category, description, priceFrom,
+  "url": image.asset->url,
+  "dim": image.asset->metadata.dimensions,
+  "alt": image.alt,
+  dimensions,
+  frames[]{ name, "swatchUrl": swatch.asset->url },
+  "gallery": gallery[]{ "url": asset->url, "dim": asset->metadata.dimensions }
+}`;
+
+export async function getArtworkBySlug(slug: string): Promise<ArtworkDetail | null> {
+  return client.fetch(ARTWORK_BY_SLUG_QUERY, { slug }, { next: { revalidate: 60 } });
+}
+
+// Slugs for generateStaticParams + sitemap (World B is the SEO magnet, §13).
+export async function getArtworkSlugs(): Promise<string[]> {
+  const slugs = await client.fetch<(string | null)[]>(
+    `*[_type == "artwork" && defined(slug.current)].slug.current`,
+    {},
+    { next: { revalidate: 60 } },
+  );
+  return slugs.filter((s): s is string => !!s);
 }
 
 // --- "Dodaci" (World A supporting stationery — showcase → Instagram) ---

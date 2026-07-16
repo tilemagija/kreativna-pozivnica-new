@@ -19,7 +19,7 @@
       Resend test adrese koja šalje samo na tvoj Resend nalog.)
 - [ ] **Obriši TEST podatke.** Pre launcha ukloni test šablone (`test-template`,
       `test-double`, `test-digital`), test kategorije, test „Додаци" stavke
-      (`test-dodaci-1..4`) iz Studija, i placeholder banku.
+      (`test-dodaci-1..4`), test radove World B (`test-art-1..3`) iz Studija, i placeholder banku.
 - [ ] **Rotiraj Sanity write token.** `SANITY_API_WRITE_TOKEN` je bio u chatu → napravi
       NOV u sanity.io/manage (API → Tokens), zameni ga u Vercel + `.env.local`, stari obriši.
 

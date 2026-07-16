@@ -62,7 +62,14 @@
     "kicker": "The world of art",
     "heading": "Art & gifts",
     "intro": "Hand-illustrated pieces, slava gifts and framed keepsakes. Each is made to order — write to us for details and ordering.",
-    "empty": "Pieces coming soon. For inquiries, message us on Instagram."
+    "empty": "Pieces coming soon. For inquiries, message us on Instagram.",
+    "priceFrom": "from",
+    "currency": "RSD",
+    "dimensions": "Available sizes",
+    "frames": "Available frames",
+    "availability": "Check availability",
+    "fullPage": "Full page",
+    "close": "Close"
   },
   "DodaciPage": {
     "kicker": "Alongside the invitation",
