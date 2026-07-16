@@ -105,3 +105,71 @@ export async function sendOrderEmail(data: OrderEmail, to: string): Promise<void
     throw new Error(`Resend ${res.status}: ${await res.text()}`);
   }
 }
+
+// Confirmation email to the CUSTOMER after they place an order (konfigurator §5.5).
+// Sends the order number + the bank details they need to pay the 50% deposit — so they
+// keep a written record even after closing the success screen. Skips silently when
+// unconfigured OR when the customer left no email (checkout allows phone-only). All
+// values are already server-computed/sanitized by /api/order; user text is HTML-escaped.
+export type CustomerOrderEmail = {
+  orderNumber: string;
+  templateName: string;
+  total: number;
+  deposit: number;
+  customer: { name: string; email: string };
+  ownerEmail: string; // reply-to, so a customer reply reaches the owner
+  payment: {
+    recipient: string;
+    account: string;
+    bankName: string;
+    model: string;
+    paymentCode: string;
+    purpose: string;
+  };
+};
+
+export async function sendCustomerOrderEmail(data: CustomerOrderEmail): Promise<void> {
+  const key = process.env.RESEND_API_KEY;
+  if (!key || !data.customer.email.includes("@")) return; // not configured / no email
+
+  const p = data.payment;
+  const purpose = p.purpose || "Депозит за позивнице";
+  const row = (label: string, value: string) =>
+    value ? `<tr><td style="padding:2px 10px 2px 0"><b>${label}</b></td><td>${esc(value)}</td></tr>` : "";
+
+  const html = `
+    <h2>Хвала на наруџбини!</h2>
+    <p>Поштовани/а ${esc(data.customer.name)}, примили смо вашу наруџбину.</p>
+    <p><b>Број наруџбине:</b> ${esc(data.orderNumber)}<br>
+       <b>Шаблон:</b> ${esc(data.templateName)}</p>
+    <p><b>Укупно:</b> ${data.total} дин · <b>Депозит (50%):</b> ${data.deposit} дин · остатак поузећем</p>
+    <hr>
+    <p>Да бисте потврдили наруџбину, уплатите <b>депозит од ${data.deposit} дин</b> на рачун:</p>
+    <table cellpadding="0" cellspacing="0" style="font-size:14px">
+      ${row("Прималац", p.recipient)}
+      ${row("Рачун", p.account)}
+      ${row("Банка", p.bankName)}
+      ${row("Модел", p.model)}
+      <tr><td style="padding:2px 10px 2px 0"><b>Позив на број</b></td><td>${esc(data.orderNumber)}</td></tr>
+      ${row("Шифра плаћања", p.paymentCode)}
+      <tr><td style="padding:2px 10px 2px 0"><b>Сврха</b></td><td>${esc(purpose)}</td></tr>
+    </table>
+    <p style="color:#6C6049">Јавићемо вам се ускоро. За питања одговорите на овај мејл.</p>
+  `;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      from: FROM,
+      to: [data.customer.email],
+      reply_to: data.ownerEmail.includes("@") ? data.ownerEmail : undefined,
+      subject: `Потврда наруџбине бр. ${data.orderNumber}`,
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Resend ${res.status}: ${await res.text()}`);
+  }
+}

@@ -14,7 +14,8 @@
 - [ ] **Resend nalog + ključ (da mejlovi stižu).** Napravi nalog na resend.com → API Keys →
       napravi ključ. Unesi `RESEND_API_KEY` u Vercel (Project → Settings → Environment
       Variables) i u lokalni `.env.local`. Primalac mejla = „Мејл за упите" u Studiju.
-      Bez ovoga: narudžba se snimi, ali ti NE stigne mejl.
+      Bez ovoga: narudžba se snimi, ali NE stigne mejl — ni tebi (obaveštenje), ni
+      kupcu (potvrda sa podacima za uplatu depozita). Resend pokreće oba mejla.
       (Opciono kasnije: verifikuj svoj domen u Resend-u da mejl ide sa tvoje adrese, ne sa
       Resend test adrese koja šalje samo na tvoj Resend nalog.)
 - [ ] **Obriši TEST podatke.** Pre launcha ukloni test šablone (`test-template`,

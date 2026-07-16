@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeClient } from "@/sanity/lib/serverClient";
 import { rateLimit } from "@/lib/rateLimit";
-import { sendOrderEmail } from "@/lib/email";
+import { sendOrderEmail, sendCustomerOrderEmail } from "@/lib/email";
 import { computePrice, type SealType, type WrapperKind } from "@/lib/configuratorPricing";
 import { generateOrderNumber } from "@/lib/payment";
 import { appendOrderToSheet } from "@/lib/googleSheet";
@@ -173,6 +173,18 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "save_failed" }, { status: 500 });
   }
 
+  // Bank details for the deposit payment — reused by the success screen AND the
+  // customer's confirmation email (single source, so both always match).
+  const s = data.settings;
+  const payment = {
+    recipient: s?.bankRecipient ?? "",
+    account: s?.bankAccount ?? "",
+    bankName: s?.bankName ?? "",
+    model: s?.bankModel ?? "00",
+    paymentCode: s?.bankPaymentCode ?? "289",
+    purpose: s?.bankPurpose ?? "",
+  };
+
   // --- Notify the owner (non-blocking: order is already saved) ---
   try {
     if (data.settings?.contactEmail) {
@@ -192,6 +204,21 @@ export async function POST(req: NextRequest) {
     }
   } catch (err) {
     console.error("Owner order email failed (order still saved):", err);
+  }
+
+  // --- Confirmation email to the customer (non-blocking; skipped if no email) ---
+  try {
+    await sendCustomerOrderEmail({
+      orderNumber,
+      templateName,
+      total: breakdown.total,
+      deposit: breakdown.deposit,
+      customer: { name: customer.name, email: customer.email },
+      ownerEmail: data.settings?.contactEmail ?? "",
+      payment,
+    });
+  } catch (err) {
+    console.error("Customer order email failed (order still saved):", err);
   }
 
   // --- Log to the owner's Google Sheet for material planning (non-blocking) ---
@@ -221,19 +248,11 @@ export async function POST(req: NextRequest) {
   }
 
   // Payment details for the success screen (customer pays the deposit by bank transfer).
-  const s = data.settings;
   return NextResponse.json({
     ok: true,
     total: breakdown.total,
     deposit: breakdown.deposit,
     orderNumber,
-    payment: {
-      recipient: s?.bankRecipient ?? "",
-      account: s?.bankAccount ?? "",
-      bankName: s?.bankName ?? "",
-      model: s?.bankModel ?? "00",
-      paymentCode: s?.bankPaymentCode ?? "289",
-      purpose: s?.bankPurpose ?? "",
-    },
+    payment,
   });
 }
