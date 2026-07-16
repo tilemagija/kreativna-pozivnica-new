@@ -20,7 +20,13 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 **⚠️ VLASNIK MORA — pun checklist: `docs/vlasnik-todo.md` (obavezno pre launcha + opciono + sadržaj-žena). Sažetak:** (1) PRAVI podaci banke u Studiju → Podešavanja → „Уплата на рачун" (sad PLACEHOLDER „160-0000000123456-78"); (2) RESEND nalog + `RESEND_API_KEY` (Vercel+.env.local) da mejlovi rade; (3) obrisati TEST podatke pre launcha (šabloni test-template/test-double/test-digital, kategorije, placeholder banka); (4) rotirati SANITY_API_WRITE_TOKEN (bio u chatu). Žena: unosi prave šablone (hi-res slike bez editabilnog teksta) + pečat motive/boje + svotčeve papira/koverti.
 
-**⏸️ PARKIRANO / SLEDEĆE (vlasnik bira):** Faza 4 (PDF za štampu + digitalni tok — čeka pravi hi-res dizajn+fontove) · font-library (custom upload) · nastavak bulletproof-a · **Faza 6 redizajn IZGLEDA sa ženom** (njoj se trenutni izgled ne sviđa — boje/fontovi; to je OK, gradili smo funkciju; vidi POLISH.md). Kad vlasnik pita „gde smo šuplji" → nabroji ovo.
+**📋 PO PRVOBITNOM PLANU JOŠ OSTAJE (osim estetike World B / parkiranog / novih ideja) — 15.07:**
+- **(A) Digitalna pozivnica + PDF (Faza 4)** — pola proizvoda: izbor dizajna → živi tekst → plaćanje 100% → PDF na mejl. Čeka vlasnikove PRAVE hi-res dizajne + fontove. Nije opcija, srce digitalnog dela. Prvo na redu čim stignu dizajni.
+- **(B) „Прилагодите баш вама" + posebne vitrine → Smart Inquiry (§15)** — potpuno custom dizajn (par „hoću svoje" → upit), savijene pozivnice, pozivnica u flašici. NIJE napravljeno. Koristi zadržani `InquiryDialog` popup. Može ODMAH (ne zavisi od vlasnika).
+- **(C) Faza 6 pred-lansiranje (ne-kozmetika)** — pun bezbednosni pregled svih „vrata" (§3), pred-launch čeklista (nema test/placeholder, sve iz CMS-a, oba jezika), Core Web Vitals + kompletan mobilni prolaz. Ide pred kraj (pred januar).
+- _Napomena: konfiguratorski upsell (Faza 3.4) = urađeno preko „нешто посебно → Instagram" (vlasnikova odluka). Vlasnikove launch obaveze = `docs/vlasnik-todo.md`._
+
+**⏸️ PARKIRANO / SLEDEĆE (vlasnik bira):** (A) Faza 4 digitalna+PDF (čeka dizajne+fontove) · (B) custom/posebne vitrine (može odmah) · (C) Faza 6 pred-launch · World B estetika (sa ženom) · font-library (custom upload) · nastavak bulletproof-a (njoj se trenutni izgled ne sviđa — boje/fontovi; to je OK, gradili smo funkciju; vidi POLISH.md). Kad vlasnik pita „gde smo šuplji" → nabroji ovo.
 
 **Novi paket (odobreno):** `qrcode` (IPS QR slika). Preview MCP: `mcp__Claude_Browser__preview_start {name:"kreativna-dev"}` (launch.json u `C:\Users\Tile\.claude`), port 3000.
 

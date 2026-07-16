@@ -5,8 +5,10 @@ import { useTranslations } from "next-intl";
 import SmartInquiry from "./SmartInquiry";
 
 // Button that opens the Smart Inquiry form in a modal, carrying the item's context
-// (§16 popup). Reused on every World B / showcase item. Escape + backdrop close,
-// scroll lock, focus moves into the dialog.
+// (§16 popup). Escape + backdrop close, scroll lock, focus moves into the dialog.
+// NOTE: currently unwired — World B switched to a pure Instagram button (owner's call).
+// Kept on purpose: reserved for the not-yet-built showcase-only inquiries in §15
+// (custom design "prilagodite baš vama", folded / scroll-in-bottle invitations).
 export default function InquiryDialog({
   context,
   instagramUrl,
