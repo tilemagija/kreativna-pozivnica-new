@@ -4,6 +4,7 @@ import { pick } from "@/sanity/locale";
 import SectionHeading from "./SectionHeading";
 import Reveal from "@/components/motion/Reveal";
 import SmartInquiry from "@/components/SmartInquiry";
+import ContactChannels from "@/components/site/ContactChannels";
 
 // Contact section. Real inquiry form arrives in Phase 1.3 — for now real direct
 // contact links (Instagram, email) so nothing is fake (CLAUDE.md §6).
@@ -34,21 +35,14 @@ export default async function Contact({ locale }: { locale: string }) {
       </Reveal>
 
       <Reveal delay={0.2}>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 font-body text-sm text-ink-muted">
-          <span>{t("orDirect")}</span>
-          <a
-            href={instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline transition-colors hover:text-gold"
-          >
-            Instagram
-          </a>
-          {email && (
-            <a href={`mailto:${email}`} className="underline transition-colors hover:text-gold">
-              {email}
-            </a>
-          )}
+        <div className="mt-8">
+          <p className="mb-4 font-body text-sm text-ink-muted">{t("orDirect")}</p>
+          <ContactChannels
+            instagramUrl={instagramUrl}
+            whatsappNumber={data?.whatsappNumber}
+            viberNumber={data?.viberNumber}
+            email={email}
+          />
         </div>
       </Reveal>
     </section>

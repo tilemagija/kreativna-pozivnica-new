@@ -139,13 +139,17 @@ export type ContactData = {
   email?: string;
   instagramHandle?: string;
   instagramUrl?: string;
+  whatsappNumber?: string;
+  viberNumber?: string;
 } | null;
 
 const CONTACT_QUERY = `*[_type == "homePage"][0]{
   contactKicker, contactHeading, contactText,
   "email": *[_type == "siteSettings"][0].contactEmail,
   "instagramHandle": *[_type == "siteSettings"][0].instagramHandle,
-  "instagramUrl": *[_type == "siteSettings"][0].instagramUrl
+  "instagramUrl": *[_type == "siteSettings"][0].instagramUrl,
+  "whatsappNumber": *[_type == "siteSettings"][0].whatsappNumber,
+  "viberNumber": *[_type == "siteSettings"][0].viberNumber
 }`;
 
 export async function getContact(): Promise<ContactData> {
@@ -261,6 +265,42 @@ const DODACI_ITEMS_QUERY = `*[_type == "dodaciItem"] | order(order asc){
 
 export async function getDodaciItems(): Promise<DodaciItem[]> {
   return client.fetch(DODACI_ITEMS_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+// --- "Прилагодите баш вама" (custom + special invitations — showcase → Instagram) ---
+export type PrilagoditePageData = {
+  kicker?: LocaleValue;
+  heading?: LocaleValue;
+  intro?: LocaleValue;
+  ctaLabel?: LocaleValue;
+  seoTitle?: LocaleValue;
+  seoDescription?: LocaleValue;
+} | null;
+
+const PRILAGODITE_PAGE_QUERY = `*[_type == "prilagoditePage"][0]{
+  kicker, heading, intro, ctaLabel, seoTitle, seoDescription
+}`;
+
+export async function getPrilagoditePage(): Promise<PrilagoditePageData> {
+  return client.fetch(PRILAGODITE_PAGE_QUERY, {}, { next: { revalidate: 60 } });
+}
+
+export type PrilagoditeItem = {
+  caption?: LocaleValue;
+  url?: string;
+  dim?: { width: number; height: number };
+  alt?: LocaleValue;
+};
+
+const PRILAGODITE_ITEMS_QUERY = `*[_type == "prilagoditeItem"] | order(order asc){
+  caption,
+  "url": image.asset->url,
+  "dim": image.asset->metadata.dimensions,
+  "alt": image.alt
+}`;
+
+export async function getPrilagoditeItems(): Promise<PrilagoditeItem[]> {
+  return client.fetch(PRILAGODITE_ITEMS_QUERY, {}, { next: { revalidate: 60 } });
 }
 
 // --- "Akcija" (sale) ---

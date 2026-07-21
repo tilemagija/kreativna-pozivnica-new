@@ -25,6 +25,20 @@ export const siteSettings = defineType({
       description: "Овде ће стизати упити послати са сајта (користи се од касније фазе).",
     }),
     defineField({
+      name: "whatsappNumber",
+      title: "WhatsApp број",
+      type: "string",
+      description:
+        "Број у међународном формату, без + и без размака. Нпр. 3816XXXXXXXX (381 = Србија, па број без прве нуле). Оставите празно ако не желите WhatsApp дугме.",
+    }),
+    defineField({
+      name: "viberNumber",
+      title: "Viber број",
+      type: "string",
+      description:
+        "Исти међународни формат, без + и без размака. Нпр. 3816XXXXXXXX. Оставите празно ако не желите Viber дугме.",
+    }),
+    defineField({
       name: "footerNote",
       title: "Текст у футеру",
       type: "localeText",
