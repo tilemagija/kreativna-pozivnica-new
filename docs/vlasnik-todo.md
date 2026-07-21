@@ -48,6 +48,8 @@
       custom fajl + licenca za web/PDF). Detalji: „FONT STRATEGIJA" u ROADMAP-u.
 - [ ] **Pečat — motivi i boje.** Studio: „Печат — мотиви" i „Печат — боје" (sad prazno).
 - [ ] **Papiri i koverte — svotčevi + cene.** Studio: liste papira/koverti (slika + cena/kom).
+- [ ] **Digitalna cena.** Studio → „Ценовник" → „Дигитална позивница" → унеси праву цену
+      (sad je placeholder 3000). Ista cena za jednostranu i dvostranu; plaća se 100%.
 - [ ] **Strana „Прилагодите баш вама".** Studio → „Страница: Прилагодите баш вама" (naslov/uvod)
       + „Прилагодите (примери)" (slike custom dizajna, savijenih pozivnica, pozivnice u flašici).
       Dok se ne unese, strana radi sa unapred upisanim tekstom i vodi na Instagram.
