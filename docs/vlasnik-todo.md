@@ -32,6 +32,12 @@
 - [ ] **Zaštita alata `/template-tool` u produkciji.** Postavi env `TEMPLATE_TOOL_KEY` u
       Vercel, pa ga unesi u alat (localStorage). Dok se ne postavi, alat u produkciji NE
       može da snima (bezbedno po defaultu); lokalno radi slobodno.
+- [ ] **Upali analitiku.** Vercel → tvoj projekat → tab **Analytics** → Enable. Kod je već
+      postavljen; ovo je jedan klik. Posle toga vidiš koje strane ljudi gledaju i gde
+      odustaju (korisno jer vrtiš IG reklame). Besplatno, bez cookie banera.
+- [ ] **Unesi Viber/WhatsApp broj.** Studio → Подешавања сајта → „WhatsApp број" / „Viber
+      број". Format: međunarodni, bez + i bez razmaka (npr. `3816XXXXXXXX`). Dok su prazni,
+      ta dugmad se NE prikazuju (vidi se samo Instagram). Uneseš broj → dugme se pojavi.
 
 ## 🟢 SADRŽAJ — unosi ŽENA (kroz Studio, bez koda)
 
@@ -42,6 +48,9 @@
       custom fajl + licenca za web/PDF). Detalji: „FONT STRATEGIJA" u ROADMAP-u.
 - [ ] **Pečat — motivi i boje.** Studio: „Печат — мотиви" i „Печат — боје" (sad prazno).
 - [ ] **Papiri i koverte — svotčevi + cene.** Studio: liste papira/koverti (slika + cena/kom).
+- [ ] **Strana „Прилагодите баш вама".** Studio → „Страница: Прилагодите баш вама" (naslov/uvod)
+      + „Прилагодите (примери)" (slike custom dizajna, savijenih pozivnica, pozivnice u flašici).
+      Dok se ne unese, strana radi sa unapred upisanim tekstom i vodi na Instagram.
 
 ---
 

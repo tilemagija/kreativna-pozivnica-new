@@ -9,16 +9,24 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 
 ## ▶ TRENUTNO STANJE — pročitaj OVO prvo posle /clear
 
-### ▶ NASTAVAK SUTRA (kraj sesije 15.07) — čitaj OVO prvo
+### ▶ SESIJA 21.07 — čitaj OVO prvo
+**Urađene 3 stvari (sve verifikovano uživo, build 28/28, 3 commita, NIJE push-ovano — čeka vlasnikovu reč):**
+1. **Vercel Analytics** (commit `dd60131`) — `<Analytics/>` u root layout, bez cookie banera. ⚠️ **VLASNIK MORA:** upaliti Web Analytics u Vercel dashboard-u (Project → Analytics) da podaci krenu. Paket `@vercel/analytics` (odobren).
+2. **Viber + WhatsApp kanali** (commit `5082fb1`) — polja u Studiju (Подешавања → WhatsApp/Viber број, međ. format bez + npr. 3816XXXXXXXX) + pilule Instagram·WhatsApp·Viber·мејл u kontakt sekciji + footeru. Kanal se PRESKAČE dok broj nije unet (sad se vide samo Instagram, jer brojevi prazni). `lib/contactChannels.ts` (wa.me / viber://), `components/site/ContactChannels.tsx`. ⚠️ **VLASNIK:** uneti WhatsApp/Viber broj u Studiju da se dugmad pojave.
+3. **Strana „Прилагодите баш вама"** (commit `a46522c`) — nova nav strana `/prilagodite` (custom dizajn, savijene pozivnice, pozivnica u flašici) = tekst + mozaik + dugme → **Instagram** (vlasnikova odluka, kao World B; NE Smart Inquiry). CMS: `prilagoditePage` (singleton) + `prilagoditeItem` (lista) u Studiju. Radi s fallback tekstom dok vlasnik ne unese sadržaj. Dodato u nav (sr+en), sitemap, poruke. SEO: `SectionHeading` dobio `as="h1"` → ova strana ima pravi jedan `<h1>` (§13). ⚠️ **VLASNIK/ŽENA:** uneti primere + tekst u Studiju („Страница: Прилагодите баш вама" / „Прилагодите (примери)").
+**⚠️ SITAN SEO NALAZ (nije blokada):** postojeće showcase strane `/dodaci` i `/umetnost` (index) koriste `h2` bez `h1` — isti obrazac popravljen samo na novoj strani; audit ostalih ide u Fazu 6 SEO ili brzi follow-up (task chip postavljen).
+**NAPOMENA:** `components/InquiryDialog.tsx` sad definitivno neupotrebljen (i custom vitrine idu na Instagram, ne Smart Inquiry) — kandidat za brisanje.
+
+### ▶ NASTAVAK (kraj sesije 15.07)
 **Gde smo stali:** upravo završen **mejl potvrde kupcu** (commit `1d0b2dc`, push-ovan). Sesija je bila: Google Sheet evidencija → „Додаци" strana → World B nadogradnja → funkcionalni review → AI FAQ chatbot (odobren za kasnije) → mejl kupcu.
 **⏳ OTVORENO (pitati vlasnika na početku):**
 - (1) Odobrenje **teksta mejla kupcu** (vlasnik gледао, da potvrdi/tweak-uje reč-dve).
 - (2) Odluka: **mejl obavezan u checkoutu?** (sad telefon ILI mejl; preporuka = ostaviti opciono).
 **★ SLEDEĆE (vlasnik bira) — sve spремно, ništa ne blokira osim gde piše „čeka":**
 - **World B estetika** (redizajn izgleda, po mogućstvu sa ženom; `data-world="b"` hook postavljen)
-- **(B) „Прилагодите баш вама" + posebne vitrine → upit** (može ODMAH, ne zavisi od vlasnika)
-- **Analitika** (Vercel Analytics/Plausible — biznis vrti IG reklame, ne vidi šta konvertuje) ⭐ nova rupa iz review-a
-- **Kontakt kanali** (Viber/WhatsApp dugme; sad samo Instagram) — nova rupa iz review-a
+- ✅ ~~(B) „Прилагодите баш вама" + posebne vitrine → upit~~ **GOTOVO 21.07** (→ Instagram, ne Smart Inquiry)
+- ✅ ~~Analitika~~ **GOTOVO 21.07** (Vercel Analytics; ⚠️ vlasnik pali u Vercel dashboard-u)
+- ✅ ~~Kontakt kanali (Viber/WhatsApp)~~ **GOTOVO 21.07** (⚠️ vlasnik unosi brojeve u Studiju)
 - **Custom 404** — sitno
 - **(A) Faza 4 digitalna+PDF** — čeka vlasnikove hi-res dizajne + fontove
 - **AI FAQ chatbot** — čeka FAQ sadržaj + Anthropic API nalog (spec u parkiranom bloku)
