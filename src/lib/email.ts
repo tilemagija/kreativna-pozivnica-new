@@ -64,6 +64,7 @@ export type OrderEmail = {
   total: number;
   deposit: number;
   customer: { name: string; phone: string; email: string; address: string; eventDate: string };
+  digital?: boolean; // digital order: 100% upfront, PDF by email (no paper/COD)
 };
 
 export async function sendOrderEmail(data: OrderEmail, to: string): Promise<void> {
@@ -74,18 +75,22 @@ export async function sendOrderEmail(data: OrderEmail, to: string): Promise<void
     .map((t) => `<tr><td><b>${esc(t.key)}</b></td><td>${esc(t.value)}</td></tr>`)
     .join("");
 
+  const amountLine = data.digital
+    ? `<p><b>Износ:</b> ${data.total} дин · дигитална позивница (100%, PDF на мејл)</p>`
+    : `<p><b>Укупно:</b> ${data.total} дин · <b>Депозит (50%):</b> ${data.deposit} дин · остатак поузећем</p>`;
+
   const html = `
-    <h2>Нова наруџбина (позивнице)</h2>
+    <h2>Нова наруџбина (${data.digital ? "дигитална позивница" : "позивнице"})</h2>
     <p><b>Шаблон:</b> ${esc(data.templateName)}</p>
     <p><b>Текст:</b></p>
     <table border="1" cellpadding="6" cellspacing="0">${rows}</table>
     <p><b>Конфигурација:</b><br>${esc(data.config).replace(/\n/g, "<br>")}</p>
-    <p><b>Укупно:</b> ${data.total} дин · <b>Депозит (50%):</b> ${data.deposit} дин · остатак поузећем</p>
+    ${amountLine}
     <hr>
     <p><b>Купац:</b> ${esc(data.customer.name)}</p>
-    <p><b>Телефон:</b> ${esc(data.customer.phone)}</p>
+    ${data.customer.phone ? `<p><b>Телефон:</b> ${esc(data.customer.phone)}</p>` : ""}
     <p><b>Мејл:</b> ${esc(data.customer.email)}</p>
-    <p><b>Адреса:</b> ${esc(data.customer.address)}</p>
+    ${data.customer.address ? `<p><b>Адреса:</b> ${esc(data.customer.address)}</p>` : ""}
     ${data.customer.eventDate ? `<p><b>Датум догађаја:</b> ${esc(data.customer.eventDate)}</p>` : ""}
   `;
 
@@ -118,6 +123,7 @@ export type CustomerOrderEmail = {
   deposit: number;
   customer: { name: string; email: string };
   ownerEmail: string; // reply-to, so a customer reply reaches the owner
+  digital?: boolean; // digital order: pay 100%, PDF follows by email
   payment: {
     recipient: string;
     account: string;
@@ -133,18 +139,31 @@ export async function sendCustomerOrderEmail(data: CustomerOrderEmail): Promise<
   if (!key || !data.customer.email.includes("@")) return; // not configured / no email
 
   const p = data.payment;
-  const purpose = p.purpose || "Депозит за позивнице";
+  const amountDue = data.digital ? data.total : data.deposit; // digital pays 100%
+  const purpose = p.purpose || (data.digital ? "Дигитална позивница" : "Депозит за позивнице");
   const row = (label: string, value: string) =>
     value ? `<tr><td style="padding:2px 10px 2px 0"><b>${label}</b></td><td>${esc(value)}</td></tr>` : "";
+
+  const amountSummary = data.digital
+    ? `<p><b>Износ:</b> ${data.total} дин · дигитална позивница (плаћа се 100%)</p>`
+    : `<p><b>Укупно:</b> ${data.total} дин · <b>Депозит (50%):</b> ${data.deposit} дин · остатак поузећем</p>`;
+
+  const payLine = data.digital
+    ? `<p>Да бисте потврдили наруџбину, уплатите <b>цео износ од ${amountDue} дин</b> на рачун:</p>`
+    : `<p>Да бисте потврдили наруџбину, уплатите <b>депозит од ${amountDue} дин</b> на рачун:</p>`;
+
+  const closing = data.digital
+    ? `<p style="color:#6C6049">Дигиталну позивницу (PDF) шаљемо на овај мејл чим видимо уплату. За питања одговорите на овај мејл.</p>`
+    : `<p style="color:#6C6049">Јавићемо вам се ускоро. За питања одговорите на овај мејл.</p>`;
 
   const html = `
     <h2>Хвала на наруџбини!</h2>
     <p>Поштовани/а ${esc(data.customer.name)}, примили смо вашу наруџбину.</p>
     <p><b>Број наруџбине:</b> ${esc(data.orderNumber)}<br>
        <b>Шаблон:</b> ${esc(data.templateName)}</p>
-    <p><b>Укупно:</b> ${data.total} дин · <b>Депозит (50%):</b> ${data.deposit} дин · остатак поузећем</p>
+    ${amountSummary}
     <hr>
-    <p>Да бисте потврдили наруџбину, уплатите <b>депозит од ${data.deposit} дин</b> на рачун:</p>
+    ${payLine}
     <table cellpadding="0" cellspacing="0" style="font-size:14px">
       ${row("Прималац", p.recipient)}
       ${row("Рачун", p.account)}
@@ -154,7 +173,7 @@ export async function sendCustomerOrderEmail(data: CustomerOrderEmail): Promise<
       ${row("Шифра плаћања", p.paymentCode)}
       <tr><td style="padding:2px 10px 2px 0"><b>Сврха</b></td><td>${esc(purpose)}</td></tr>
     </table>
-    <p style="color:#6C6049">Јавићемо вам се ускоро. За питања одговорите на овај мејл.</p>
+    ${closing}
   `;
 
   const res = await fetch("https://api.resend.com/emails", {

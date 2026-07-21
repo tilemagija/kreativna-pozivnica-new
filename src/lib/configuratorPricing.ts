@@ -9,6 +9,7 @@ export type SealType = "none" | "plain" | "goldLeaf" | "tatarika";
 export type PricingConfig = {
   minQuantity?: number;
   setupFee?: number;
+  digitalPrice?: number; // fixed price for a digital invitation (100% upfront)
   pausOmotPrice?: number;
   addonDoubleSided?: number;
   addonTornEdges?: number;

@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getTemplateBySlugServer, getConfiguratorOptionsServer } from "@/sanity/serverQueries";
-import { getInstagramUrl } from "@/sanity/queries";
+import { getInstagramUrl, getDigitalPrice } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
 import { Link } from "@/i18n/navigation";
 import { configuratorFontVars } from "../../../fonts";
 import SectionHeading from "@/components/sections/SectionHeading";
 import Configurator from "@/components/configurator/Configurator";
+import DigitalConfigurator from "@/components/configurator/DigitalConfigurator";
 
 export async function generateMetadata({
   params,
@@ -41,6 +42,27 @@ export default async function DesignPage({
 
   // Every design can be ordered printed OR digital — the customer's choice arrives as ?tip.
   if (tip === "digitalna") {
+    const digitalPrice = await getDigitalPrice();
+
+    // Digital is priced → run the real digital flow (text editor → pay 100% → PDF by email).
+    if (digitalPrice > 0) {
+      return (
+        <div className={`${configuratorFontVars} mx-auto max-w-6xl px-4 pb-24 pt-28 sm:px-6 md:pt-36`}>
+          <Link
+            href="/napravite-svoju"
+            className="font-body text-sm text-ink-muted transition-colors hover:text-gold-deep"
+          >
+            {g("backToGallery")}
+          </Link>
+          <div className="mt-4">
+            <SectionHeading kicker={t("digitalKicker")} heading={name} />
+          </div>
+          <DigitalConfigurator template={template} digitalPrice={digitalPrice} locale={locale} />
+        </div>
+      );
+    }
+
+    // Not priced yet → keep the showcase fallback (Instagram) so nothing looks broken.
     const instagramUrl = await getInstagramUrl();
     return (
       <div className="mx-auto max-w-3xl px-6 pb-24 pt-28 text-center md:pt-36">

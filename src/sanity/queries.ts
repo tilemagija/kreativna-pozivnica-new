@@ -470,7 +470,7 @@ export type ConfiguratorOptions = {
 
 export const OPTIONS_QUERY = `{
   "pricing": *[_type == "pricing"][0]{
-    minQuantity, setupFee, pausOmotPrice, addonDoubleSided,
+    minQuantity, setupFee, digitalPrice, pausOmotPrice, addonDoubleSided,
     addonTornEdges, addonGoldEdges, addonRoundedEdges,
     sealBase, sealGoldLeaf, sealTatarika
   },
@@ -501,4 +501,15 @@ export async function getInstagramUrl(): Promise<string> {
   );
   const clean = (handle || "kreativna_pozivnica").replace(/^@/, "");
   return `https://instagram.com/${clean}`;
+}
+
+// Fixed digital-invitation price (§15). `pricing` is in the public read grant, so this
+// is safe to read with the public client. The server RE-reads it in /api/order (§7).
+export async function getDigitalPrice(): Promise<number> {
+  const price = await client.fetch<number | null>(
+    `*[_type == "pricing"][0].digitalPrice`,
+    {},
+    { next: { revalidate: 60 } },
+  );
+  return typeof price === "number" && price > 0 ? price : 0;
 }

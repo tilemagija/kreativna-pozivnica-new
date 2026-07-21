@@ -11,8 +11,18 @@ export const pricing = defineType({
     { name: "wrapper", title: "Омот", options: { collapsible: true } },
     { name: "addons", title: "Додаци на позивницу (по комаду)", options: { collapsible: true } },
     { name: "seal", title: "Печат, тракице, нитне (по комаду)", options: { collapsible: true } },
+    { name: "digital", title: "Дигитална позивница", options: { collapsible: true } },
   ],
   fields: [
+    defineField({
+      name: "digitalPrice",
+      title: "Цена дигиталне позивнице (фиксно)",
+      type: "number",
+      initialValue: 3000,
+      description:
+        "Јединствена цена за дигиталну позивницу (PDF на мејл), иста за једнострану и двострану. Плаћа се 100%.",
+      fieldset: "digital",
+    }),
     defineField({ name: "minQuantity", title: "Минимална количина", type: "number", initialValue: 50, fieldset: "rules" }),
     defineField({
       name: "setupFee",

@@ -27,7 +27,7 @@ Legend: 🟢 known territory (done it in Budva) · 🟡 new territory (extra car
 - ✅ ~~(B) „Прилагодите баш вама" + posebne vitrine → upit~~ **GOTOVO 21.07** (→ Instagram, ne Smart Inquiry)
 - ✅ ~~Analitika~~ **GOTOVO 21.07** (Vercel Analytics; ⚠️ vlasnik pali u Vercel dashboard-u)
 - ✅ ~~Kontakt kanali (Viber/WhatsApp)~~ **GOTOVO 21.07** (⚠️ vlasnik unosi brojeve u Studiju)
-- **Custom 404** — sitno
+- ✅ ~~Custom 404~~ **GOTOVO 21.07** (brendirana, dvojezična, pravi 404 status, commit `307ec11`)
 - **(A) Faza 4 digitalna+PDF** — čeka vlasnikove hi-res dizajne + fontove
 - **AI FAQ chatbot** — čeka FAQ sadržaj + Anthropic API nalog (spec u parkiranom bloku)
 - nastavak bulletproof-a · font-library

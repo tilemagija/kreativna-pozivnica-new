@@ -10,6 +10,20 @@ export const order = defineType({
   type: "document",
   fields: [
     defineField({
+      name: "kind",
+      title: "Тип позивнице",
+      type: "string",
+      readOnly: true,
+      options: {
+        list: [
+          { title: "Штампана (депозит 50%)", value: "physical" },
+          { title: "Дигитална / PDF (100%)", value: "digital" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "physical",
+    }),
+    defineField({
       name: "status",
       title: "Статус",
       type: "string",
@@ -140,10 +154,11 @@ export const order = defineType({
     { title: "Најновије", name: "newest", by: [{ field: "createdAt", direction: "desc" }] },
   ],
   preview: {
-    select: { name: "customer.name", template: "templateName", total: "computedTotal", status: "status" },
-    prepare: ({ name, template, total, status }) => {
+    select: { name: "customer.name", template: "templateName", total: "computedTotal", status: "status", kind: "kind" },
+    prepare: ({ name, template, total, status, kind }) => {
       const mark = status === "handled" ? "✓ " : status === "deposit_paid" ? "◐ " : "• ";
-      return { title: `${mark}${name || "Наруџбина"}`, subtitle: `${template || ""} · ${total || 0} дин` };
+      const tag = kind === "digital" ? "📄 " : "";
+      return { title: `${mark}${tag}${name || "Наруџбина"}`, subtitle: `${template || ""} · ${total || 0} дин` };
     },
   },
 });

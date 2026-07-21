@@ -187,7 +187,18 @@
     "payScan": "Scan in your mobile banking to auto-fill everything",
     "orderNumberLabel": "Order number",
     "requiredFields": "Please fill in your name, phone or email, and address.",
-    "orderError": "Something went wrong. Please try again or message us on Instagram."
+    "orderError": "Something went wrong. Please try again or message us on Instagram.",
+    "digitalKicker": "Digital invitation",
+    "digitalPriceLabel": "Digital invitation (PDF)",
+    "digitalNote": "One flat price, same for single- or double-sided. Paid 100%; we email the finished invitation as a PDF.",
+    "digitalConfirmBody": "Check your text before continuing. We prepare the digital invitation exactly as you see it.",
+    "digitalEmailRequired": "Please enter your name and a valid email — we send the finished invitation there.",
+    "custEmailRequired": "Email (we send the PDF here)",
+    "digitalPayNote": "Paid 100%. After payment, we email the finished invitation as a PDF.",
+    "digitalPayAmount": "Amount (100%)",
+    "digitalPayInstructions": "Please pay the full amount to the account below. The reference number is your order number.",
+    "digitalPayAfter": "As soon as we see your payment, we email you the finished digital invitation (PDF).",
+    "digitalSuccessBody": "We'll be in touch shortly about payment. The digital invitation is delivered by email."
   },
   "Nav": {
     "akcija": "Sale",
