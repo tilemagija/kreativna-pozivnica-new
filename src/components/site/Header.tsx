@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { href: "/nastanak", key: "nastanak" },
   { href: "/umetnost", key: "art" },
   { href: "/dodaci", key: "dodaci" },
+  { href: "/prilagodite", key: "prilagodite" },
 ] as const;
 
 export default function Header() {

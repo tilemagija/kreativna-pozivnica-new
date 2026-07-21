@@ -77,6 +77,12 @@
     "intro": "We also make the pieces that complete your celebration — thank-you cards, guest gifts, welcome signs, boutonnieres and much more. Get in touch and we'll design the details together.",
     "cta": "Get in touch"
   },
+  "PrilagoditePage": {
+    "kicker": "Just for you",
+    "heading": "Make it yours",
+    "intro": "Want something entirely your own? We create fully custom invitations to your vision, as well as special forms — folded invitations, invitations in a bottle and other one-of-a-kind ideas. Browse the examples, then reach out and we'll design yours.",
+    "cta": "Message us on Instagram"
+  },
   "Nastanak": {
     "kicker": "Behind every piece",
     "heading": "The making",
@@ -188,6 +194,7 @@
     "nastanak": "The making",
     "art": "Art & gifts",
     "dodaci": "Add-ons",
+    "prilagodite": "Make it yours",
     "configurator": "Design your own",
     "menu": "Menu",
     "close": "Close"

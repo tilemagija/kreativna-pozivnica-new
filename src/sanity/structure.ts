@@ -23,6 +23,10 @@ export const structure: StructureResolver = (S) =>
         .id("dodaciPage")
         .child(S.document().schemaType("dodaciPage").documentId("dodaciPage")),
       S.listItem()
+        .title("Страница: Прилагодите баш вама")
+        .id("prilagoditePage")
+        .child(S.document().schemaType("prilagoditePage").documentId("prilagoditePage")),
+      S.listItem()
         .title("Страница: Настанак")
         .id("nastanakPage")
         .child(S.document().schemaType("nastanakPage").documentId("nastanakPage")),
@@ -34,6 +38,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("galleryItem").title("Галерија"),
       S.documentTypeListItem("artwork").title("Уметност и поклони (радови)"),
       S.documentTypeListItem("dodaciItem").title("Додаци (ставке)"),
+      S.documentTypeListItem("prilagoditeItem").title("Прилагодите (примери)"),
       S.documentTypeListItem("sale").title("Акције (ставке)"),
       S.documentTypeListItem("testimonial").title("Утисци"),
       S.divider(),

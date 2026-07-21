@@ -11,6 +11,8 @@ import { artwork } from "./documents/artwork";
 import { artPage } from "./documents/artPage";
 import { dodaciPage } from "./documents/dodaciPage";
 import { dodaciItem } from "./documents/dodaciItem";
+import { prilagoditePage } from "./documents/prilagoditePage";
+import { prilagoditeItem } from "./documents/prilagoditeItem";
 import { nastanakPage } from "./documents/nastanakPage";
 import { sale } from "./documents/sale";
 import { salePage } from "./documents/salePage";
@@ -38,6 +40,8 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   artPage,
   dodaciPage,
   dodaciItem,
+  prilagoditePage,
+  prilagoditeItem,
   nastanakPage,
   sale,
   salePage,
