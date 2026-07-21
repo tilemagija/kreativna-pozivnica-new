@@ -202,5 +202,12 @@
   "Footer": {
     "tagline": "Handmade, with love",
     "rights": "All rights reserved"
+  },
+  "NotFound": {
+    "kicker": "Error 404",
+    "heading": "This page could not be found",
+    "text": "It looks like this link no longer exists or was mistyped. Let's get you back on track.",
+    "home": "Back to home",
+    "configurator": "Create your invitation"
   }
 }
