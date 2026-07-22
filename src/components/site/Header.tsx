@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import LocaleSwitcher from "@/components/LocaleSwitcher";
-import Lotus from "@/components/brand/Lotus";
 
-// Fixed header: transparent over the hero, gains a soft cream backdrop once scrolled.
-// Desktop: logo left, links right. Mobile/tablet: logo + hamburger → full-screen menu.
-// "Акција" (first) and "Дизајнирајте сами" (last) are the two accented, eye-catching items.
-// Nav links lead ONLY to separate pages. Landing scroll-sections (about/gallery/contact)
-// are NOT in the nav by design.
+// Fixed header. Has its OWN surface + bottom border + soft shadow from the start (a clear
+// "razdelnik" so it never gets lost on the parchment page). Logo image + wordmark sit far
+// left; links + language + CTA on the right. Labels kept short so sr and en both fit ONE row.
+// Mobile/tablet: logo + hamburger → full-screen menu.
 const NAV_ITEMS = [
   { href: "/nastanak", key: "nastanak" },
   { href: "/umetnost", key: "art" },
@@ -48,21 +47,29 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        scrolled || menuOpen
-          ? "border-b border-line bg-cream/85 backdrop-blur"
-          : "border-b border-transparent bg-transparent"
+      className={`fixed inset-x-0 top-0 z-40 border-b border-gold/25 bg-cream/95 backdrop-blur transition-shadow duration-300 ${
+        scrolled
+          ? "shadow-[0_4px_20px_-6px_rgba(32,64,34,0.20)]"
+          : "shadow-[0_1px_10px_-4px_rgba(32,64,34,0.12)]"
       }`}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-        <Link href="/" onClick={close} className="flex items-center gap-2 text-gold">
-          <Lotus className="h-6 w-9" />
-          <span className="font-serif text-lg font-medium uppercase tracking-[0.15em]">
+      <nav className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-4 px-5 py-2.5 md:px-8">
+        {/* Logo + wordmark — far left */}
+        <Link href="/" onClick={close} className="flex shrink-0 items-center gap-2.5">
+          <Image
+            src="/logo.png"
+            alt="Креативна позивница"
+            width={267}
+            height={220}
+            priority
+            className="h-10 w-auto lg:h-11"
+          />
+          <span className="font-serif text-[15px] font-medium uppercase tracking-[0.13em] text-forest lg:text-base">
             Креативна позивница
           </span>
         </Link>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-5">
           {/* Акција — accented, festive on hover */}
           <Link
             href="/akcija"
@@ -71,10 +78,10 @@ export default function Header() {
             {t("akcija")}
           </Link>
 
-          <ul className="hidden items-center gap-6 text-sm text-ink-muted lg:flex">
+          <ul className="hidden items-center gap-5 text-[13px] text-ink-muted lg:flex">
             {NAV_ITEMS.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="transition-colors hover:text-gold">
+                <Link href={item.href} className="whitespace-nowrap transition-colors hover:text-forest">
                   {t(item.key)}
                 </Link>
               </li>
@@ -87,7 +94,7 @@ export default function Header() {
 
           <Link
             href="/napravite-svoju"
-            className="hidden rounded-sm bg-gold px-5 py-2 font-serif text-sm italic text-cream transition-colors hover:bg-gold-deep lg:inline-block"
+            className="hidden whitespace-nowrap rounded-sm bg-gold px-5 py-2 font-serif text-sm italic text-cream transition-colors hover:bg-gold-deep lg:inline-block"
           >
             {t("configurator")}
           </Link>
@@ -109,7 +116,7 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="fixed inset-0 top-[65px] z-40 flex flex-col gap-5 bg-cream px-8 py-10 lg:hidden"
+            className="fixed inset-0 top-[57px] z-40 flex flex-col gap-5 bg-cream px-8 py-10 lg:hidden"
             initial={reduce ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
@@ -128,7 +135,7 @@ export default function Header() {
                   <Link
                     href={item.href}
                     onClick={close}
-                    className="font-serif text-2xl text-ink transition-colors hover:text-gold"
+                    className="font-serif text-2xl text-ink transition-colors hover:text-forest"
                   >
                     {t(item.key)}
                   </Link>
