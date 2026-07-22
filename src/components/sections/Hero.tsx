@@ -41,7 +41,7 @@ export default async function Hero({ locale }: { locale: string }) {
           </Reveal>
         )}
         <Reveal delay={0.05}>
-          <h1 className="font-serif text-4xl leading-[1.05] text-ink sm:text-5xl md:text-6xl">
+          <h1 className="font-serif text-4xl leading-[1.05] text-forest sm:text-5xl md:text-6xl">
             {heading}
           </h1>
         </Reveal>
@@ -51,7 +51,7 @@ export default async function Hero({ locale }: { locale: string }) {
         <Reveal delay={0.15} className="flex flex-wrap gap-3 pt-2">
           <Link
             href="/napravite-svoju"
-            className="rounded-sm bg-gold px-6 py-3 font-sans text-sm uppercase tracking-wider text-cream transition-colors hover:bg-gold-deep"
+            className="rounded-sm bg-forest px-6 py-3 font-sans text-sm uppercase tracking-wider text-cream transition-colors hover:bg-sage-deep"
           >
             {primaryCta}
           </Link>

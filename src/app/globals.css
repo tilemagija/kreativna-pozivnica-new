@@ -1,23 +1,27 @@
 @import "tailwindcss";
 
-/* Brand design tokens — source of truth: CLAUDE.md §11 */
+/* Brand design tokens — source of truth: DESIGN.md.
+   Direction (owner, 21.07): TWO mains = aged parchment (surface) + deep green (accent),
+   with gold as the supporting metallic accent and warm brown for body text. */
 :root {
-  --c-cream: #f5eee0;
-  --c-greige: #e7e0d0;
-  --c-kraft: #e8d6bb;
-  --c-gold: #b7995a;
-  --c-gold-deep: #927741;
-  --c-sage: #9b9e76;
-  --c-sage-deep: #797b54;
-  --c-terracotta: #c08a6a;
-  --c-ink: #3d352a;
-  --c-ink-muted: #6c6049;
-  --c-line: #dcd1bb;
-  --c-forest: #22342a; /* deep green — dramatic band for the social-proof section */
+  --c-paper: #e7d8b6; /* MAIN 1 — aged parchment: dominant page surface (+ texture on body) */
+  --c-cream: #f4ecd7; /* light warm ivory — insets + text on dark (buttons/green bands) */
+  --c-greige: #e1d2af; /* alternate section band — mid parchment */
+  --c-kraft: #d8c39b; /* aged/vintage accent background, sparing */
+  --c-gold: #b08d57; /* supporting metallic accent — lotus, dividers, thin lines */
+  --c-gold-deep: #8c6c3c; /* gold hover / borders */
+  --c-sage: #7a866a; /* secondary botanical green (nudged toward the main green family) */
+  --c-sage-deep: #55634c; /* darker botanical */
+  --c-terracotta: #b6805f; /* warm tertiary accent, very sparing */
+  --c-ink: #3b3227; /* body text — warm deep brown, NOT black */
+  --c-ink-muted: #6b5e46; /* secondary text */
+  --c-line: #cdbc98; /* dividers / soft borders on parchment */
+  --c-forest: #1c2720; /* MAIN 2 — deep green: headings, bands, buttons, key lines */
 }
 
 @theme inline {
-  /* Colors → utilities: bg-cream, text-ink, text-gold, border-line, bg-sage, ... */
+  /* Colors → utilities: bg-paper, bg-cream, text-ink, text-gold, text-forest, ... */
+  --color-paper: var(--c-paper);
   --color-cream: var(--c-cream);
   --color-greige: var(--c-greige);
   --color-kraft: var(--c-kraft);
@@ -40,9 +44,32 @@
 }
 
 body {
-  background: var(--c-cream);
+  background-color: var(--c-paper);
   color: var(--c-ink);
   font-family: var(--font-body);
+}
+
+/* Aged-parchment page surface (DESIGN.md): a REAL scanned/parchment photo fills the
+   viewport as one fixed "sheet" the whole site sits on. A light parchment wash on top
+   unifies the tone and keeps text readable. Fixed + composited (behind content) — no
+   background-attachment:fixed repaint jank. The image is optimized (~140KB). Strength
+   is tuned via the wash opacity below. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--c-paper);
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--c-paper) 22%, transparent),
+      color-mix(in srgb, var(--c-paper) 22%, transparent)
+    ),
+    url("/textures/paper.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* --- Configurator preview (§5): template image + editable text overlay. Positions and

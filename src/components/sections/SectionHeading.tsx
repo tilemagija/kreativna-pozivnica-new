@@ -33,7 +33,7 @@ export default function SectionHeading({
       <Reveal delay={0.05}>
         <Tag
           className={`max-w-2xl font-serif text-3xl leading-tight sm:text-4xl md:text-5xl ${
-            light ? "text-cream" : "text-ink"
+            light ? "text-cream" : "text-forest"
           }`}
         >
           {heading}
