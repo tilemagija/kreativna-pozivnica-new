@@ -129,7 +129,7 @@ upiše u CMS koji font/veličinu/poziciju je koristio za svako tekst-polje.
 
 > Otvoreno pitanje za build: da li vlasniku dati i alat da vizuelno postavi polja
 > (klik na preview da odredi x/y) umesto ručnog unosa % — LEPŠE ali više posla.
-> Prva verzija: ručni unos %/izbor fonta u CMS-u; vizuelni editor kasnije (POLISH).
+> Prva verzija: ručni unos %/izbor fonta u CMS-u; vizuelni editor kasnije (estetska faza — vidi DESIGN.md).
 
 ---
 
