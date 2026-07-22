@@ -16,7 +16,7 @@
   --c-ink: #3b3227; /* body text — warm deep brown, NOT black */
   --c-ink-muted: #6b5e46; /* secondary text */
   --c-line: #cdbc98; /* dividers / soft borders on parchment */
-  --c-forest: #1c2720; /* MAIN 2 — deep green: headings, bands, buttons, key lines */
+  --c-forest: #204022; /* MAIN 2 — deep green: headings, bands, buttons, key lines */
 }
 
 @theme inline {

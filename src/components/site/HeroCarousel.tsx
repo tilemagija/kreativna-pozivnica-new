@@ -28,7 +28,7 @@ export default function HeroCarousel({
   const current = images[index] ?? images[0];
 
   return (
-    <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md border border-line bg-kraft">
+    <div className="relative aspect-[3/4] w-full overflow-hidden bg-kraft">
       <AnimatePresence>
         <motion.div
           key={index}
