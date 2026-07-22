@@ -42,7 +42,7 @@ export default async function ArtPage({
   // with the owner; §11a/Phase 6). Structure + logic are final now; the skin is deferred.
   return (
     <div data-world="b" className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:pt-36">
-      <SectionHeading kicker={kicker} heading={heading} />
+      <SectionHeading kicker={kicker} heading={heading} as="h1" />
       <Reveal delay={0.1}>
         <p className="mx-auto mt-4 max-w-2xl text-center font-body leading-relaxed text-ink-muted">
           {intro}

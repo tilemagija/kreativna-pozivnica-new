@@ -53,7 +53,7 @@ export default async function DodaciPage({
 
   return (
     <div className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:pt-36">
-      <SectionHeading kicker={kicker} heading={heading} />
+      <SectionHeading kicker={kicker} heading={heading} as="h1" />
       <Reveal delay={0.1}>
         <p className="mx-auto mt-4 max-w-2xl text-center font-body leading-relaxed text-ink-muted">
           {intro}
