@@ -18,6 +18,12 @@ const NAV_ITEMS = [
   { href: "/prilagodite", key: "prilagodite" },
 ] as const;
 
+// Traditional Serbian embroidery (vez) border — the header's bottom "line" (owner's call:
+// ethno red/black). One seamless tile (diamond + wax-red center + orange seam beads on two
+// black rules) that repeats horizontally at any width. Self-contained SVG (no asset).
+const ETNO_TILE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='30'%3E%3Crect width='50' height='30' fill='%23F4ECD7'/%3E%3Crect y='2.5' width='50' height='1.4' fill='%232b2b2b'/%3E%3Crect y='28.6' width='50' height='1.4' fill='%232b2b2b'/%3E%3Crect y='6' width='50' height='0.7' fill='%23C0392B'/%3E%3Crect y='24.5' width='50' height='0.7' fill='%23C0392B'/%3E%3Cpath d='M25 9 L35 16.5 L25 24 L15 16.5 Z' fill='none' stroke='%232b2b2b' stroke-width='1.3'/%3E%3Cpath d='M25 12 L31 16.5 L25 21 L19 16.5 Z' fill='%23C0392B'/%3E%3Ccircle cx='25' cy='16.5' r='1.3' fill='%23F4ECD7'/%3E%3Cpath d='M8 16.5 l5 -3 v6 z' fill='%23E2621F'/%3E%3Cpath d='M42 16.5 l-5 -3 v6 z' fill='%23E2621F'/%3E%3Cpath d='M0 13.5 L3 16.5 L0 19.5 L-3 16.5 Z' fill='%232b2b2b'/%3E%3Cpath d='M50 13.5 L53 16.5 L50 19.5 L47 16.5 Z' fill='%232b2b2b'/%3E%3C/svg%3E\")";
+
 export default function Header() {
   const t = useTranslations("Nav");
   const reduce = useReducedMotion();
@@ -47,10 +53,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 border-b border-gold/25 bg-cream/95 backdrop-blur transition-shadow duration-300 ${
+      className={`fixed inset-x-0 top-0 z-40 bg-cream/95 backdrop-blur transition-shadow duration-300 ${
         scrolled
-          ? "shadow-[0_4px_20px_-6px_rgba(32,64,34,0.20)]"
-          : "shadow-[0_1px_10px_-4px_rgba(32,64,34,0.12)]"
+          ? "shadow-[0_5px_20px_-6px_rgba(32,64,34,0.22)]"
+          : "shadow-[0_2px_10px_-4px_rgba(32,64,34,0.14)]"
       }`}
     >
       <nav className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-4 px-5 py-2.5 md:px-8">
@@ -113,10 +119,22 @@ export default function Header() {
         </div>
       </nav>
 
+      {/* Ethno vez strip — the header's bottom edge */}
+      <div
+        aria-hidden
+        className="h-[30px] w-full"
+        style={{
+          backgroundImage: ETNO_TILE,
+          backgroundRepeat: "repeat-x",
+          backgroundSize: "50px 30px",
+          backgroundPosition: "left center",
+        }}
+      />
+
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="fixed inset-0 top-[57px] z-40 flex flex-col gap-5 bg-cream px-8 py-10 lg:hidden"
+            className="fixed inset-0 top-[87px] z-40 flex flex-col gap-5 bg-cream px-8 py-10 lg:hidden"
             initial={reduce ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
