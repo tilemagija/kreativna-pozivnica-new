@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-// import IntroOverlay from "@/components/intro/IntroOverlay"; // TEMP hidden (hero revamp)
+import IntroOverlay from "@/components/intro/IntroOverlay";
 import Hero from "@/components/sections/Hero";
 import Gallery from "@/components/sections/Gallery";
 import WhyUs from "@/components/sections/WhyUs";
@@ -17,8 +17,7 @@ export default async function Home({
 
   return (
     <>
-      {/* TEMP (hero revamp): intro overlay hidden so the hero image is the first thing. Re-enable to revert. */}
-      {/* <IntroOverlay /> */}
+      <IntroOverlay />
       <Hero locale={locale} />
       <Gallery locale={locale} />
       <WhyUs locale={locale} />
