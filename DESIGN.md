@@ -6,6 +6,33 @@
 
 ---
 
+## ▶ TRENUTNO STANJE ESTETIKE — čitaj OVO prvo (26.07)
+
+**Radimo KOMPLETAN etno-vintage overhaul po vlasnikovom mokapu** (topli papirus + duboka zelena + zlato, srpski vez trake, sepija fotografije). Mokap = master dizajn, ceo sajt ga prati. Vlasnik zadržava sekcije „О нама" i kontakt-sa-paketima; sve ostalo se redizajnira.
+
+**PALETA ZAKLJUČANA (tokeni u `src/app/globals.css`):** papirus `--c-paper #E7D8B6` (pozadina + tekstura) · **duboka zelena `--c-forest #204022`** (naslovi/dugmad/akcenti) · zlato `--c-gold #B08D57` (lotos/linije) · telo teksta topla braon `--c-ink #3B3227`. Fontovi: Cormorant (naslovi) / Lora (telo) / Marck (script) — za sad ostaju.
+
+**URAĐENO (Hero + Navbar, pass 1) — commit `4cc2e93`:**
+- **Hero = vlasnikova slika** `public/hero.jpg` (pun ekran, `object-cover`), sa **„Ink Bleed Reveal"** na učitavanju (mastilo se upija ~3s pa se očisti; `components/motion/InkReveal.tsx` + `.ink-reveal` u globals.css; poštuje reduced-motion).
+- **Navbar:** BEZ loga, **centrirani linkovi** (Акција·Настанак·Уметност и поклони·Додаци·Прилагодите), СР/EN + „Дизајнирајте сами" desno. **Transparentan preko Hero-a**, na skrol → cream pozadina + **gornja vez traka** (`public/traka-tile.png` — seamless, isečen jedan čist deo šare). Navbar je **IZNAD** slike (ne preklapa). Skrol se detektuje preko **IntersectionObserver** sentinela (Lenis guši scroll evente). ⚠️ **transparent→cream na skrol NIJE potvrđen uživo** — proveriti pravim skrolom; ako ne radi, IO sentinel je već postavljen, samo debug.
+- Intro overlay **privremeno sakriven** (`page.tsx`), stari editorial Hero **sačuvan zakomentarisan** u `Hero.tsx` (ništa obrisano).
+
+**★ SLEDEĆE (po mokapu, odozgo nadole):** sekcija „**Наше услуге**" (3 kartice: Позивнице/Слике/Посебни детаљи) → „**Узори који остају**" (mozaik 5 slika) → **footer** (sa vez trakom) → pa preliti ton na „О нама" + kontakt/paketi. Bočni vertikalni vez ornamenti + sitni krstići-razdelnici (radim kao SVG).
+
+**⚠️ VLASNIK DOSTAVLJA (u `public/`, javi ime) — bez ovoga ne liči na mokap:**
+- **Lotos SAMO, transparentno** (PNG/SVG) — trenutni `logo.png` ima „kutiju"; svakako nije u navbaru sad.
+- **Hi-res hero** ≥1920px (sad 1280×731 = mekano na velikim ekranima).
+- **~8 fotki proizvoda** (pozivnice, ilustracija/crkva, poklon, buket sa vezom, vez tekstil) za „услуге" kartice + „Узори" mozaik.
+- Finalni tekstovi + odluka o nav nazivima (mokap: ПОЧЕТНА/ПОЗИВНИЦЕ/СЛИКЕ/О МЕНИ/КОНТАКТ; mi za sad zadržali naše).
+
+**⚠️ TEHNIČKE ZAMKE (bitno za rad):**
+- **DEV KEŠ:** izmene `globals.css` se ČESTO zaglave u `.next` kešu (servira stari CSS). Rešenje: `preview_stop` → `rm -rf .next` → `preview_start`. (Dešavalo se stalno ovu sesiju.)
+- **Snimci ekrana app-a NE rade** (Lenis/renderer zapinje) → verifikuj preko computed styles (`javascript_tool`) ili vlasnik gleda `localhost:3000`.
+- **Slike optimizovati** pre upotrebe (`sharp`): hero/traka/logo su smanjeni (paper 2.9MB→141KB, traka isečena+tile). Novi asseti isto.
+- Push često prvi put padne (DNS) → probaj 2×.
+
+---
+
 ## ★ VELIKI VIZUELNI PASS — vlasnikova žena (signal, 14.07)
 > **Žena (oko za estetiku brenda — organski domet 200k) videla sajt i rekla da joj se NE sviđa: boje, fontovi, „kao da je dete crtalo".** Vredan signal — poklapa se sa anti-template upozorenjem dole. Ovo NIJE sitna korekcija nego **ozbiljan redizajn:**
 > - [ ] Sesija sa ženom: uzeti KONKRETNO šta smeta (koje boje, fontovi, sekcije) + njene reference/želje — ona vodi estetiku.

@@ -7,8 +7,10 @@ Puna istorija + fazni plan: `docs/ROADMAP-archive.md` · Specifikacija: `docs/SP
 
 ## ▶ TRENUTNO STANJE — čitaj OVO prvo posle /clear
 
-**Faza sada: ESTETIKA/IZGLED** (vlasnikova odluka 21.07 — prelazak sa funkcija na izgled).
-Za rad na izgledu → radi iz **`DESIGN.md`** (tokeni + pravac + backlog). Funkcionalnost dolazi „poneka usput"; kad je dira → pročitaj relevantni deo `docs/SPEC.md`.
+**Faza sada: KOMPLETAN ETNO-VINTAGE OVERHAUL IZGLEDA** (vlasnikov mokap = master dizajn).
+→ **Sav rad na izgledu vodi `DESIGN.md`** — tamo je „TRENUTNO STANJE ESTETIKE" sa: paletom (papirus + zelena `#204022` + zlato), šta je urađeno (Hero slika + Ink Bleed Reveal, transparentan navbar + vez traka), SLEDEĆIM sekcijama (Наше услуге → Узори → footer), asseti koje vlasnik dostavlja, i tehničkim zamkama (`.next` keš, snimci ne rade). **Pročitaj DESIGN.md pre bilo kakvog rada na izgledu.**
+Funkcionalnost je kompletna (dole); dira se „poneka usput" → tada pročitaj `docs/SPEC.md`.
+_Zadnja sesija (26.07): Hero = vlasnikova slika + ink-bleed reveal; navbar redizajniran (bez loga, centrirani linkovi, transparentan→cream+vez na skrol); commit `4cc2e93` push-ovan. ⚠️ transparent→skrol nije potvrđen uživo — proveriti._
 
 **Šta radi (funkcionalno kompletno i push-ovano):**
 - Landing (hero, galerija, „zašto baš mi", utisci, kontakt + Viber/WhatsApp/IG pilule).
