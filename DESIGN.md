@@ -15,7 +15,7 @@
 **URAĐENO (Hero + Navbar, pass 1) — commit `4cc2e93`:**
 - **Hero = vlasnikova slika** `public/hero.jpg` (pun ekran, `object-cover`), sa **„Ink Bleed Reveal"** na učitavanju (mastilo se upija ~3s pa se očisti; `components/motion/InkReveal.tsx` + `.ink-reveal` u globals.css; poštuje reduced-motion).
 - **Navbar:** BEZ loga, **centrirani linkovi** (Акција·Настанак·Уметност и поклони·Додаци·Прилагодите), СР/EN + „Дизајнирајте сами" desno. **Transparentan preko Hero-a**, na skrol → cream pozadina + **gornja vez traka** (`public/traka-tile.png` — seamless, isečen jedan čist deo šare). Navbar je **IZNAD** slike (ne preklapa). Skrol se detektuje preko **IntersectionObserver** sentinela (Lenis guši scroll evente). ⚠️ **transparent→cream na skrol NIJE potvrđen uživo** — proveriti pravim skrolom; ako ne radi, IO sentinel je već postavljen, samo debug.
-- Intro overlay **privremeno sakriven** (`page.tsx`), stari editorial Hero **sačuvan zakomentarisan** u `Hero.tsx` (ništa obrisano).
+- Intro overlay „**отварање коверте**" **vraćen** (`page.tsx`, video `otvaranje.mp4`, z-[60] iznad svega). ⚠️ Napomena: ink-bleed reveal Hero-a se sad odigra IZA intro cover-a (na load), pa ga korisnik ne vidi kad klikne intro — refinement za kasnije: okinuti ink-reveal TEK kad se intro zatvori. Stari editorial Hero **sačuvan zakomentarisan** u `Hero.tsx` (ništa obrisano).
 
 **★ SLEDEĆE (po mokapu, odozgo nadole):** sekcija „**Наше услуге**" (3 kartice: Позивнице/Слике/Посебни детаљи) → „**Узори који остају**" (mozaik 5 slika) → **footer** (sa vez trakom) → pa preliti ton na „О нама" + kontakt/paketi. Bočni vertikalni vez ornamenti + sitni krstići-razdelnici (radim kao SVG).
 
