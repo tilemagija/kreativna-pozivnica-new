@@ -48,6 +48,16 @@ export default function IntroOverlay() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
+  // Tell the hero when the intro is leaving, so its ink-bleed reveal starts THEN (not on
+  // page load, behind the cover). Fires as it fades out (revealing) and once closed —
+  // also covers already-seen / reduced-motion (which jump straight to "closed").
+  useEffect(() => {
+    if (state === "revealing" || state === "closed") {
+      (window as unknown as { __introDone?: boolean }).__introDone = true;
+      window.dispatchEvent(new Event("intro:done"));
+    }
+  }, [state]);
+
   if (state === "closed") return null;
 
   const markSeen = () => {

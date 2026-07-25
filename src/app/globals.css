@@ -135,7 +135,8 @@ body::before {
    rough-edged mask (white blobs displaced by turbulence, baked once in the SVG so it's cheap)
    grows from small to full over ~1.4s; the image also un-blurs and settles. Plays once on
    load. Reduced motion → no mask, no animation (full image immediately). --- */
-.ink-reveal {
+.ink-reveal,
+.ink-reveal-waiting {
   --ink-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Cdefs%3E%3Cfilter id='r' x='-40%25' y='-40%25' width='180%25' height='180%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='2' seed='4' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='16'/%3E%3CfeGaussianBlur stdDeviation='1.1'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23r)' fill='%23fff'%3E%3Ccircle cx='50' cy='52' r='17'/%3E%3Ccircle cx='34' cy='40' r='13'/%3E%3Ccircle cx='66' cy='44' r='13'/%3E%3Ccircle cx='42' cy='66' r='12'/%3E%3Ccircle cx='60' cy='64' r='12'/%3E%3Ccircle cx='30' cy='62' r='10'/%3E%3Ccircle cx='72' cy='60' r='10'/%3E%3Ccircle cx='50' cy='33' r='10'/%3E%3C/g%3E%3C/svg%3E");
   -webkit-mask-image: var(--ink-mask);
   mask-image: var(--ink-mask);
@@ -143,6 +144,13 @@ body::before {
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
+}
+/* Waiting for the intro to close — image fully masked (invisible) until the reveal starts. */
+.ink-reveal-waiting {
+  -webkit-mask-size: 0% 0%;
+  mask-size: 0% 0%;
+}
+.ink-reveal {
   animation: ink-bleed 3000ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
   will-change: mask-size, filter, transform;
 }
@@ -164,7 +172,8 @@ body::before {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ink-reveal {
+  .ink-reveal,
+  .ink-reveal-waiting {
     animation: none;
     -webkit-mask-image: none;
     mask-image: none;
