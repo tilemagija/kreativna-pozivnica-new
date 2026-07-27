@@ -11,7 +11,7 @@ Puna istorija + fazni plan: `docs/ROADMAP-archive.md` · Specifikacija: `docs/SP
 → **Sav rad na izgledu vodi `DESIGN.md`** — tamo je „TRENUTNO STANJE ESTETIKE" sa: paletom (papirus + zelena `#204022` + zlato), šta je urađeno (Hero slika + Ink Bleed Reveal, transparentan navbar + vez traka), SLEDEĆIM sekcijama (Наше услуге → Узори → footer), asseti koje vlasnik dostavlja, i tehničkim zamkama (`.next` keš, snimci ne rade). **Pročitaj DESIGN.md pre bilo kakvog rada na izgledu.**
 Funkcionalnost je kompletna (dole); dira se „poneka usput" → tada pročitaj `docs/SPEC.md`.
 _Zadnja sesija (26.07): Hero = vlasnikova slika + ink-bleed reveal; navbar redizajniran (bez loga, centrirani linkovi, transparentan→cream+vez na skrol); commit `4cc2e93` push-ovan._
-_Sesija (27.07): navbar skrol-detekcija ojačana (nativni scroll listener + IO fallback); logika potvrđena da menja klase u oba smera. Pikseli se ne vide kroz preview (headless tab zamrzava tranzicije/snimke) → vlasnik potvrdi na `localhost:3000`. Detalji u `DESIGN.md`._
+_Sesija (27.07): (1) navbar skrol-detekcija ojačana (nativni scroll listener + IO fallback), logika potvrđena. (2) vez razdelnik ispod Hero-a (`TrakaDivider`). (3) „guzvani papir" izbačen → nova pozadina `pozadina.jpg` (laneno platno sa ušivenim vez ornamentima). (4) sekcija **Наше услуге** (3 kartice → /pozivnice, /umetnost, /dodaci; placeholder slike). (5) galerija premeštena na novu stranu `/pozivnice`. Detalji u `DESIGN.md`. Pikseli se ne vide kroz preview (headless tab) → vlasnik potvrdi na `localhost:3000`._
 
 **Šta radi (funkcionalno kompletno i push-ovano):**
 - Landing (hero, galerija, „zašto baš mi", utisci, kontakt + Viber/WhatsApp/IG pilule).

@@ -49,29 +49,6 @@ body {
   font-family: var(--font-body);
 }
 
-/* Aged-parchment page surface (DESIGN.md): a REAL scanned/parchment photo fills the
-   viewport as one fixed "sheet" the whole site sits on. A light parchment wash on top
-   unifies the tone and keeps text readable. Fixed + composited (behind content) — no
-   background-attachment:fixed repaint jank. The image is optimized (~140KB). Strength
-   is tuned via the wash opacity below. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-color: var(--c-paper);
-  background-image:
-    linear-gradient(
-      color-mix(in srgb, var(--c-paper) 22%, transparent),
-      color-mix(in srgb, var(--c-paper) 22%, transparent)
-    ),
-    url("/textures/paper.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 /* --- Configurator preview (§5): template image + editable text overlay. Positions and
    font sizes are all in % of the preview width (cqw), so it stays 1:1 on any screen. --- */
 .tp-canvas {

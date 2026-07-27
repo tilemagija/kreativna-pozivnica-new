@@ -19,7 +19,14 @@
 
 **URAĐENO — vez razdelnik (27.07):** ispod Hero-a ubačena **šira vez traka** kao razdelnik ka galeriji. Vlasnikova slika `public/traka-razdelnik.png` (original zadržan) isečena u bešavni tile `public/traka-razdelnik-tile.png` (period 384px, krem rub, 70KB). Komponenta `components/site/TrakaDivider.tsx` je **višekratna** (`h-14 md:h-20`, repeat-x, `bg-size auto 100%`) — koristiti je i za ostale razdelnike sekcija + footer.
 
-**★ SLEDEĆE (po mokapu, odozgo nadole):** sekcija „**Наше услуге**" (3 kartice: Позивнице/Слике/Посебни детаљи) → „**Узори који остају**" (mozaik 5 slika) → **footer** (sa vez trakom) → pa preliti ton na „О нама" + kontakt/paketi. Bočni vertikalni vez ornamenti + sitni krstići-razdelnici (radim kao SVG).
+**URAĐENO — Наше услуге + pozadina (27.07):**
+- **„Guzvani papir" izbačen** — strana je sad čist papirus (bez `body::before` teksture). `public/pozadina.jpg` (toplo laneno platno sa **vez ornamentima UŠIVENIM** levo/desno — vlasnikova `pozadina 3`, 324KB) je pozadina **SAMO sekcije Наше услуге** (odluka vlasnika+supruge: kao pozadina cele strane bila je previše „zumirana", trake se gube; treba da uokviri baš taj segment od vrha do dna). Primenjeno na `<section>` sa `background-size:100% 100%` (trake idu punom visinom). Zasebne overlay bočne trake **napuštene** (ornament je u samoj slici). Ako se kasnije opet zatreba full-page — slika ostaje.
+- **Sekcija `components/sections/NaseUsluge.tsx`** (ispod TrakaDivider): naslov НАШЕ УСЛУГЕ + script „стварамо успомене" + 3 kartice (Позивнице/Слике/Посебни детаљи) sa placeholder slikama („ФОТОГРАФИЈА УСКОРО"). Krstići-razdelnici = `components/brand/CrossDivider.tsx` (SVG). Sadržaj `max-w-5xl` centriran (da ne prelazi ornamente). Tekst u `messages/*.json` → `Usluge`.
+- **Linkovi kartica:** Позивнице → `/pozivnice`, Слике → `/umetnost`, Посебни детаљи → `/dodaci`.
+- **Galerija premeštena** sa početne na novu stranu `/pozivnice` (`src/app/[locale]/pozivnice/page.tsx`, reuse `Gallery`). Stara inline Gallery sekcija sklonjena sa `page.tsx`.
+- ⚠️ **Slike kartica = placeholder** → čekaju vlasnikove fotke **+ CMS** (Sanity schema za usluge kartice = sledeći tehnički korak kad stignu slike).
+
+**★ SLEDEĆE (po mokapu, odozgo nadole):** „**Узори који остају**" (mozaik 5 slika) → **footer** (sa vez trakom) → pa preliti ton na „О нама" + kontakt/paketi. (Наше услуге ✅ gotovo gore.)
 
 **⚠️ VLASNIK DOSTAVLJA (u `public/`, javi ime) — bez ovoga ne liči na mokap:**
 - **Lotos SAMO, transparentno** (PNG/SVG) — trenutni `logo.png` ima „kutiju"; svakako nije u navbaru sad.

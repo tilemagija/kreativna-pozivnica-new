@@ -33,6 +33,25 @@
     "heading": "Every story, illustrated",
     "subheading": "A selection of hand-illustrated invitations and art pieces."
   },
+  "Usluge": {
+    "heading": "Our services",
+    "subtitle": "creating memories",
+    "photoSoon": "photo coming soon",
+    "cards": {
+      "invitations": {
+        "title": "Invitations",
+        "desc": "Hand-made invitations in ethno style for every important moment."
+      },
+      "art": {
+        "title": "Art",
+        "desc": "Artistic paintings with soul and motifs of our tradition."
+      },
+      "details": {
+        "title": "Special details",
+        "desc": "Gifts, décor and everything that keeps your most beautiful stories."
+      }
+    }
+  },
   "About": {
     "kicker": "About us",
     "heading": "Behind every illustration",
