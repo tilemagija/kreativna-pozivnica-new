@@ -26,10 +26,20 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Scroll detection via IntersectionObserver on a tiny sentinel at the very top of the
-  // page. Lenis (smooth scroll) suppresses native "scroll" events, so we watch a real
-  // element's position instead — reliable regardless of how scrolling is driven.
+  // Scroll detection — belt-and-suspenders so the transparent→cream switch can never
+  // silently fail. Two independent signals both drive `scrolled`, whichever fires:
+  //  1. A native passive "scroll" listener. Lenis runs in default (window) mode here, so
+  //     real scroll events DO fire in the browser.
+  //  2. An IntersectionObserver on a tiny sentinel at the very top of the page, as a
+  //     fallback for any environment where scroll events are throttled.
+  // (Both are throttled together only in a backgrounded/headless tab — a tooling quirk,
+  // not something a real visitor hits.)
   useEffect(() => {
+    const PAST = 8; // px scrolled before the header switches
+    const onScroll = () => setScrolled(window.scrollY > PAST);
+    onScroll(); // sync initial state (e.g. reload while already scrolled)
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     const sentinel = document.createElement("div");
     sentinel.style.cssText =
       "position:absolute;top:0;left:0;height:8px;width:1px;pointer-events:none;opacity:0;";
@@ -39,7 +49,9 @@ export default function Header() {
       { threshold: 0 },
     );
     io.observe(sentinel);
+
     return () => {
+      window.removeEventListener("scroll", onScroll);
       io.disconnect();
       sentinel.remove();
     };
