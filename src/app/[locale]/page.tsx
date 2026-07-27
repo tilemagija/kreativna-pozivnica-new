@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import IntroOverlay from "@/components/intro/IntroOverlay";
 import Hero from "@/components/sections/Hero";
+import TrakaDivider from "@/components/site/TrakaDivider";
 import Gallery from "@/components/sections/Gallery";
 import WhyUs from "@/components/sections/WhyUs";
 import About from "@/components/sections/About";
@@ -19,6 +20,7 @@ export default async function Home({
     <>
       <IntroOverlay />
       <Hero locale={locale} />
+      <TrakaDivider />
       <Gallery locale={locale} />
       <WhyUs locale={locale} />
       <About locale={locale} />
