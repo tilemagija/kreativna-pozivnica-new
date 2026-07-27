@@ -1,19 +1,17 @@
-import type { CSSProperties } from "react";
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
-import { getUsluge } from "@/sanity/queries";
+import { getUsluge, getGallery } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
 import Reveal from "@/components/motion/Reveal";
-import Lotus from "@/components/brand/Lotus";
 import CrossDivider from "@/components/brand/CrossDivider";
+import UslugaCard from "./UslugaCard";
 
 // „Наше услуге" — the services hub from the owner's mockup. Direction chosen with the owner:
 // „album" — three equal-size photo prints with a torn cream edge, hand-tilted, with a
-// handwritten (script) caption. The torn edge is an SVG feDisplacement filter on the cream
-// paper layer (see globals.css `.album-print`). Vez side ornaments live in the page
-// background (pozadina.jpg). NOTE (CMS follow-up): card images are placeholders — the owner
-// supplies photos, which should become Sanity-editable. Copy in messages/*.json.
+// handwritten (script) caption. On hover each card scatters the first 8 gallery photos
+// (see UslugaCard). The torn edge is an SVG feDisplacement filter on the cream paper layer
+// (see globals.css `.album-print`), defined once below. Vez side ornaments live in the page
+// background (pozadina.jpg). Card cover images are Sanity-editable (getUsluge); copy in
+// messages/*.json.
 const CARDS = [
   { key: "invitations", href: "/pozivnice", tilt: "-2.5deg", print: "", img: "pozivnice" },
   { key: "art", href: "/umetnost", tilt: "1.5deg", print: "album-print--b", img: "slike" },
@@ -21,7 +19,17 @@ const CARDS = [
 ] as const;
 
 export default async function NaseUsluge({ locale }: { locale: string }) {
-  const [t, usluge] = await Promise.all([getTranslations("Usluge"), getUsluge()]);
+  const [t, usluge, gallery] = await Promise.all([
+    getTranslations("Usluge"),
+    getUsluge(),
+    getGallery(),
+  ]);
+
+  // First 8 gallery photos, shared by all cards' hover fan.
+  const galleryImages = (gallery?.items ?? [])
+    .filter((it) => it.url)
+    .slice(0, 8)
+    .map((it) => ({ url: it.url as string }));
 
   return (
     <section
@@ -64,41 +72,23 @@ export default async function NaseUsluge({ locale }: { locale: string }) {
           </Reveal>
         </div>
 
-        {/* Cards — album prints */}
+        {/* Cards — album prints (hover scatters gallery photos) */}
         <div className="mt-12 grid gap-x-12 gap-y-16 sm:grid-cols-2 md:mt-16 lg:grid-cols-3 lg:gap-x-16">
           {CARDS.map((c, i) => {
             const cover = usluge?.[c.img];
             return (
               <Reveal key={c.key} delay={0.06 * i} className="flex justify-center">
-                <Link href={c.href} className="group block w-full max-w-[290px]">
-                  <div
-                    className={`album-print ${c.print}`}
-                    style={{ "--tilt": c.tilt } as CSSProperties}
-                  >
-                    <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden border border-line bg-kraft">
-                      {cover?.url ? (
-                        <Image
-                          src={cover.url}
-                          alt={pick(cover.alt, locale) || t(`cards.${c.key}.title`)}
-                          fill
-                          sizes="(max-width: 640px) 90vw, 290px"
-                          className="object-cover"
-                        />
-                      ) : (
-                        <div className="flex flex-col items-center gap-2 text-gold/45">
-                          <Lotus className="h-10 w-16" />
-                          <span className="font-sans text-[10px] uppercase tracking-[0.25em]">
-                            {t("photoSoon")}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="album-name">{t(`cards.${c.key}.title`)}</div>
-                  </div>
-                  <p className="mx-auto mt-7 max-w-[18rem] text-center font-sans text-base leading-relaxed text-ink">
-                    {t(`cards.${c.key}.desc`)}
-                  </p>
-                </Link>
+                <UslugaCard
+                  href={c.href}
+                  tilt={c.tilt}
+                  printClass={c.print}
+                  title={t(`cards.${c.key}.title`)}
+                  desc={t(`cards.${c.key}.desc`)}
+                  coverUrl={cover?.url}
+                  coverAlt={pick(cover?.alt, locale) || t(`cards.${c.key}.title`)}
+                  photoSoon={t("photoSoon")}
+                  images={galleryImages}
+                />
               </Reveal>
             );
           })}
