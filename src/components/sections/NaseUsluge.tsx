@@ -1,35 +1,54 @@
 import { getTranslations } from "next-intl/server";
-import { getUsluge, getGallery } from "@/sanity/queries";
+import { getUsluge, getGallery, getArtworks, getDodaciItems } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
 import Reveal from "@/components/motion/Reveal";
 import CrossDivider from "@/components/brand/CrossDivider";
-import UslugaCard from "./UslugaCard";
+import UslugeCards, { type UslugaCardData } from "./UslugeCards";
 
-// „Наше услуге" — the services hub from the owner's mockup. Direction chosen with the owner:
-// „album" — three equal-size photo prints with a torn cream edge, hand-tilted, with a
-// handwritten (script) caption. On hover each card scatters the first 8 gallery photos
-// (see UslugaCard). The torn edge is an SVG feDisplacement filter on the cream paper layer
-// (see globals.css `.album-print`), defined once below. Vez side ornaments live in the page
-// background (pozadina.jpg). Card cover images are Sanity-editable (getUsluge); copy in
-// messages/*.json.
+// „Наше услуге" — the services hub. „Album" cards (torn cream edge, hand-tilted, script
+// caption). On hover a card grows into a large panel over the others and scatters that
+// card's own photos inside (see UslugeCards). Each card pulls a different world:
+// Позивнице→gallery, Слике→art, Посебни детаљи→dodaci. Covers are Sanity-editable
+// (getUsluge); copy in messages/*.json. Torn-edge SVG filters are defined once below.
 const CARDS = [
   { key: "invitations", href: "/pozivnice", tilt: "-2.5deg", print: "", img: "pozivnice" },
   { key: "art", href: "/umetnost", tilt: "1.5deg", print: "album-print--b", img: "slike" },
   { key: "details", href: "/dodaci", tilt: "-1.5deg", print: "album-print--c", img: "detalji" },
 ] as const;
 
+const first8 = (arr: { url?: string }[]) =>
+  arr.filter((x) => x.url).slice(0, 8).map((x) => ({ url: x.url as string }));
+
 export default async function NaseUsluge({ locale }: { locale: string }) {
-  const [t, usluge, gallery] = await Promise.all([
+  const [t, usluge, gallery, artworks, dodaci] = await Promise.all([
     getTranslations("Usluge"),
     getUsluge(),
     getGallery(),
+    getArtworks(),
+    getDodaciItems(),
   ]);
 
-  // First 8 gallery photos, shared by all cards' hover fan.
-  const galleryImages = (gallery?.items ?? [])
-    .filter((it) => it.url)
-    .slice(0, 8)
-    .map((it) => ({ url: it.url as string }));
+  // Each card previews its own world.
+  const imagesByKey: Record<string, { url: string }[]> = {
+    pozivnice: first8(gallery?.items ?? []),
+    slike: first8(artworks ?? []),
+    detalji: first8(dodaci ?? []),
+  };
+
+  const cards: UslugaCardData[] = CARDS.map((c) => {
+    const cover = usluge?.[c.img];
+    return {
+      href: c.href,
+      tilt: c.tilt,
+      printClass: c.print,
+      title: t(`cards.${c.key}.title`),
+      desc: t(`cards.${c.key}.desc`),
+      coverUrl: cover?.url,
+      coverAlt: pick(cover?.alt, locale) || t(`cards.${c.key}.title`),
+      photoSoon: t("photoSoon"),
+      images: imagesByKey[c.img],
+    };
+  });
 
   return (
     <section
@@ -50,6 +69,10 @@ export default async function NaseUsluge({ locale }: { locale: string }) {
           <filter id="torn-edge-c" x="-8%" y="-8%" width="116%" height="116%">
             <feTurbulence type="fractalNoise" baseFrequency="0.024 0.034" numOctaves={4} seed={41} result="n" />
             <feDisplacementMap in="SourceGraphic" in2="n" scale={16} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="torn-edge-panel" x="-6%" y="-6%" width="112%" height="112%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves={4} seed={11} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale={26} xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </defs>
       </svg>
@@ -72,27 +95,7 @@ export default async function NaseUsluge({ locale }: { locale: string }) {
           </Reveal>
         </div>
 
-        {/* Cards — album prints (hover scatters gallery photos) */}
-        <div className="mt-12 grid gap-x-12 gap-y-16 sm:grid-cols-2 md:mt-16 lg:grid-cols-3 lg:gap-x-16">
-          {CARDS.map((c, i) => {
-            const cover = usluge?.[c.img];
-            return (
-              <Reveal key={c.key} delay={0.06 * i} className="flex justify-center">
-                <UslugaCard
-                  href={c.href}
-                  tilt={c.tilt}
-                  printClass={c.print}
-                  title={t(`cards.${c.key}.title`)}
-                  desc={t(`cards.${c.key}.desc`)}
-                  coverUrl={cover?.url}
-                  coverAlt={pick(cover?.alt, locale) || t(`cards.${c.key}.title`)}
-                  photoSoon={t("photoSoon")}
-                  images={galleryImages}
-                />
-              </Reveal>
-            );
-          })}
-        </div>
+        <UslugeCards cards={cards} />
       </div>
     </section>
   );

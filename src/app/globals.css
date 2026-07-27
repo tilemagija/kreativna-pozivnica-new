@@ -81,6 +81,17 @@ body {
   line-height: 1;
   color: var(--c-gold-deep);
 }
+/* Expanded „Наше услуге" hover panel — same torn cream paper as the card, but scaled for
+   the big surface (own filter). No transform here (framer drives scale/origin). */
+.usluga-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--c-cream);
+  filter: url(#torn-edge-panel) drop-shadow(0 22px 42px rgba(43, 38, 28, 0.4));
+}
+
 .group:hover .album-print { transform: rotate(0deg) translateY(-6px) scale(1.04); }
 @media (prefers-reduced-motion: reduce) {
   .album-print { transition: none; }
