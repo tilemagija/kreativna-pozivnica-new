@@ -24,8 +24,11 @@ export default async function About({ locale }: { locale: string }) {
     : null;
 
   return (
-    <section className="bg-greige py-20 md:py-28">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 md:grid-cols-2 md:gap-16">
+    <section
+      className="bg-no-repeat py-20 md:py-28"
+      style={{ backgroundImage: "url(/pozadina3.jpg)", backgroundSize: "100% 100%" }}
+    >
+      <div className="mx-auto grid max-w-5xl items-center gap-10 px-6 sm:px-10 md:grid-cols-2 md:gap-16 md:px-16">
         <Reveal>
           <div className="relative aspect-[4/5] overflow-hidden rounded-md border border-line">
             {imgUrl ? (
@@ -51,7 +54,7 @@ export default async function About({ locale }: { locale: string }) {
             </span>
           </Reveal>
           <Reveal delay={0.05}>
-            <h2 className="font-serif text-3xl leading-tight text-ink sm:text-4xl">
+            <h2 className="font-serif text-3xl leading-tight text-forest sm:text-4xl">
               {heading}
             </h2>
           </Reveal>

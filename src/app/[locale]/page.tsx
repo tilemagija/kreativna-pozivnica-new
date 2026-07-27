@@ -6,7 +6,6 @@ import NaseUsluge from "@/components/sections/NaseUsluge";
 import WhyUs from "@/components/sections/WhyUs";
 import About from "@/components/sections/About";
 import SocialProof from "@/components/sections/SocialProof";
-import Contact from "@/components/sections/Contact";
 
 export default async function Home({
   params,
@@ -24,9 +23,9 @@ export default async function Home({
       <NaseUsluge locale={locale} />
       <TrakaDivider src="/traka2-tile.png" />
       <WhyUs locale={locale} />
+      <TrakaDivider src="/traka3-tile.png" />
       <About locale={locale} />
       <SocialProof locale={locale} />
-      <Contact locale={locale} />
     </>
   );
 }

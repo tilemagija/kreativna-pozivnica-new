@@ -55,6 +55,22 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
     setHoverable(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
   }, []);
 
+  // Close the grown panel the moment the pointer is no longer meant to be on it —
+  // any scroll, tab switch (alt-tab / window blur), or hidden tab. Without this the
+  // panel's onMouseLeave never fires in those cases and it stays stuck on screen.
+  useEffect(() => {
+    if (hovered === null) return;
+    const close = () => setHovered(null);
+    window.addEventListener("scroll", close, { passive: true });
+    window.addEventListener("blur", close);
+    document.addEventListener("visibilitychange", close);
+    return () => {
+      window.removeEventListener("scroll", close);
+      window.removeEventListener("blur", close);
+      document.removeEventListener("visibilitychange", close);
+    };
+  }, [hovered]);
+
   const canHover = hoverable && !reduce;
 
   const onEnter = (i: number) => {
