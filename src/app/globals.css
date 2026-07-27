@@ -49,6 +49,44 @@ body {
   font-family: var(--font-body);
 }
 
+/* „Албум" cards (Наше услуге): vintage prints with a torn cream edge, hand-tilted, with a
+   handwritten caption. The torn edge is an SVG feDisplacement filter applied ONLY to the
+   cream paper layer (::before, behind the photo) so the photo + caption stay crisp. Tilt
+   is per-card via the --tilt custom property; hover straightens + lifts. */
+.album-print {
+  position: relative;
+  padding: 12px 12px 34px;
+  transform: rotate(var(--tilt, -2deg));
+  transition: transform 0.45s ease;
+}
+.album-print::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--c-cream);
+  /* subtle paper edge-darkening, then torn silhouette + a shadow that follows the torn
+     edge (drop-shadow AFTER url() → the shadow itself is torn-shaped = real lifted paper) */
+  box-shadow: inset 0 0 0 1px rgba(59, 50, 39, 0.06);
+  filter: url(#torn-edge-a) drop-shadow(0 9px 12px rgba(43, 38, 28, 0.32));
+}
+.album-print--b::before { filter: url(#torn-edge-b) drop-shadow(0 9px 12px rgba(43, 38, 28, 0.32)); }
+.album-print--c::before { filter: url(#torn-edge-c) drop-shadow(0 9px 12px rgba(43, 38, 28, 0.32)); }
+.album-print > * { position: relative; z-index: 1; }
+.album-name {
+  margin-top: 12px;
+  text-align: center;
+  font-family: var(--font-script);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--c-gold-deep);
+}
+.group:hover .album-print { transform: rotate(0deg) translateY(-5px); }
+@media (prefers-reduced-motion: reduce) {
+  .album-print { transition: none; }
+  .group:hover .album-print { transform: rotate(var(--tilt, -2deg)); }
+}
+
 /* --- Configurator preview (§5): template image + editable text overlay. Positions and
    font sizes are all in % of the preview width (cqw), so it stays 1:1 on any screen. --- */
 .tp-canvas {

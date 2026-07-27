@@ -1,19 +1,20 @@
+import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import Reveal from "@/components/motion/Reveal";
 import Lotus from "@/components/brand/Lotus";
 import CrossDivider from "@/components/brand/CrossDivider";
 
-// „Наше услуге" — the services hub from the owner's mockup: three windows that route to
-// the three worlds. The vez side ornaments are woven into the page background
-// (pozadina.jpg), so the section itself just needs the heading + cards; cross ornaments
-// punctuate the heading and the card row.
-// NOTE (CMS follow-up): card images are placeholders for now — the owner will supply
-// photos, and they should become Sanity-editable. Copy lives in messages/*.json.
+// „Наше услуге" — the services hub from the owner's mockup. Direction chosen with the owner:
+// „album" — three equal-size photo prints with a torn cream edge, hand-tilted, with a
+// handwritten (script) caption. The torn edge is an SVG feDisplacement filter on the cream
+// paper layer (see globals.css `.album-print`). Vez side ornaments live in the page
+// background (pozadina.jpg). NOTE (CMS follow-up): card images are placeholders — the owner
+// supplies photos, which should become Sanity-editable. Copy in messages/*.json.
 const CARDS = [
-  { key: "invitations", href: "/pozivnice" },
-  { key: "art", href: "/umetnost" },
-  { key: "details", href: "/dodaci" },
+  { key: "invitations", href: "/pozivnice", tilt: "-2.5deg", print: "" },
+  { key: "art", href: "/umetnost", tilt: "1.5deg", print: "album-print--b" },
+  { key: "details", href: "/dodaci", tilt: "-1.5deg", print: "album-print--c" },
 ] as const;
 
 export default async function NaseUsluge() {
@@ -24,7 +25,25 @@ export default async function NaseUsluge() {
       className="relative bg-no-repeat py-16 md:py-24"
       style={{ backgroundImage: "url(/pozadina.jpg)", backgroundSize: "100% 100%" }}
     >
-      <div className="mx-auto max-w-4xl px-10 sm:px-16 md:px-24">
+      {/* Torn-edge filters for the album prints (referenced from globals.css). */}
+      <svg aria-hidden focusable="false" className="pointer-events-none absolute h-0 w-0">
+        <defs>
+          <filter id="torn-edge-a" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.022 0.032" numOctaves={4} seed={7} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale={15} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="torn-edge-b" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves={4} seed={24} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale={14} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="torn-edge-c" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.024 0.034" numOctaves={4} seed={41} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale={16} xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div className="mx-auto max-w-5xl px-6 sm:px-10 md:px-16">
         {/* Heading */}
         <div className="flex flex-col items-center gap-3 text-center">
           <Reveal>
@@ -42,33 +61,29 @@ export default async function NaseUsluge() {
           </Reveal>
         </div>
 
-        {/* Cards */}
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 md:mt-14 md:gap-8">
+        {/* Cards — album prints */}
+        <div className="mt-12 grid gap-x-12 gap-y-16 sm:grid-cols-2 md:mt-16 lg:grid-cols-3 lg:gap-x-16">
           {CARDS.map((c, i) => (
-            <Reveal key={c.key} delay={0.05 * i} className="h-full">
-              <Link
-                href={c.href}
-                className="group flex h-full flex-col rounded-sm border border-gold/30 bg-cream/70 p-4 text-center shadow-[0_14px_30px_-20px_rgba(32,64,34,0.5)] backdrop-blur-[1px] transition duration-300 hover:-translate-y-1 hover:border-gold/60 hover:shadow-[0_20px_38px_-20px_rgba(32,64,34,0.6)]"
-              >
-                {/* Image placeholder (owner photos + CMS to come) */}
-                <div className="flex aspect-[4/5] w-full items-center justify-center border border-line bg-greige">
-                  <div className="flex flex-col items-center gap-2 text-gold/45">
-                    <Lotus className="h-10 w-16" />
-                    <span className="font-sans text-[10px] uppercase tracking-[0.25em]">
-                      {t("photoSoon")}
-                    </span>
+            <Reveal key={c.key} delay={0.06 * i} className="flex justify-center">
+              <Link href={c.href} className="group block w-full max-w-[290px]">
+                <div
+                  className={`album-print ${c.print}`}
+                  style={{ "--tilt": c.tilt } as CSSProperties}
+                >
+                  {/* Photo placeholder (owner photos + CMS to come) */}
+                  <div className="flex aspect-[4/5] w-full items-center justify-center border border-line bg-kraft">
+                    <div className="flex flex-col items-center gap-2 text-gold/45">
+                      <Lotus className="h-10 w-16" />
+                      <span className="font-sans text-[10px] uppercase tracking-[0.25em]">
+                        {t("photoSoon")}
+                      </span>
+                    </div>
                   </div>
+                  <div className="album-name">{t(`cards.${c.key}.title`)}</div>
                 </div>
-
-                <h3 className="mt-5 font-serif text-xl uppercase tracking-wide text-forest">
-                  {t(`cards.${c.key}.title`)}
-                </h3>
-                <p className="mt-2 font-body text-sm leading-relaxed text-ink-muted">
+                <p className="mx-auto mt-7 max-w-[18rem] text-center font-sans text-base leading-relaxed text-ink">
                   {t(`cards.${c.key}.desc`)}
                 </p>
-                <span className="mt-auto pt-4">
-                  <CrossDivider className="mx-auto h-3.5 w-3.5 text-gold/70" />
-                </span>
               </Link>
             </Reveal>
           ))}
