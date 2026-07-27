@@ -22,6 +22,7 @@ export default async function Home({
       <Hero locale={locale} />
       <TrakaDivider />
       <NaseUsluge />
+      <TrakaDivider src="/traka2-tile.png" />
       <WhyUs locale={locale} />
       <About locale={locale} />
       <SocialProof locale={locale} />
