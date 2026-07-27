@@ -26,15 +26,17 @@ export type UslugaCardData = {
 // (Позивнице→gallery, Слике→art, Детаљи→dodaci). We measure the card + the row and animate
 // top/left/width/height so it visibly expands out of the card (no separate centred window).
 // Touch / reduced-motion get no panel — a tap just follows the link.
+// Bigger, overlapping, tilted prints spread across the panel (not a tidy arc) so the space
+// reads as a lively scatter, not an empty rectangle. Two loose staggered rows.
 const SCATTER = [
-  { x: -258, y: -18, r: -12 },
-  { x: -158, y: -54, r: -7 },
-  { x: -52, y: -68, r: -1 },
-  { x: 58, y: -60, r: 6 },
-  { x: 168, y: -30, r: 12 },
-  { x: 256, y: 16, r: 8 },
-  { x: -150, y: 54, r: -9 },
-  { x: 44, y: 52, r: 3 },
+  { x: -300, y: -44, r: -11 },
+  { x: -215, y: 46, r: 8 },
+  { x: -120, y: -54, r: -5 },
+  { x: -20, y: 40, r: 6 },
+  { x: 90, y: -52, r: -8 },
+  { x: 185, y: 44, r: 9 },
+  { x: 285, y: -40, r: 13 },
+  { x: 320, y: 48, r: -5 },
 ];
 
 type Rect = { top: number; left: number; width: number; height: number };
@@ -133,8 +135,8 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
                 {active.images.slice(0, 8).map((img, idx) => (
                   <motion.div
                     key={idx}
-                    className="absolute h-[176px] w-[140px] overflow-hidden border-[6px] border-cream bg-kraft shadow-[0_14px_26px_-12px_rgba(43,38,28,0.6)]"
-                    style={{ left: -70, top: -88 }}
+                    className="absolute h-[228px] w-[186px] overflow-hidden border-[7px] border-cream bg-kraft shadow-[0_16px_30px_-12px_rgba(43,38,28,0.6)]"
+                    style={{ left: -93, top: -114 }}
                     initial={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.4 }}
                     animate={{ opacity: 1, x: SCATTER[idx].x, y: SCATTER[idx].y, rotate: SCATTER[idx].r, scale: 1 }}
                     exit={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.5 }}
@@ -142,7 +144,7 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`${img.url}?w=280&h=350&fit=crop&auto=format`}
+                      src={`${img.url}?w=380&h=470&fit=crop&auto=format`}
                       alt=""
                       className="h-full w-full object-cover"
                     />
