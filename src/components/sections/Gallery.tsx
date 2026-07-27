@@ -37,17 +37,12 @@ export default async function Gallery({ locale }: { locale: string }) {
                 <figure className="overflow-hidden rounded-md border border-line">
                   <Image
                     src={it.url as string}
-                    alt={pick(it.alt, locale) || pick(it.title, locale) || heading}
+                    alt={heading}
                     width={it.dim?.width || 800}
                     height={it.dim?.height || 1000}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="h-auto w-full"
                   />
-                  {pick(it.title, locale) && (
-                    <figcaption className="bg-cream px-3 py-2 font-serif text-sm text-ink-muted">
-                      {pick(it.title, locale)}
-                    </figcaption>
-                  )}
                 </figure>
               </Reveal>
             ))

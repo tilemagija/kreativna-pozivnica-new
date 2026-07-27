@@ -87,11 +87,8 @@ export async function getSocial(): Promise<SocialData> {
 
 // --- Gallery ---
 export type GalleryEntry = {
-  title?: LocaleValue;
-  category?: string;
   url?: string;
   dim?: { width: number; height: number };
-  alt?: LocaleValue;
 };
 export type GalleryData = {
   galleryKicker?: LocaleValue;
@@ -102,11 +99,9 @@ export type GalleryData = {
 
 const GALLERY_QUERY = `*[_type == "homePage"][0]{
   galleryKicker, galleryHeading, gallerySubheading,
-  "items": *[_type == "galleryItem"] | order(order asc){
-    title, category,
-    "url": image.asset->url,
-    "dim": image.asset->metadata.dimensions,
-    "alt": image.alt
+  "items": galleryImages[]{
+    "url": asset->url,
+    "dim": asset->metadata.dimensions
   }
 }`;
 

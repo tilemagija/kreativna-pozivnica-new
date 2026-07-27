@@ -1,8 +1,8 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
 
 // The whole landing page copy — one document, split into clearly-named sections
-// so a non-technical editor fills each part in one place. Gallery items and
-// testimonials live as their own lists (galleryItem / testimonial).
+// so a non-technical editor fills each part in one place. Gallery is an image array
+// here (multi-upload); testimonials live as their own list (testimonial).
 export const homePage = defineType({
   name: "homePage",
   title: "Почетна страна",
@@ -50,6 +50,16 @@ export const homePage = defineType({
     defineField({ name: "galleryKicker", title: "Надтекст", type: "localeString", fieldset: "gallery" }),
     defineField({ name: "galleryHeading", title: "Наслов", type: "localeString", fieldset: "gallery" }),
     defineField({ name: "gallerySubheading", title: "Кратак опис", type: "localeText", fieldset: "gallery" }),
+    defineField({
+      name: "galleryImages",
+      title: "Слике галерије",
+      type: "array",
+      fieldset: "gallery",
+      description:
+        "Превуци да промениш редослед. При отпремању можеш изабрати ВИШЕ слика одједном. Првих 8 се приказује и на hover-у картица.",
+      options: { layout: "grid" },
+      of: [defineArrayMember({ type: "image", options: { hotspot: true } })],
+    }),
 
     // 2б · НАШЕ УСЛУГЕ — cover image per card (text stays in the app; only the photo is editable here)
     defineField({

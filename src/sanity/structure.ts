@@ -35,7 +35,6 @@ export const structure: StructureResolver = (S) =>
         .id("salePage")
         .child(S.document().schemaType("salePage").documentId("salePage")),
       S.divider(),
-      S.documentTypeListItem("galleryItem").title("Галерија"),
       S.documentTypeListItem("artwork").title("Уметност и поклони (радови)"),
       S.documentTypeListItem("dodaciItem").title("Додаци (ставке)"),
       S.documentTypeListItem("prilagoditeItem").title("Прилагодите (примери)"),

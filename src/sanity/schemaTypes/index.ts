@@ -4,7 +4,6 @@ import { localeText } from "./objects/localeText";
 import { templateTextField } from "./objects/templateTextField";
 import { siteSettings } from "./documents/siteSettings";
 import { homePage } from "./documents/homePage";
-import { galleryItem } from "./documents/galleryItem";
 import { testimonial } from "./documents/testimonial";
 import { inquiry } from "./documents/inquiry";
 import { artwork } from "./documents/artwork";
@@ -33,7 +32,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   // content
   siteSettings,
   homePage,
-  galleryItem,
   testimonial,
   inquiry,
   artwork,
