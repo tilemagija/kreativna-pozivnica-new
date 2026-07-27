@@ -114,6 +114,24 @@ export async function getGallery(): Promise<GalleryData> {
   return client.fetch(GALLERY_QUERY, {}, { next: { revalidate: 60 } });
 }
 
+// --- "Наше услуге" card cover images (optional; fall back to a placeholder when empty) ---
+export type UslugeCard = { url?: string; alt?: LocaleValue } | null;
+export type UslugeData = {
+  pozivnice?: UslugeCard;
+  slike?: UslugeCard;
+  detalji?: UslugeCard;
+} | null;
+
+const USLUGE_QUERY = `*[_type == "homePage"][0]{
+  "pozivnice": { "url": uslugePozivniceImage.asset->url, "alt": uslugePozivniceImage.alt },
+  "slike": { "url": uslugeSlikeImage.asset->url, "alt": uslugeSlikeImage.alt },
+  "detalji": { "url": uslugeDetaljiImage.asset->url, "alt": uslugeDetaljiImage.alt }
+}`;
+
+export async function getUsluge(): Promise<UslugeData> {
+  return client.fetch(USLUGE_QUERY, {}, { next: { revalidate: 60 } });
+}
+
 // --- About ("O nama") ---
 export type AboutData = {
   aboutKicker?: LocaleValue;

@@ -25,7 +25,7 @@
 - **Linkovi kartica:** Позивнице → `/pozivnice`, Слике → `/umetnost`, Посебни детаљи → `/dodaci`.
 - **Stil kartica = „АЛБУМ"** (vlasnikov izbor, protiv „AI grida"): 3 kartice **istih veličina**, ali kao stare fotografije — beli krem okvir sa **iscepanim ivicama** (SVG `feDisplacement` filter na `::before` krem sloju + `drop-shadow` POSLE `url()` → senka prati iscepanu konturu = deluje kao pravi podignut komad), **blago nakrivljene** (`--tilt` po kartici, na hover se isprave+podignu), **rukom pisan** naslov (Marck script). Opis ispod = **sans** (čitljiviji), 16px, ink. CSS klase `.album-print*` u `globals.css`. NE mešati sa savetom za GALERIJU (velike/asimetrične/preklapanje — čuva se za `/pozivnice` mozaik).
 - **Galerija premeštena** sa početne na novu stranu `/pozivnice` (`src/app/[locale]/pozivnice/page.tsx`, reuse `Gallery`). Stara inline Gallery sekcija sklonjena sa `page.tsx`.
-- ⚠️ **Slike kartica = placeholder** → čekaju vlasnikove fotke **+ CMS** (Sanity schema za usluge kartice = sledeći tehnički korak kad stignu slike).
+- ✅ **Slike kartica = CMS-povezane** (Sanity): `homePage` fieldset „2б · Наше услуге" → polja `uslugePozivniceImage/uslugeSlikeImage/uslugeDetaljiImage`. Query `getUsluge()`, komponenta renderuje CMS sliku ako postoji, inače placeholder („ФОТОГРАФИЈА УСКОРО"). Vlasnik uploaduje na `/studio` → Почетна страна → Наше услуге. (Tekst kartica i dalje u `messages/*.json`, ne u CMS-u.)
 
 **★ SLEDEĆE (po mokapu, odozgo nadole):** „**Узори који остају**" (mozaik 5 slika) → **footer** (sa vez trakom) → pa preliti ton na „О нама" + kontakt/paketi. (Наше услуге ✅ gotovo gore.)
 

@@ -21,7 +21,7 @@ export default async function Home({
       <IntroOverlay />
       <Hero locale={locale} />
       <TrakaDivider />
-      <NaseUsluge />
+      <NaseUsluge locale={locale} />
       <TrakaDivider src="/traka2-tile.png" />
       <WhyUs locale={locale} />
       <About locale={locale} />

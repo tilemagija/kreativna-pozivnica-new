@@ -10,6 +10,7 @@ export const homePage = defineType({
   fieldsets: [
     { name: "hero", title: "1 · Hero (врх стране)", options: { collapsible: true } },
     { name: "gallery", title: "2 · Галерија (наслов секције)", options: { collapsible: true, collapsed: true } },
+    { name: "usluge", title: "2б · Наше услуге (слике картица)", options: { collapsible: true, collapsed: true } },
     { name: "why", title: "3 · Зашто баш ми", options: { collapsible: true, collapsed: true } },
     { name: "about", title: "4 · О нама", options: { collapsible: true, collapsed: true } },
     { name: "social", title: "5 · Постаните део приче (друштвени доказ)", options: { collapsible: true, collapsed: true } },
@@ -49,6 +50,32 @@ export const homePage = defineType({
     defineField({ name: "galleryKicker", title: "Надтекст", type: "localeString", fieldset: "gallery" }),
     defineField({ name: "galleryHeading", title: "Наслов", type: "localeString", fieldset: "gallery" }),
     defineField({ name: "gallerySubheading", title: "Кратак опис", type: "localeText", fieldset: "gallery" }),
+
+    // 2б · НАШЕ УСЛУГЕ — cover image per card (text stays in the app; only the photo is editable here)
+    defineField({
+      name: "uslugePozivniceImage",
+      title: "Слика за картицу: Позивнице",
+      type: "image",
+      fieldset: "usluge",
+      options: { hotspot: true },
+      fields: [{ name: "alt", title: "Опис слике (за приступачност/SEO)", type: "localeString" }],
+    }),
+    defineField({
+      name: "uslugeSlikeImage",
+      title: "Слика за картицу: Слике",
+      type: "image",
+      fieldset: "usluge",
+      options: { hotspot: true },
+      fields: [{ name: "alt", title: "Опис слике (за приступачност/SEO)", type: "localeString" }],
+    }),
+    defineField({
+      name: "uslugeDetaljiImage",
+      title: "Слика за картицу: Посебни детаљи",
+      type: "image",
+      fieldset: "usluge",
+      options: { hotspot: true },
+      fields: [{ name: "alt", title: "Опис слике (за приступачност/SEO)", type: "localeString" }],
+    }),
 
     // 3 · WHY US
     defineField({ name: "whyKicker", title: "Надтекст", type: "localeString", fieldset: "why" }),
