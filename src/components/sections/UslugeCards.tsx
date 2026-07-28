@@ -4,7 +4,7 @@ import type { CSSProperties, MouseEvent as ReactMouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import Lotus from "@/components/brand/Lotus";
 import Reveal from "@/components/motion/Reveal";
 
@@ -51,6 +51,7 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
   const rowRef = useRef<HTMLDivElement>(null);
   const printRefs = useRef<(HTMLDivElement | null)[]>([]);
   const ptr = useRef({ x: -1, y: -1 });
+  const router = useRouter();
 
   useEffect(() => {
     setHoverable(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
@@ -173,11 +174,16 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
                 {active.images.slice(0, 8).map((img, idx) => (
                   <motion.div
                     key={idx}
-                    className="absolute h-[228px] w-[186px] overflow-hidden border-[7px] border-cream bg-kraft shadow-[0_16px_30px_-12px_rgba(43,38,28,0.6)]"
+                    // Second-level hover: since the prints overlap, hovering one lifts it
+                    // to the front (higher z + a small pop). Cheap — just a z-index/scale
+                    // change on already-rendered nodes. Click still goes to the card page.
+                    className="pointer-events-auto absolute h-[228px] w-[186px] cursor-pointer overflow-hidden border-[7px] border-cream bg-kraft shadow-[0_16px_30px_-12px_rgba(43,38,28,0.6)]"
                     style={{ left: -93, top: -114 }}
                     initial={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.4 }}
                     animate={{ opacity: 1, x: SCATTER[idx].x, y: SCATTER[idx].y, rotate: SCATTER[idx].r, scale: 1 }}
                     exit={{ opacity: 0, x: 0, y: 0, rotate: 0, scale: 0.5 }}
+                    whileHover={{ scale: 1.12, zIndex: 30, transition: { duration: 0.16 } }}
+                    onClick={() => router.push(active.href)}
                     transition={{ delay: 0.08 + idx * 0.04, type: "spring", stiffness: 240, damping: 22 }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
