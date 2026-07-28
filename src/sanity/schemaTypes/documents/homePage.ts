@@ -145,14 +145,30 @@ export const homePage = defineType({
     }),
     defineField({
       name: "instagramImages",
-      title: "Слике за Instagram мрежу (у телефону)",
+      title: "Слике за Instagram мрежу (у телефону) — резерва",
       type: "array",
       fieldset: "social",
-      description: "6 слика за мрежу у телефону.",
+      description: "Приказује се у телефону САМО ако није постављен скриншот профила испод.",
       of: [defineArrayMember({ type: "image", options: { hotspot: true } })],
+    }),
+    defineField({
+      name: "instagramScreenshot",
+      title: "Скриншот Instagram профила (приказ у телефону)",
+      type: "image",
+      fieldset: "social",
+      description: "Сликај свој IG профил (заглавље + мрежа) и убаци овде — приказује се у телефону као да је отворен. Клик на телефон води на Instagram.",
+      options: { hotspot: true },
     }),
     defineField({ name: "testimonialsKicker", title: "Надтекст за утиске (нпр. ВАШЕ РЕЧИ)", type: "localeString", fieldset: "social" }),
     defineField({ name: "testimonialsHeading", title: "Наслов за утиске (нпр. Утисци)", type: "localeString", fieldset: "social" }),
+    defineField({
+      name: "utisci",
+      title: "Утисци — слике/скриншотови",
+      type: "array",
+      fieldset: "social",
+      description: "Скриншотови порука, рецензија, фотке. Приказују се 2 у реду; клик отвара галерију свих. Без описа/наслова — само убаци слике.",
+      of: [defineArrayMember({ type: "image", options: { hotspot: true } })],
+    }),
 
     // 5 · CONTACT heading
     defineField({ name: "contactKicker", title: "Надтекст", type: "localeString", fieldset: "contact" }),

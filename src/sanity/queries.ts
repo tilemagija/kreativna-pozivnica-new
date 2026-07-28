@@ -63,10 +63,12 @@ export type SocialData = {
   counterTagline?: LocaleValue;
   packageImages?: SanityImage[];
   instagramImages?: SanityImage[];
+  instagramScreenshot?: SanityImage;
   instagramHandle?: string;
   testimonialsKicker?: LocaleValue;
   testimonialsHeading?: LocaleValue;
   testimonials?: TestimonialItem[];
+  utisci?: SanityImage[];
 } | null;
 
 const SOCIAL_QUERY = `*[_type == "homePage"][0]{
@@ -74,6 +76,8 @@ const SOCIAL_QUERY = `*[_type == "homePage"][0]{
   counterTarget, counterSuffix, counterLabel, counterTagline,
   packageImages[]{ asset, alt },
   instagramImages[]{ asset },
+  instagramScreenshot{ asset },
+  utisci[]{ asset },
   testimonialsKicker, testimonialsHeading,
   "instagramHandle": *[_type == "siteSettings"][0].instagramHandle,
   "testimonials": *[_type == "testimonial"] | order(order asc){

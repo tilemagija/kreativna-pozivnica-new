@@ -205,3 +205,19 @@ body {
     mask-image: none;
   }
 }
+
+/* „Утисци" scroll area — thin, warm scrollbar so it reads as intentional, not a browser default. */
+.utisci-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--c-gold) 55%, transparent) transparent;
+}
+.utisci-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.utisci-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--c-gold) 55%, transparent);
+  border-radius: 999px;
+}
+.utisci-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
