@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, MouseEvent as ReactMouseEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -50,31 +50,53 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
 
   const rowRef = useRef<HTMLDivElement>(null);
   const printRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const ptr = useRef({ x: -1, y: -1 });
 
   useEffect(() => {
     setHoverable(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
   }, []);
 
-  // Close the grown panel the moment the pointer is no longer meant to be on it —
-  // any scroll, tab switch (alt-tab / window blur), or hidden tab. Without this the
-  // panel's onMouseLeave never fires in those cases and it stays stuck on screen.
+  // Close the grown panel once the pointer is genuinely no longer over the cards.
+  // We do NOT close on every scroll tick — with fluid (Lenis) scrolling the momentum
+  // keeps firing scroll events while the mouse sits still, which would flicker the panel
+  // open/closed. Instead, on scroll we hit-test the pointer's last position: if the cards
+  // have scrolled out from under it, close; if the mouse is still over the row (inertia
+  // just settling), keep it. Tab switch (blur) / hidden tab always close.
   useEffect(() => {
     if (hovered === null) return;
-    const close = () => setHovered(null);
-    window.addEventListener("scroll", close, { passive: true });
-    window.addEventListener("blur", close);
-    document.addEventListener("visibilitychange", close);
+    const onMove = (e: PointerEvent) => {
+      ptr.current = { x: e.clientX, y: e.clientY };
+    };
+    const stillOverRow = () => {
+      const row = rowRef.current;
+      if (!row || ptr.current.x < 0) return false;
+      const el = document.elementFromPoint(ptr.current.x, ptr.current.y);
+      return !!el && row.contains(el);
+    };
+    const onScroll = () => {
+      if (!stillOverRow()) setHovered(null);
+    };
+    const onBlur = () => setHovered(null);
+    const onVis = () => {
+      if (document.hidden) setHovered(null);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("blur", onBlur);
+    document.addEventListener("visibilitychange", onVis);
     return () => {
-      window.removeEventListener("scroll", close);
-      window.removeEventListener("blur", close);
-      document.removeEventListener("visibilitychange", close);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("blur", onBlur);
+      document.removeEventListener("visibilitychange", onVis);
     };
   }, [hovered]);
 
   const canHover = hoverable && !reduce;
 
-  const onEnter = (i: number) => {
+  const onEnter = (i: number, e: ReactMouseEvent) => {
     if (!canHover || cards[i].images.length === 0) return;
+    ptr.current = { x: e.clientX, y: e.clientY };
     const row = rowRef.current;
     const print = printRefs.current[i];
     if (!row || !print) return;
@@ -94,7 +116,7 @@ export default function UslugeCards({ cards }: { cards: UslugaCardData[] }) {
           <Reveal key={c.href} delay={0.06 * i} className="flex justify-center">
             <Link
               href={c.href}
-              onMouseEnter={() => onEnter(i)}
+              onMouseEnter={(e) => onEnter(i, e)}
               className="group relative block w-full max-w-[290px]"
               style={{ opacity: hovered === i ? 0 : 1, transition: "opacity 0.15s" }}
             >
