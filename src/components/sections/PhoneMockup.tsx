@@ -24,7 +24,7 @@ export default function PhoneMockup({
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="w-56 rounded-[2rem] border border-white/15 bg-white/5 p-2 shadow-2xl shadow-black/40">
+      <div className="w-56 rounded-[2rem] border border-forest/15 bg-forest/5 p-2 shadow-2xl shadow-forest/25">
         <div className="overflow-hidden rounded-[1.6rem] bg-cream">
           {/* header */}
           <div className="flex items-center gap-2 px-3 py-2.5">
@@ -55,7 +55,7 @@ export default function PhoneMockup({
           </div>
         </div>
       </div>
-      <span className="font-sans text-xs uppercase tracking-[0.25em] text-sage">
+      <span className="font-sans text-xs uppercase tracking-[0.25em] text-sage-deep">
         @{(handle || "kreativna_pozivnica").replace(/^@/, "")}
       </span>
     </div>

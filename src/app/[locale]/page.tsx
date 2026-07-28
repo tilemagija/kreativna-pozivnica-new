@@ -25,6 +25,7 @@ export default async function Home({
       <WhyUs locale={locale} />
       <TrakaDivider src="/traka3-tile.png" />
       <About locale={locale} />
+      <TrakaDivider src="/traka4-tile.png" />
       <SocialProof locale={locale} />
     </>
   );

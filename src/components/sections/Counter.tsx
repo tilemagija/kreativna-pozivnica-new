@@ -51,11 +51,11 @@ export default function Counter({
         {suffix && <span className="align-top text-3xl md:text-4xl">{suffix}</span>}
       </div>
       {label && (
-        <div className="font-sans text-xs uppercase tracking-[0.3em] text-greige">
+        <div className="font-sans text-xs uppercase tracking-[0.3em] text-ink-muted">
           {label}
         </div>
       )}
-      {tagline && <p className="font-script text-2xl text-sage">{tagline}</p>}
+      {tagline && <p className="font-script text-2xl text-sage-deep">{tagline}</p>}
     </div>
   );
 }

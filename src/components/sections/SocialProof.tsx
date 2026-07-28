@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { getSocial } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
@@ -10,8 +11,9 @@ import Reveal from "@/components/motion/Reveal";
 
 type ImgLike = Parameters<typeof urlFor>[0];
 
-// "Postanite deo priče" — the social-proof band (deep green). Three columns:
-// phone Instagram grid · counter + falling package photos · testimonials ("Utisci").
+// "Postanite deo priče" — the social-proof band. A faint sepia watercolour (couple +
+// church) washes the background; content sits on warm paper with dark ink text. Three
+// columns: phone Instagram grid · counter + falling package photos · testimonials.
 // Everything from Sanity with graceful placeholders while content is being added.
 export default async function SocialProof({ locale }: { locale: string }) {
   const data = await getSocial();
@@ -47,9 +49,16 @@ export default async function SocialProof({ locale }: { locale: string }) {
     : [null, null, null, null];
 
   return (
-    <section className="bg-forest py-20 text-cream md:py-28">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading kicker={kicker} heading={heading} tone="light" />
+    <section className="relative isolate overflow-hidden bg-paper py-20 text-ink md:py-28">
+      <Image
+        src="/pozadina4.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-10 object-cover opacity-20"
+      />
+      <div className="relative mx-auto max-w-6xl px-6">
+        <SectionHeading kicker={kicker} heading={heading} tone="dark" />
 
         <div className="mt-14 grid gap-12 md:mt-20 lg:grid-cols-3 lg:items-start lg:gap-8">
           {/* Left — phone */}
@@ -72,10 +81,10 @@ export default async function SocialProof({ locale }: { locale: string }) {
           {/* Right — testimonials */}
           <div className="flex flex-col gap-4">
             <div className="flex flex-col items-center gap-1 text-center lg:items-start lg:text-left">
-              <span className="font-sans text-xs uppercase tracking-[0.3em] text-sage">
+              <span className="font-sans text-xs uppercase tracking-[0.3em] text-sage-deep">
                 {tKicker}
               </span>
-              <h3 className="font-script text-3xl text-cream">{tHeading}</h3>
+              <h3 className="font-script text-3xl text-forest">{tHeading}</h3>
             </div>
             <div className="grid grid-cols-2 gap-3">
               {cards.map(
@@ -85,15 +94,15 @@ export default async function SocialProof({ locale }: { locale: string }) {
                     <Reveal
                       key={i}
                       delay={0.05 * i}
-                      className="flex flex-col gap-2 rounded-lg border border-white/10 bg-white/5 p-3"
+                      className="flex flex-col gap-2 rounded-lg border border-line bg-cream/70 p-3"
                     >
                       <span className="font-serif text-2xl leading-none text-gold">“</span>
                       {quote ? (
                         <>
-                          <p className="line-clamp-4 font-body text-sm leading-relaxed text-greige">
+                          <p className="line-clamp-4 font-body text-sm leading-relaxed text-ink-muted">
                             {quote}
                           </p>
-                          <span className="mt-auto font-sans text-xs text-sage">
+                          <span className="mt-auto font-sans text-xs text-sage-deep">
                             {item?.authorName}
                             {item?.authorDetail
                               ? ` · ${pick(item.authorDetail, locale)}`
@@ -102,8 +111,8 @@ export default async function SocialProof({ locale }: { locale: string }) {
                         </>
                       ) : (
                         <div className="flex flex-col gap-1.5 py-2">
-                          <span className="h-2 w-4/5 rounded bg-white/10" />
-                          <span className="h-2 w-3/5 rounded bg-white/10" />
+                          <span className="h-2 w-4/5 rounded bg-forest/10" />
+                          <span className="h-2 w-3/5 rounded bg-forest/10" />
                         </div>
                       )}
                     </Reveal>
