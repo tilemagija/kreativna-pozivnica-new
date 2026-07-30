@@ -6,14 +6,16 @@
 export default function TrakaDivider({
   className = "",
   src = "/traka-razdelnik-tile.png",
+  heightClass = "h-14 md:h-20",
 }: {
   className?: string;
   src?: string;
+  heightClass?: string;
 }) {
   return (
     <div
       aria-hidden
-      className={`h-14 w-full bg-center bg-repeat-x md:h-20 ${className}`}
+      className={`w-full bg-center bg-repeat-x ${heightClass} ${className}`}
       style={{ backgroundImage: `url(${src})`, backgroundSize: "auto 100%" }}
     />
   );
