@@ -4,7 +4,6 @@ import { getAbout } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
 import { urlFor } from "@/sanity/lib/image";
 import Reveal from "@/components/motion/Reveal";
-import Lotus from "@/components/brand/Lotus";
 
 // "O nama" — the story. Asymmetric two-column: image on the left (bleeds), text right.
 export default async function About({ locale }: { locale: string }) {
@@ -15,13 +14,15 @@ export default async function About({ locale }: { locale: string }) {
   const heading = pick(data?.aboutHeading, locale) || t("heading");
   const text = pick(data?.aboutText, locale) || t("text");
   const hasImage = Boolean(data?.aboutImage?.asset?._ref);
+  // Default to the family photo (public/porodica.jpg); the owner can still override it
+  // from Sanity (aboutImage) later.
   const imgUrl = hasImage
     ? urlFor(data!.aboutImage as Parameters<typeof urlFor>[0])
-        .width(900)
-        .height(1100)
+        .width(1200)
+        .height(800)
         .fit("crop")
         .url()
-    : null;
+    : "/porodica.jpg";
 
   return (
     <section
@@ -30,20 +31,14 @@ export default async function About({ locale }: { locale: string }) {
     >
       <div className="mx-auto grid max-w-5xl items-center gap-10 px-6 sm:px-10 md:grid-cols-2 md:gap-16 md:px-16">
         <Reveal>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-md border border-line">
-            {imgUrl ? (
-              <Image
-                src={imgUrl}
-                alt={pick(data?.aboutImage?.alt, locale) || heading}
-                fill
-                sizes="(max-width: 768px) 90vw, 45vw"
-                className="object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-kraft text-gold">
-                <Lotus className="h-20 w-28 opacity-40" />
-              </div>
-            )}
+          <div className="relative aspect-[3/2] overflow-hidden rounded-md border border-line">
+            <Image
+              src={imgUrl}
+              alt={pick(data?.aboutImage?.alt, locale) || heading}
+              fill
+              sizes="(max-width: 768px) 90vw, 45vw"
+              className="object-cover"
+            />
           </div>
         </Reveal>
 
