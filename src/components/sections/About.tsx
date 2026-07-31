@@ -2,7 +2,6 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { getAbout } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
-import { urlFor } from "@/sanity/lib/image";
 import Reveal from "@/components/motion/Reveal";
 
 // "O nama" — the story. Asymmetric two-column: image on the left (bleeds), text right.
@@ -13,16 +12,10 @@ export default async function About({ locale }: { locale: string }) {
   const kicker = pick(data?.aboutKicker, locale) || t("kicker");
   const heading = pick(data?.aboutHeading, locale) || t("heading");
   const text = pick(data?.aboutText, locale) || t("text");
-  const hasImage = Boolean(data?.aboutImage?.asset?._ref);
-  // Default to the family photo (public/porodica.jpg); the owner can still override it
-  // from Sanity (aboutImage) later.
-  const imgUrl = hasImage
-    ? urlFor(data!.aboutImage as Parameters<typeof urlFor>[0])
-        .width(1200)
-        .height(800)
-        .fit("crop")
-        .url()
-    : "/porodica.jpg";
+  // The family photo is the „О нама" image (public/porodica.jpg). Kept static on purpose:
+  // a stale Sanity aboutImage used to override it. To change it, swap the file (or ask
+  // to re-wire the CMS field).
+  const imgUrl = "/porodica.jpg";
 
   return (
     <section
@@ -34,7 +27,7 @@ export default async function About({ locale }: { locale: string }) {
           <div className="relative aspect-[3/2] overflow-hidden rounded-md border border-line">
             <Image
               src={imgUrl}
-              alt={pick(data?.aboutImage?.alt, locale) || heading}
+              alt={heading}
               fill
               sizes="(max-width: 768px) 90vw, 45vw"
               className="object-cover"
