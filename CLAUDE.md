@@ -60,6 +60,8 @@ Bezbednost nije feature koji se „doda" — to je **odsustvo otvorenih vrata** 
 - **Nikad ne veruj ceni iz browsera.** Uvek preračunaj finalni iznos na serveru pre naplate.
 - **Ne obećavaj ponašanje platforme koje ne možemo da proverimo.** (Npr. Instagram ne može pre-puniti DM tekst+slika linkom — Meta blokira.)
 - **Live text-over-image editor: tekst KONTROLISAN iz jednog React state-a (jedan izvor istine).** NE mešati `contentEditable` + upisivanje state-a nazad — tekst se resetuje/bori sa karetom (to je srušilo prvi pokušaj konfiguratora). Izmena kroz prava input polja (mobilno pouzdano); klik na tekst na slici samo fokusira polje. Verifikuj uživo u browseru, ne samo SSR/build.
+- **NE uvoziti server komponentu u „use client" fajl.** Ako client komponenta `import`-uje server komponentu koja zove `getTranslations`/`getX` iz `next-intl/server`, ona upadne u client bundle i build padne na prerenderu („getTranslations is not supported in Client Components"). Rešenje: server komponentu prosledi kao `children`/prop client „gate"-u (RSC obrazac), ne kao import.
+- **`npm run build | tail` maskira izlazni kod** (dobiješ exit pipe-a, ne build-a). Za pravi status: redirekcija u log + `echo EXIT=$?`, pa proveri ima li „prerender error / exiting the build".
 
 ---
 

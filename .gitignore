@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Owner source assets (heavy originals, optimized copies live in public/)
+_source-assets/

@@ -8,6 +8,7 @@ import { cormorant, lora, marck } from "../fonts";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
+import ConditionalFooter from "@/components/site/ConditionalFooter";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
@@ -56,7 +57,9 @@ export default async function LocaleLayout({
           <SmoothScroll />
           <Header />
           <main className="flex flex-1 flex-col">{children}</main>
-          <Footer />
+          <ConditionalFooter>
+            <Footer />
+          </ConditionalFooter>
           <Analytics />
         </NextIntlClientProvider>
       </body>

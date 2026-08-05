@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import type { Artwork } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
 import Reveal from "@/components/motion/Reveal";
+import MasonryInfinite from "@/components/gallery/MasonryInfinite";
 
 // World B gallery (showcase → Instagram, §14). Mosaic grid with a starting price under
 // each piece; clicking a piece opens an in-page lightbox (NOT a new window) with the
@@ -47,41 +48,41 @@ export default function ArtGallery({
 
   const open = openIndex !== null ? artworks[openIndex] : null;
 
+  const nodes = artworks.map((a, i) => {
+    const name = pick(a.name, locale);
+    return (
+      <Reveal key={a.slug || i} delay={0.03 * (i % 3)}>
+        <button
+          type="button"
+          onClick={() => setOpenIndex(i)}
+          className="group block w-full overflow-hidden rounded-sm border border-line bg-cream p-1.5 text-left shadow-[0_8px_22px_rgba(59,50,39,0.15)] transition duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_14px_30px_rgba(59,50,39,0.22)]"
+        >
+          <figure>
+            <Image
+              src={a.url as string}
+              alt={pick(a.alt, locale) || name}
+              width={a.dim?.width || 800}
+              height={a.dim?.height || 1000}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="h-auto w-full rounded-[2px]"
+            />
+            <figcaption className="flex items-baseline justify-between gap-3 px-2.5 pb-1 pt-3">
+              <span className="font-serif text-base text-ink">{name}</span>
+              {priceLabel(a.priceFrom) && (
+                <span className="whitespace-nowrap font-body text-sm text-gold-deep">
+                  {priceLabel(a.priceFrom)}
+                </span>
+              )}
+            </figcaption>
+          </figure>
+        </button>
+      </Reveal>
+    );
+  });
+
   return (
     <>
-      <div className="mt-12 gap-4 [column-count:1] sm:[column-count:2] lg:[column-count:3] md:mt-16">
-        {artworks.map((a, i) => {
-          const name = pick(a.name, locale);
-          return (
-            <Reveal key={a.slug || i} delay={0.03 * (i % 6)} className="mb-4 break-inside-avoid">
-              <button
-                type="button"
-                onClick={() => setOpenIndex(i)}
-                className="group block w-full overflow-hidden rounded-md border border-line bg-cream text-left transition-colors hover:border-gold"
-              >
-                <figure>
-                  <Image
-                    src={a.url as string}
-                    alt={pick(a.alt, locale) || name}
-                    width={a.dim?.width || 800}
-                    height={a.dim?.height || 1000}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="h-auto w-full"
-                  />
-                  <figcaption className="flex items-baseline justify-between gap-3 px-4 py-3">
-                    <span className="font-serif text-base text-ink">{name}</span>
-                    {priceLabel(a.priceFrom) && (
-                      <span className="whitespace-nowrap font-body text-sm text-gold-deep">
-                        {priceLabel(a.priceFrom)}
-                      </span>
-                    )}
-                  </figcaption>
-                </figure>
-              </button>
-            </Reveal>
-          );
-        })}
-      </div>
+      <MasonryInfinite items={nodes} />
 
       {open && (
         <div

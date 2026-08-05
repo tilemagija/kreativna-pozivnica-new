@@ -5,6 +5,8 @@ import { pick } from "@/sanity/locale";
 import SectionHeading from "@/components/sections/SectionHeading";
 import ArtGallery from "@/components/worldb/ArtGallery";
 import Reveal from "@/components/motion/Reveal";
+import EtnoFrame from "@/components/site/EtnoFrame";
+import PageEndHome from "@/components/site/PageEndHome";
 
 export async function generateMetadata({
   params,
@@ -41,19 +43,22 @@ export default async function ArtPage({
   // `data-world="b"` scopes a distinct World B aesthetic (locked in a later design pass
   // with the owner; §11a/Phase 6). Structure + logic are final now; the skin is deferred.
   return (
-    <div data-world="b" className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:pt-36">
-      <SectionHeading kicker={kicker} heading={heading} as="h1" />
-      <Reveal delay={0.1}>
-        <p className="mx-auto mt-4 max-w-2xl text-center font-body leading-relaxed text-ink-muted">
-          {intro}
-        </p>
-      </Reveal>
+    <EtnoFrame>
+      <div data-world="b" className="mx-auto max-w-6xl px-6 pb-24 pt-12 md:pt-16">
+        <SectionHeading kicker={kicker} heading={heading} as="h1" />
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-4 max-w-2xl text-center font-body leading-relaxed text-ink-muted">
+            {intro}
+          </p>
+        </Reveal>
 
-      {items.length ? (
-        <ArtGallery artworks={items} locale={locale} instagramUrl={instagramUrl} />
-      ) : (
-        <p className="mt-16 text-center font-body text-ink-muted">{t("empty")}</p>
-      )}
-    </div>
+        {items.length ? (
+          <ArtGallery artworks={items} locale={locale} instagramUrl={instagramUrl} />
+        ) : (
+          <p className="mt-16 text-center font-body text-ink-muted">{t("empty")}</p>
+        )}
+      </div>
+      <PageEndHome />
+    </EtnoFrame>
   );
 }

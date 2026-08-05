@@ -229,6 +229,9 @@
     "menu": "Menu",
     "close": "Close"
   },
+  "Common": {
+    "backHome": "Home page"
+  },
   "Footer": {
     "tagline": "Handmade, with love",
     "rights": "All rights reserved"
