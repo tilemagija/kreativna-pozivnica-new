@@ -5,6 +5,9 @@ import { getDodaciPage, getDodaciItems, getInstagramUrl } from "@/sanity/queries
 import { pick } from "@/sanity/locale";
 import SectionHeading from "@/components/sections/SectionHeading";
 import Reveal from "@/components/motion/Reveal";
+import EtnoFrame from "@/components/site/EtnoFrame";
+import PageEndHome from "@/components/site/PageEndHome";
+import MasonryInfinite from "@/components/gallery/MasonryInfinite";
 
 export async function generateMetadata({
   params,
@@ -40,53 +43,52 @@ export default async function DodaciPage({
 
   const shown = items.filter((it) => it.url);
 
-  const ctaButton = (
-    <a
-      href={instagramUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-block rounded-sm bg-gold px-7 py-3 font-serif text-base italic text-cream transition-colors hover:bg-gold-deep"
-    >
-      {ctaLabel}
-    </a>
-  );
+  const nodes = shown.map((it, i) => (
+    <Reveal key={i} delay={0.03 * (i % 3)}>
+      <figure className="rounded-sm border border-line bg-cream p-1.5 shadow-[0_8px_22px_rgba(59,50,39,0.18)] transition-transform duration-300 hover:-translate-y-1">
+        <Image
+          src={it.url as string}
+          alt={pick(it.alt, locale) || pick(it.caption, locale) || heading}
+          width={it.dim?.width || 800}
+          height={it.dim?.height || 1000}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="h-auto w-full rounded-[2px]"
+        />
+        {pick(it.caption, locale) && (
+          <figcaption className="px-2.5 pb-1 pt-2.5 text-center font-serif text-sm text-ink-muted">
+            {pick(it.caption, locale)}
+          </figcaption>
+        )}
+      </figure>
+    </Reveal>
+  ));
 
   return (
-    <div className="mx-auto max-w-6xl px-6 pb-24 pt-28 md:pt-36">
-      <SectionHeading kicker={kicker} heading={heading} as="h1" />
-      <Reveal delay={0.1}>
-        <p className="mx-auto mt-4 max-w-2xl text-center font-body leading-relaxed text-ink-muted">
-          {intro}
-        </p>
-      </Reveal>
+    <EtnoFrame>
+      <div className="mx-auto max-w-6xl px-6 pb-8 pt-12 md:pt-16">
+        <SectionHeading kicker={kicker} heading={heading} as="h1" />
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-4 max-w-2xl text-center font-body leading-relaxed text-ink-muted">
+            {intro}
+          </p>
+        </Reveal>
 
-      {shown.length > 0 && (
-        <div className="mt-12 gap-4 [column-count:1] sm:[column-count:2] lg:[column-count:3] md:mt-16">
-          {shown.map((it, i) => (
-            <Reveal key={i} delay={0.03 * (i % 6)} className="mb-4 break-inside-avoid">
-              <figure className="overflow-hidden rounded-md border border-line">
-                <Image
-                  src={it.url as string}
-                  alt={pick(it.alt, locale) || pick(it.caption, locale) || heading}
-                  width={it.dim?.width || 800}
-                  height={it.dim?.height || 1000}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="h-auto w-full"
-                />
-                {pick(it.caption, locale) && (
-                  <figcaption className="bg-cream px-3 py-2 font-serif text-sm text-ink-muted">
-                    {pick(it.caption, locale)}
-                  </figcaption>
-                )}
-              </figure>
-            </Reveal>
-          ))}
-        </div>
-      )}
+        {nodes.length > 0 && <MasonryInfinite items={nodes} />}
 
-      <Reveal delay={0.1}>
-        <div className="mt-16 flex justify-center md:mt-20">{ctaButton}</div>
-      </Reveal>
-    </div>
+        <Reveal delay={0.1}>
+          <div className="mt-16 flex justify-center md:mt-20">
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-sm bg-gold px-7 py-3 font-serif text-base italic text-cream transition-colors hover:bg-gold-deep"
+            >
+              {ctaLabel}
+            </a>
+          </div>
+        </Reveal>
+      </div>
+      <PageEndHome />
+    </EtnoFrame>
   );
 }

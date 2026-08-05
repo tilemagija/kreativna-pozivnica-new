@@ -8,7 +8,7 @@ import { usePathname } from "@/i18n/navigation";
 // than importing Footer itself — importing a server component (Footer uses getTranslations)
 // into a client module would drag it into the client bundle and break the build. usePathname
 // from the i18n navigation returns the locale-stripped path (e.g. "/pozivnice").
-const HIDE_FOOTER = ["/pozivnice", "/umetnost"];
+const HIDE_FOOTER = ["/pozivnice", "/umetnost", "/dodaci"];
 
 export default function ConditionalFooter({
   children,
