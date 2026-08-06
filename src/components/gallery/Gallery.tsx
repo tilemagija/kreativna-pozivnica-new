@@ -4,45 +4,55 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { GalleryTemplate, GalleryCategory } from "@/sanity/queries";
+import type { GalleryTemplate, GalleryCategory, GalleryType } from "@/sanity/queries";
 import { pick } from "@/sanity/locale";
 
-// Design catalog (owner's sketch): tabs Штампане / Дигиталне on top, categories on the
-// left, a grid of designs on the right (~4/row). EVERY design can be ordered both printed
-// and digital, so the tab is just the customer's CHOICE — both tabs show all designs, and
-// the tab (mode) is carried into the design's page. No sorting (small catalog).
+// Design catalog (owner's sketch): tabs Штампане / Дигиталне on top, filters on the left,
+// a grid of designs on the right (~4/row). EVERY design can be ordered both printed and
+// digital, so the tab is just the customer's CHOICE — both tabs show all designs, and the
+// tab (mode) is carried into the design's page. Sidebar filters (both CMS-managed): ТИП
+// (shape/dimension) + КАТЕГОРИЈА (occasion). Single/double-sided is a per-template pricing
+// option, not a filter.
 type Tab = "stampana" | "digitalna";
 
 export default function Gallery({
   templates,
   categories,
+  types,
   locale,
 }: {
   templates: GalleryTemplate[];
   categories: GalleryCategory[];
+  types: GalleryType[];
   locale: string;
 }) {
   const t = useTranslations("Catalog");
   const [tab, setTab] = useState<Tab>("stampana");
-  const [sided, setSided] = useState<"all" | "single" | "double">("all");
+  const [type, setType] = useState<string | "all">("all");
   const [cat, setCat] = useState<string | "all">("all");
 
-  // Categories that actually have designs (keeps the sidebar honest). Same for both tabs.
+  // Only show filter values that actually have designs (keeps the sidebar honest).
   const presentCategories = useMemo(() => {
     const present = new Set<string>();
     for (const x of templates) for (const s of x.categorySlugs ?? []) present.add(s);
     return categories.filter((c) => c.slug && present.has(c.slug));
   }, [templates, categories]);
 
-  // Two independent filters: TIP (single/double, from the doubleSided flag) + category.
+  const presentTypes = useMemo(() => {
+    const present = new Set<string>();
+    for (const x of templates) for (const s of x.typeSlugs ?? []) present.add(s);
+    return types.filter((ty) => ty.slug && present.has(ty.slug));
+  }, [templates, types]);
+
+  // Two independent filters: TIP (shape/dimension) + category — both from CMS.
   const shown = useMemo(
     () =>
       templates.filter((x) => {
-        const sidedOk = sided === "all" || (sided === "double" ? !!x.doubleSided : !x.doubleSided);
+        const typeOk = type === "all" || (x.typeSlugs ?? []).includes(type);
         const catOk = cat === "all" || (x.categorySlugs ?? []).includes(cat);
-        return sidedOk && catOk;
+        return typeOk && catOk;
       }),
-    [templates, sided, cat],
+    [templates, type, cat],
   );
 
   const tabBtn = (value: Tab, label: string) => (
@@ -59,26 +69,34 @@ export default function Gallery({
   );
 
   return (
-    <div className="mt-10">
+    <div>
       {/* Tabs */}
       <div className="flex justify-center gap-3">
         {tabBtn("stampana", t("stampane"))}
         {tabBtn("digitalna", t("digitalne"))}
       </div>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-[200px_1fr] md:gap-10">
-        {/* Filters: TIP (single/double) then categories */}
-        <aside className="flex flex-col gap-6">
-          <div>
-            <h2 className="mb-3 font-sans text-xs uppercase tracking-[0.2em] text-sage-deep">
-              {t("tip")}
-            </h2>
-            <ul className="flex flex-wrap gap-2 md:flex-col md:gap-1">
-              <li><CatButton active={sided === "all"} onClick={() => setSided("all")}>{t("all")}</CatButton></li>
-              <li><CatButton active={sided === "single"} onClick={() => setSided("single")}>{t("single")}</CatButton></li>
-              <li><CatButton active={sided === "double"} onClick={() => setSided("double")}>{t("double")}</CatButton></li>
-            </ul>
-          </div>
+      <div className="mt-10 grid gap-8 md:grid-cols-[260px_1fr] md:gap-12">
+        {/* Filters: ТИП (shape/dimension) then КАТЕГОРИЈА — framed "window" panel, kept
+            calm/light so the designs stay the focus. Sticky on desktop while the grid scrolls. */}
+        <aside className="flex flex-col gap-6 self-start rounded-lg border border-line bg-cream/80 p-5 shadow-sm md:sticky md:top-28">
+          {presentTypes.length > 0 && (
+            <div>
+              <h2 className="mb-3 font-sans text-xs uppercase tracking-[0.2em] text-sage-deep">
+                {t("tip")}
+              </h2>
+              <ul className="flex flex-wrap gap-2 md:flex-col md:gap-1">
+                <li><CatButton active={type === "all"} onClick={() => setType("all")}>{t("all")}</CatButton></li>
+                {presentTypes.map((ty) => (
+                  <li key={ty.slug}>
+                    <CatButton active={type === ty.slug} onClick={() => setType(ty.slug!)}>
+                      {pick(ty.name, locale)}
+                    </CatButton>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
             <h2 className="mb-3 font-sans text-xs uppercase tracking-[0.2em] text-sage-deep">
@@ -101,7 +119,7 @@ export default function Gallery({
 
         {/* Grid */}
         {shown.length ? (
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 lg:gap-8">
             {shown.map((d) => (
               <Link
                 key={d._id}

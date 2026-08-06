@@ -50,6 +50,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
       S.documentTypeListItem("invitationTemplate").title("Позивнице — шаблони"),
       S.documentTypeListItem("category").title("Позивнице — категорије"),
+      S.documentTypeListItem("invitationType").title("Позивнице — типови (облик/димензија)"),
       S.documentTypeListItem("sealMotif").title("Печат — мотиви"),
       S.documentTypeListItem("sealColor").title("Печат — боје воска"),
       S.divider(),

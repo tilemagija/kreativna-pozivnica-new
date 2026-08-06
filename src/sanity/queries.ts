@@ -424,17 +424,25 @@ export type GalleryTemplate = {
   doubleSided?: boolean;
   imageUrl?: string;
   categorySlugs?: string[];
+  typeSlugs?: string[];
 };
 export type GalleryCategory = { name?: LocaleValue; slug?: string };
-export type CatalogData = { templates: GalleryTemplate[]; categories: GalleryCategory[] };
+export type GalleryType = { name?: LocaleValue; slug?: string };
+export type CatalogData = {
+  templates: GalleryTemplate[];
+  categories: GalleryCategory[];
+  types: GalleryType[];
+};
 
 export const CATALOG_QUERY = `{
   "templates": *[_type == "invitationTemplate" && active == true] | order(order asc){
     _id, name, "slug": slug.current, doubleSided,
     "imageUrl": image.asset->url,
-    "categorySlugs": categories[]->slug.current
+    "categorySlugs": categories[]->slug.current,
+    "typeSlugs": types[]->slug.current
   },
-  "categories": *[_type == "category"] | order(order asc){ name, "slug": slug.current }
+  "categories": *[_type == "category"] | order(order asc){ name, "slug": slug.current },
+  "types": *[_type == "invitationType"] | order(order asc){ name, "slug": slug.current }
 }`;
 
 const TEXTFIELDS_PROJECTION = `{

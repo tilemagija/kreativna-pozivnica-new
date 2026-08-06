@@ -20,6 +20,7 @@ import { envelopeOption } from "./documents/envelopeOption";
 import { pricing } from "./documents/pricing";
 import { invitationTemplate } from "./documents/invitationTemplate";
 import { category } from "./documents/category";
+import { invitationType } from "./documents/invitationType";
 import { sealMotif } from "./documents/sealMotif";
 import { sealColor } from "./documents/sealColor";
 import { order } from "./documents/order";
@@ -48,6 +49,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   pricing,
   invitationTemplate,
   category,
+  invitationType,
   sealMotif,
   sealColor,
   order,

@@ -32,6 +32,14 @@ export const invitationTemplate = defineType({
       group: "main",
     }),
     defineField({
+      name: "types",
+      title: "Типови (облик/димензија)",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "invitationType" }] }],
+      description: "Нпр. Класична, Квадратна, Издужена — управљаш у „Позивнице — типови\". Пуни „Тип\" филтер у каталогу.",
+      group: "main",
+    }),
+    defineField({
       name: "doubleSided",
       title: "Двострана (предња + задња)",
       type: "boolean",
