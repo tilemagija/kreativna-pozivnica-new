@@ -401,8 +401,8 @@ export type TemplateTextField = {
 
 export type InvitationTemplate = {
   _id: string;
-  name?: LocaleValue;
-  slug?: string;
+  /** Single (Serbian) name — the owner fills one field, no translation. */
+  name?: string;
   category?: string;
   active?: boolean;
   doubleSided?: boolean;
@@ -419,8 +419,7 @@ export type InvitationTemplate = {
 // --- Gallery (catalog) ---
 export type GalleryTemplate = {
   _id: string;
-  name?: LocaleValue;
-  slug?: string;
+  name?: string;
   doubleSided?: boolean;
   imageUrl?: string;
   categorySlugs?: string[];
@@ -434,9 +433,14 @@ export type CatalogData = {
   types: GalleryType[];
 };
 
+// `name` used to be bilingual ({sr, en}); it is a single string now. Documents saved before
+// that change still hold the old object, so every template projection reads the name through
+// this shim and always hands the UI a plain string. Drop it once no old docs remain.
+export const TEMPLATE_NAME_PROJECTION = `"name": coalesce(name.sr, name.en, name)`;
+
 export const CATALOG_QUERY = `{
   "templates": *[_type == "invitationTemplate" && active == true] | order(order asc){
-    _id, name, "slug": slug.current, doubleSided,
+    _id, ${TEMPLATE_NAME_PROJECTION}, doubleSided,
     "imageUrl": image.asset->url,
     "categorySlugs": categories[]->slug.current,
     "typeSlugs": types[]->slug.current
@@ -450,8 +454,8 @@ const TEXTFIELDS_PROJECTION = `{
   xPct, yPct, widthPct, lineHeight, multiline, maxLength
 }`;
 
-export const TEMPLATE_BY_SLUG_QUERY = `*[_type == "invitationTemplate" && slug.current == $slug][0]{
-  _id, name, "slug": slug.current, doubleSided,
+export const TEMPLATE_BY_ID_QUERY = `*[_type == "invitationTemplate" && _id == $id && active == true][0]{
+  _id, ${TEMPLATE_NAME_PROJECTION}, doubleSided,
   "imageUrl": image.asset->url,
   "aspect": image.asset->metadata.dimensions.aspectRatio,
   textFields[]${TEXTFIELDS_PROJECTION},
@@ -461,7 +465,7 @@ export const TEMPLATE_BY_SLUG_QUERY = `*[_type == "invitationTemplate" && slug.c
 }`;
 
 const TEMPLATES_QUERY = `*[_type == "invitationTemplate" && active == true] | order(order asc){
-  _id, name, category,
+  _id, ${TEMPLATE_NAME_PROJECTION}, category,
   "imageUrl": image.asset->url,
   "aspect": image.asset->metadata.dimensions.aspectRatio,
   textFields[]{

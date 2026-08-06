@@ -2,9 +2,12 @@ import { defineType, defineField, defineArrayMember } from "sanity";
 
 // One invitation design the owner adds (konfigurator §3.1 + gallery). It is the BACKGROUND
 // image (illustration with empty spots) plus text fields the customer edits — all positions
-// in % so the live overlay stays 1:1. `type` splits the gallery tabs (printed vs digital);
-// `categories` drive the sidebar filter. Double-sided designs add a back image + back
-// fields and auto-charge the double-sided add-on (price handled server-side).
+// in % so the live overlay stays 1:1. `categories`/`types` drive the sidebar filters.
+// Double-sided designs add a back image + back fields and auto-charge the double-sided
+// add-on (price handled server-side).
+// No slug: these pages are reached by clicking a card in the catalog and are not in the
+// sitemap, and Cyrillic names make no readable slug — so the route keys off `_id` and the
+// owner has one less field to fill in.
 export const invitationTemplate = defineType({
   name: "invitationTemplate",
   title: "Позивница — шаблон",
@@ -15,15 +18,7 @@ export const invitationTemplate = defineType({
     { name: "back", title: "Задња страна (двострана)" },
   ],
   fields: [
-    defineField({ name: "name", title: "Име шаблона", type: "localeString", validation: (r) => r.required(), group: "main" }),
-    defineField({
-      name: "slug",
-      title: "Slug (адреса)",
-      type: "slug",
-      options: { source: "name.sr", maxLength: 70 },
-      validation: (r) => r.required(),
-      group: "main",
-    }),
+    defineField({ name: "name", title: "Име шаблона", type: "string", validation: (r) => r.required(), group: "main" }),
     defineField({
       name: "categories",
       title: "Категорије",
@@ -87,7 +82,7 @@ export const invitationTemplate = defineType({
   ],
   orderings: [{ title: "Редослед", name: "orderAsc", by: [{ field: "order", direction: "asc" }] }],
   preview: {
-    select: { title: "name.sr", media: "image", double: "doubleSided" },
+    select: { title: "name", media: "image", double: "doubleSided" },
     prepare: ({ title, media, double }) => ({
       title,
       subtitle: double ? "двострана" : undefined,

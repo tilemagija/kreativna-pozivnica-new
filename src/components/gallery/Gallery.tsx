@@ -123,14 +123,14 @@ export default function Gallery({
             {shown.map((d) => (
               <Link
                 key={d._id}
-                href={`/napravite-svoju/${d.slug}?tip=${tab}`}
+                href={`/napravite-svoju/${d._id}?tip=${tab}`}
                 className="group flex flex-col overflow-hidden rounded-sm border border-line bg-cream transition-colors hover:border-gold"
               >
                 <span className="relative block aspect-[0.71] w-full bg-greige">
                   {d.imageUrl && (
                     <Image
                       src={d.imageUrl}
-                      alt={pick(d.name, locale)}
+                      alt={d.name ?? ""}
                       fill
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
                       className="object-cover"
@@ -143,7 +143,7 @@ export default function Gallery({
                   )}
                 </span>
                 <span className="p-3 font-serif text-lg text-ink group-hover:text-gold-deep">
-                  {pick(d.name, locale)}
+                  {d.name}
                 </span>
               </Link>
             ))}

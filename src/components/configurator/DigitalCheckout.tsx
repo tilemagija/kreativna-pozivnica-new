@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { InvitationTemplate } from "@/sanity/queries";
-import { pick } from "@/sanity/locale";
 import QRCode from "qrcode";
 import { buildIpsQrString } from "@/lib/payment";
 import type { PreviewValues } from "./TemplatePreview";
@@ -111,7 +110,7 @@ export default function DigitalCheckout({
         body: JSON.stringify({
           kind: "digital",
           templateId: template._id,
-          templateName: pick(template.name, locale),
+          templateName: template.name ?? "",
           textValues: Object.entries(values).map(([key, value]) => ({ key, value })),
           customer,
           website: fd.get("website"),

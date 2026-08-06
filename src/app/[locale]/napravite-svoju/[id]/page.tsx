@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { getTemplateBySlugServer, getConfiguratorOptionsServer } from "@/sanity/serverQueries";
+import { getTemplateByIdServer, getConfiguratorOptionsServer } from "@/sanity/serverQueries";
 import { getInstagramUrl, getDigitalPrice } from "@/sanity/queries";
-import { pick } from "@/sanity/locale";
 import { Link } from "@/i18n/navigation";
 import { configuratorFontVars } from "../../../fonts";
 import SectionHeading from "@/components/sections/SectionHeading";
@@ -13,13 +12,12 @@ import DigitalConfigurator from "@/components/configurator/DigitalConfigurator";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ locale: string; id: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
-  const template = await getTemplateBySlugServer(slug);
+  const { id } = await params;
+  const template = await getTemplateByIdServer(id);
   const t = await getTranslations("Configurator");
-  const name = pick(template?.name, locale);
-  return { title: name || t("heading"), description: t("intro") };
+  return { title: template?.name || t("heading"), description: t("intro") };
 }
 
 // One design's configurator (printed = full flow; digital = placeholder until Phase 4).
@@ -27,18 +25,18 @@ export default async function DesignPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ locale: string; id: string }>;
   searchParams: Promise<{ tip?: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, id } = await params;
   const { tip } = await searchParams;
   setRequestLocale(locale);
-  const template = await getTemplateBySlugServer(slug);
+  const template = await getTemplateByIdServer(id);
   if (!template) notFound();
 
   const t = await getTranslations("Configurator");
   const g = await getTranslations("Catalog");
-  const name = pick(template.name, locale);
+  const name = template.name ?? "";
 
   // Every design can be ordered printed OR digital — the customer's choice arrives as ?tip.
   if (tip === "digitalna") {

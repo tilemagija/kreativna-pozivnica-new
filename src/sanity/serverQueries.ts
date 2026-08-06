@@ -3,7 +3,8 @@ import { writeClient } from "./lib/serverClient";
 import {
   OPTIONS_QUERY,
   CATALOG_QUERY,
-  TEMPLATE_BY_SLUG_QUERY,
+  TEMPLATE_BY_ID_QUERY,
+  TEMPLATE_NAME_PROJECTION,
   type ConfiguratorOptions,
   type InvitationTemplate,
   type CatalogData,
@@ -23,7 +24,7 @@ const TOOL_TEXTFIELDS = `{
   xPct, yPct, widthPct, lineHeight, multiline, maxLength
 }`;
 const TOOL_TEMPLATES_QUERY = `*[_type == "invitationTemplate"] | order(order asc){
-  _id, name, active, doubleSided,
+  _id, ${TEMPLATE_NAME_PROJECTION}, active, doubleSided,
   "imageUrl": image.asset->url,
   "aspect": image.asset->metadata.dimensions.aspectRatio,
   textFields[]${TOOL_TEXTFIELDS},
@@ -42,7 +43,12 @@ export async function getGalleryDataServer(): Promise<CatalogData> {
   return writeClient.fetch(CATALOG_QUERY, {}, { next: { revalidate: 60 } });
 }
 
-// One template (front + back) by slug — for its dedicated configurator page.
-export async function getTemplateBySlugServer(slug: string): Promise<InvitationTemplate | null> {
-  return writeClient.fetch(TEMPLATE_BY_SLUG_QUERY, { slug }, { next: { revalidate: 60 } });
+// One template (front + back) by document id — for its dedicated configurator page.
+// The id comes straight from the URL, so it is treated as untrusted: it is bound as a GROQ
+// parameter (never string-concatenated), `drafts.` ids are refused so unpublished work is
+// never served, and the query itself requires `active == true` so a design the owner hid
+// from the catalog cannot be reached by guessing its address. A miss returns null → 404.
+export async function getTemplateByIdServer(id: string): Promise<InvitationTemplate | null> {
+  if (!id || id.startsWith("drafts.")) return null;
+  return writeClient.fetch(TEMPLATE_BY_ID_QUERY, { id }, { next: { revalidate: 60 } });
 }

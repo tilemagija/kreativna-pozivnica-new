@@ -123,7 +123,7 @@ export default function Checkout({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           templateId: template._id,
-          templateName: pick(template.name, locale),
+          templateName: template.name ?? "",
           textValues: Object.entries(values).map(([key, value]) => ({ key, value })),
           quantity: selection.quantity,
           doubleSided: template.doubleSided ?? false,

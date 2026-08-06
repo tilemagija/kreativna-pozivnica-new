@@ -5,6 +5,7 @@ import { sendOrderEmail, sendCustomerOrderEmail } from "@/lib/email";
 import { computePrice, type SealType, type WrapperKind } from "@/lib/configuratorPricing";
 import { generateOrderNumber } from "@/lib/payment";
 import { appendOrderToSheet } from "@/lib/googleSheet";
+import { TEMPLATE_NAME_PROJECTION } from "@/sanity/queries";
 
 export const runtime = "nodejs";
 
@@ -107,7 +108,7 @@ export async function POST(req: NextRequest) {
     envelope: { name?: { sr?: string }; pricePerPiece?: number } | null;
     sealMotif: { name?: { sr?: string } } | null;
     sealColor: { name?: { sr?: string } } | null;
-    template: { name?: { sr?: string }; doubleSided?: boolean } | null;
+    template: { name?: string; doubleSided?: boolean } | null;
     settings: {
       contactEmail?: string;
       bankRecipient?: string;
@@ -126,7 +127,7 @@ export async function POST(req: NextRequest) {
         "envelope": *[_id==$envelopeId][0]{ name, pricePerPiece },
         "sealMotif": *[_id==$sealMotifId][0]{ name },
         "sealColor": *[_id==$sealColorId][0]{ name },
-        "template": *[_id==$templateId][0]{ name, doubleSided },
+        "template": *[_id==$templateId][0]{ ${TEMPLATE_NAME_PROJECTION}, doubleSided },
         "settings": *[_type=="siteSettings"][0]{ contactEmail, bankRecipient, bankAccount, bankName, bankModel, bankPaymentCode, bankPurpose }
       }`,
       { paperId, envelopeId, sealMotifId, sealColorId, templateId },
@@ -145,7 +146,8 @@ export async function POST(req: NextRequest) {
   );
 
   const sealAddon = sealType === "goldLeaf" ? "goldLeaf" : sealType === "tatarika" ? "tatarika" : "none";
-  const templateName = clean(body.templateName, 200) || localeName(data.template?.name);
+  // Server value wins; the browser-sent name is only a fallback (never trust the client).
+  const templateName = data.template?.name || clean(body.templateName, 200);
   const orderNumber = generateOrderNumber(); // poziv na broj for the bank transfer
   const createdAt = new Date().toISOString();
 
@@ -301,7 +303,7 @@ async function handleDigitalOrder(
 
   let data: {
     digitalPrice: number | null;
-    template: { name?: { sr?: string } } | null;
+    template: { name?: string } | null;
     settings: {
       contactEmail?: string;
       bankRecipient?: string;
@@ -316,7 +318,7 @@ async function handleDigitalOrder(
     data = await writeClient.fetch(
       `{
         "digitalPrice": *[_type=="pricing"][0].digitalPrice,
-        "template": *[_id==$templateId][0]{ name },
+        "template": *[_id==$templateId][0]{ ${TEMPLATE_NAME_PROJECTION} },
         "settings": *[_type=="siteSettings"][0]{ contactEmail, bankRecipient, bankAccount, bankName, bankModel, bankPaymentCode, bankPurpose }
       }`,
       { templateId },
@@ -333,7 +335,8 @@ async function handleDigitalOrder(
     return NextResponse.json({ error: "not_configured" }, { status: 503 });
   }
 
-  const templateName = clean(body.templateName, 200) || localeName(data.template?.name);
+  // Server value wins; the browser-sent name is only a fallback (never trust the client).
+  const templateName = data.template?.name || clean(body.templateName, 200);
   const orderNumber = generateOrderNumber();
   const createdAt = new Date().toISOString();
 

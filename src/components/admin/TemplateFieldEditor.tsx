@@ -10,7 +10,7 @@ import FieldPlacementCanvas from "./FieldPlacementCanvas";
 // the painful part (positioning) visually; the % model it writes is exactly what the live
 // configurator + PDF read. Guarded save endpoint: /api/template-fields.
 const FALLBACK_ASPECT = 0.71;
-const nameOf = (t?: InvitationTemplate) => t?.name?.sr || t?.name?.en || t?._id || "";
+const nameOf = (t?: InvitationTemplate) => t?.name || t?._id || "";
 
 type Fields = TemplateTextField[];
 type Sides = { front: Fields; back: Fields };
