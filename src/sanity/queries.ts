@@ -35,11 +35,12 @@ export type Reason = { icon?: string; title?: LocaleValue; text?: LocaleValue };
 export type WhyData = {
   whyKicker?: LocaleValue;
   whyHeading?: LocaleValue;
+  whyIntro?: LocaleValue;
   whyReasons?: Reason[];
 } | null;
 
 const WHY_QUERY = `*[_type == "homePage"][0]{
-  whyKicker, whyHeading,
+  whyKicker, whyHeading, whyIntro,
   whyReasons[]{ icon, title, text }
 }`;
 

@@ -91,6 +91,13 @@ export const homePage = defineType({
     defineField({ name: "whyKicker", title: "Надтекст", type: "localeString", fieldset: "why" }),
     defineField({ name: "whyHeading", title: "Наслов", type: "localeString", fieldset: "why" }),
     defineField({
+      name: "whyIntro",
+      title: "Увод (пасус испод наслова)",
+      type: "localeText",
+      fieldset: "why",
+      description: "Кратак пасус између наслова и разлога. Оставите празно да се не приказује.",
+    }),
+    defineField({
       name: "whyReasons",
       title: "Разлози (3–4)",
       type: "array",

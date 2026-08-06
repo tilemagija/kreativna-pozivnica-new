@@ -18,6 +18,7 @@ export default async function WhyUs({ locale }: { locale: string }) {
 
   const kicker = pick(data?.whyKicker, locale) || t("kicker");
   const heading = pick(data?.whyHeading, locale) || t("heading");
+  const intro = pick(data?.whyIntro, locale) || t("intro");
 
   const cmsReasons = (data?.whyReasons ?? [])
     .map((r) => ({ title: pick(r.title, locale), text: pick(r.text, locale) }))
@@ -62,6 +63,12 @@ export default async function WhyUs({ locale }: { locale: string }) {
               {heading}
             </h2>
           </Reveal>
+
+          {intro && (
+            <Reveal delay={0.09}>
+              <p className="mt-5 font-body leading-relaxed text-ink-muted">{intro}</p>
+            </Reveal>
+          )}
 
           <div className="mt-8 flex flex-col gap-6 md:mt-10">
             {reasons.map((r, i) => (

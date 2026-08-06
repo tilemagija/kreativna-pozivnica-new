@@ -12,19 +12,20 @@
   },
   "WhyUs": {
     "kicker": "Why us",
-    "heading": "Every invitation is your story",
+    "heading": "We don't just make invitations — we create keepsakes",
+    "intro": "Every handmade invitation starts from a blank page, just for you. We draw your church, your details and your story — a wedding, christening or slava invitation you won't find anywhere else.",
     "reasons": [
       {
-        "title": "Hand-illustrated",
-        "text": "We draw every invitation by hand — your church, the two of you. No identical one exists anywhere in the world."
+        "title": "As unique as you are",
+        "text": "We never use ready-made templates. Every design is an original illustration, drawn for your family and your day alone."
       },
       {
-        "title": "Unique and uncopyable",
-        "text": "Your story turned into art that no one else has. That is the heart of what we do."
+        "title": "Love in every last detail",
+        "text": "From the choice of handmade paper, through gilded edges and a wax seal, to the final finishing — every single piece passes through our hands. Because love shows in the small things."
       },
       {
-        "title": "Finest materials",
-        "text": "Handmade paper, gold, wax and seal — every detail chosen with care, so its value is felt in the hand."
+        "title": "A family atelier",
+        "text": "Behind every order stand the two of us, and three little ones who remind us daily how precious family moments are. We ship across Serbia, to Bosnia and Montenegro — and treat every celebration as if it were our own."
       }
     ]
   },
