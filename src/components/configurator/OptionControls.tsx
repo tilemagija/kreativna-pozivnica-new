@@ -216,12 +216,20 @@ function Swatch({
       onClick={onClick}
       aria-pressed={selected}
       title={label}
-      className={`flex flex-col overflow-hidden rounded-sm border text-left transition-colors ${
+      className={`group relative flex flex-col rounded-sm border text-left transition-colors ${
         selected ? "border-gold ring-2 ring-gold/40" : "border-line hover:border-gold"
       }`}
     >
-      <span className="relative block aspect-square w-full bg-greige">
-        {imageUrl && <Image src={imageUrl} alt={label} fill sizes="90px" className="object-cover" />}
+      <span className="relative block aspect-square w-full overflow-hidden rounded-t-sm bg-greige">
+        {imageUrl && (
+          <Image
+            src={imageUrl}
+            alt={label}
+            fill
+            sizes="(min-width: 640px) 280px, 120px"
+            className="object-cover"
+          />
+        )}
       </span>
       <span className="px-1.5 py-1">
         <span className="block truncate font-body text-[11px] text-ink">{label}</span>
@@ -231,6 +239,20 @@ function Swatch({
           </span>
         )}
       </span>
+
+      {/* Hover magnifier: the swatch is ~90px, too small to judge a paper texture by. Shows the
+          same image ~3× over the grid. Tailwind's `hover` variant only matches hover-capable
+          pointers, so phones never render it — no popover can widen the layout there. */}
+      {imageUrl && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 z-40 hidden w-[270px] max-w-[70vw] -translate-x-1/2 -translate-y-1/2 rounded-sm border border-gold/40 bg-cream p-1 shadow-xl group-hover:block"
+        >
+          <span className="relative block aspect-square w-full overflow-hidden rounded-[2px]">
+            <Image src={imageUrl} alt="" fill sizes="280px" className="object-cover" />
+          </span>
+        </span>
+      )}
     </button>
   );
 }
