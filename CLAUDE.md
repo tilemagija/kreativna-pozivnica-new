@@ -5,6 +5,9 @@
 > `docs/SPEC.md` (čitaj PO POTREBI, kad se dira funkcionalnost). Istorija: `docs/ROADMAP-archive.md`.
 > Vlasnikove obaveze: `docs/vlasnik-todo.md`.
 >
+> **Pišeš BILO KAKAV tekst koji ide na sajt** (naslov, sekcija, opis proizvoda, meta opis,
+> alt tekst)? Prvo pročitaj `docs/SEO.md` — ključne reči i pravila pisanja su tamo.
+>
 > Vlasnik je **no-code developer** — objašnjavaj prostim jezikom, ne samo žargonom.
 
 ---
