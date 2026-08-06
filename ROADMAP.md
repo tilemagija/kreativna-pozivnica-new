@@ -35,7 +35,10 @@ pravi podaci banke · Resend nalog (mejlovi) · upali Vercel Analytics · unesi 
 - **Estetika** (glavni fokus sada) — vidi `DESIGN.md`; veliki vizuelni pass sa ženom.
 - World B estetika (`data-world="b"` hook postavljen).
 - Faza 4 **PDF** — čim stignu hi-res dizajni + fontovi (+ odobriti PDF paket).
-- Bulletproof pass · AI FAQ chatbot (čeka FAQ + Anthropic nalog) · font-library.
+- Bulletproof pass · font-library.
+- **Ozbiljan SEO — POSLE celog stacka** (sad je samo baseline): meta kampanje preko Claude Code + skilovi koje vlasnik ubaci; + OG share slika, pun hreflang.
+- **Instagram: Claude odgovara mušterijama preko MCP-a** — ZAMENA za raniji „AI FAQ chatbot na sajtu" (odustali). Eksperiment; čeka Anthropic nalog + MCP setup + guardrails (ljudsko odobrenje pre slanja, limiti).
+- Pun konsolidovan redosled preostalog: `docs/PLAN.md`.
 
 ---
 
