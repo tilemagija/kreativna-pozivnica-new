@@ -1,4 +1,5 @@
 import { defineType, defineField, defineArrayMember } from "sanity";
+import { AutoSlugInput } from "../../components/AutoSlugInput";
 
 // A World B showcase item (art, slava gift, frame, religious). Showcase → Instagram
 // ("Проверите доступност"), NOT purchasable online (§14). Owner/wife adds these in Studio.
@@ -25,6 +26,7 @@ export const artwork = defineType({
       type: "slug",
       options: { source: "name.sr", maxLength: 70 },
       validation: (r) => r.required(),
+      components: { input: AutoSlugInput },
     }),
     defineField({
       name: "category",

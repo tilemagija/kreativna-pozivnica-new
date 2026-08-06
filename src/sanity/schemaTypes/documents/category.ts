@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { AutoSlugInput } from "../../components/AutoSlugInput";
 
 // A gallery category for invitation designs (e.g. Венчање, Крштење, Слава, Двострана).
 // Managed by the owner in Studio. Templates reference one or more categories; the gallery
@@ -15,6 +16,7 @@ export const category = defineType({
       type: "slug",
       options: { source: "name.sr", maxLength: 60 },
       validation: (r) => r.required(),
+      components: { input: AutoSlugInput },
     }),
     defineField({ name: "order", title: "Редослед", type: "number", initialValue: 100 }),
   ],

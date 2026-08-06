@@ -1,4 +1,5 @@
 import { defineType, defineField } from "sanity";
+import { AutoSlugInput } from "../../components/AutoSlugInput";
 
 // An invitation TYPE — shape/format the owner manages in Studio (e.g. Класична, Квадратна,
 // Издужена, Панорама). Mirrors `category`: templates reference one or more types, and the
@@ -16,6 +17,7 @@ export const invitationType = defineType({
       type: "slug",
       options: { source: "name.sr", maxLength: 60 },
       validation: (r) => r.required(),
+      components: { input: AutoSlugInput },
     }),
     defineField({ name: "order", title: "Редослед", type: "number", initialValue: 100 }),
   ],
