@@ -30,9 +30,9 @@
     ]
   },
   "Gallery": {
-    "kicker": "Our work",
-    "heading": "Every story, illustrated",
-    "subheading": "A selection of hand-illustrated invitations and art pieces."
+    "kicker": "Invitations",
+    "heading": "Hand-illustrated invitations for days worth remembering",
+    "subheading": "Every wedding, christening or slava invitation is designed for you alone — no templates, with carefully chosen details that tell your story."
   },
   "Usluge": {
     "heading": "Our services",
@@ -79,9 +79,9 @@
     "aboutItem": "Asking about"
   },
   "ArtPage": {
-    "kicker": "The world of art",
-    "heading": "Art & gifts",
-    "intro": "Hand-illustrated pieces, slava gifts and framed keepsakes. Each is made to order — write to us for details and ordering.",
+    "kicker": "Art",
+    "heading": "Art that keeps what matters",
+    "intro": "Handmade illustrations inspired by Orthodox faith, family and Serbian tradition — slava gifts and framed keepsakes made to grace a home for years and be passed on with love.",
     "empty": "Pieces coming soon. For inquiries, message us on Instagram.",
     "priceFrom": "from",
     "currency": "RSD",
@@ -92,9 +92,9 @@
     "close": "Close"
   },
   "DodaciPage": {
-    "kicker": "Alongside the invitation",
-    "heading": "Add-ons",
-    "intro": "We also make the pieces that complete your celebration — thank-you cards, guest gifts, welcome signs, boutonnieres and much more. Get in touch and we'll design the details together.",
+    "kicker": "Special details",
+    "heading": "What makes memories last",
+    "intro": "From gifts for the koum and guests, through thank-you cards and welcome signs, to decorative details — all designed so your most important day stays remembered.",
     "cta": "Get in touch"
   },
   "PrilagoditePage": {

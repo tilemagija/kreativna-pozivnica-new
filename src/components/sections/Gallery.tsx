@@ -39,7 +39,10 @@ export default async function Gallery({ locale }: { locale: string }) {
 
   return (
     <section id="galerija" className="mx-auto max-w-6xl scroll-mt-24 px-6 py-16 md:py-24">
-      <SectionHeading kicker={kicker} heading={heading} />
+      {/* `as="h1"`: this gallery IS the /pozivnice page (its only content), and that page had
+          no h1 at all — the one page that most needs to rank for „позивнице за венчање“.
+          Mirrors /umetnost and /dodaci, which already render their heading as h1. */}
+      <SectionHeading kicker={kicker} heading={heading} as="h1" />
       {sub && (
         <Reveal delay={0.1}>
           <p className="mx-auto mt-4 max-w-xl text-center font-body text-ink-muted">
