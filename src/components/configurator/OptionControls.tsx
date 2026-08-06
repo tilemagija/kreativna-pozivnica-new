@@ -191,8 +191,11 @@ function QuantityInput({ value, onChange }: { value: number; onChange: (q: numbe
   );
 }
 
+// Two columns on phones on purpose: the hover magnifier below can't run on touch, so the
+// swatch itself has to be big enough to judge a paper texture by (~155px vs ~100px at three
+// columns). From `sm` up the panel is wide enough for four, and hover takes over.
 function SwatchGrid({ children }: { children: React.ReactNode }) {
-  return <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">{children}</div>;
+  return <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">{children}</div>;
 }
 
 function Swatch({
@@ -226,7 +229,7 @@ function Swatch({
             src={imageUrl}
             alt={label}
             fill
-            sizes="(min-width: 640px) 280px, 120px"
+            sizes="(min-width: 640px) 280px, 45vw"
             className="object-cover"
           />
         )}
