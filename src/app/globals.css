@@ -45,12 +45,69 @@
   --font-body: var(--font-alegreya), Georgia, serif;
   --font-script: var(--font-marck), cursive;
   --font-sans: ui-sans-serif, system-ui, sans-serif;
+  /* Navigation has its own two: `font-nav` for the links (bold, geometric, faintly Slavic)
+     and `font-akcija` for the promo link alone — the one deliberately foreign face. */
+  --font-nav: var(--font-philosopher), Georgia, serif;
+  --font-akcija: var(--font-russo), Impact, sans-serif;
 }
 
 body {
   background-color: var(--c-paper);
   color: var(--c-ink);
   font-family: var(--font-body);
+}
+
+/* Confetti burst on the „Акција" link (see navbar-proba/Confetti.tsx). Each speck flies out
+   along its own --angle for its own --dist, fading and shrinking. Kept in CSS so no JS runs
+   per frame. Respects reduced-motion. */
+.confetti-speck {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  animation: confetti-fly 900ms cubic-bezier(0.15, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes confetti-fly {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(0.3);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  /* Most of the distance is covered early, then it drifts — a thrown speck loses speed. */
+  60% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--dist)) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(calc(var(--dist) * 1.18))
+      translateY(10px) scale(0.65) rotate(var(--spin));
+    opacity: 0;
+  }
+}
+
+/* „Акција" chip that quietly breathes so the eye catches it (variant C). */
+.akcija-pulse {
+  animation: akcija-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes akcija-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(182, 128, 95, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(182, 128, 95, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti-speck,
+  .akcija-pulse {
+    animation: none;
+  }
 }
 
 /* „Албум" cards (Наше услуге): vintage prints with a torn cream edge, hand-tilted, with a
@@ -127,39 +184,8 @@ body {
   font-style: italic;
 }
 
-/* Festive „Акција" nav accent — gold/terracotta gradient text that shimmers on hover. */
-.akcija-link {
-  background-image: linear-gradient(
-    90deg,
-    var(--c-gold-deep),
-    var(--c-terracotta),
-    var(--c-gold),
-    var(--c-gold-deep)
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-.akcija-link:hover,
-.akcija-link:focus-visible {
-  animation: akcija-shimmer 1.2s linear infinite;
-}
-@keyframes akcija-shimmer {
-  from {
-    background-position: 0% 0;
-  }
-  to {
-    background-position: -200% 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .akcija-link:hover,
-  .akcija-link:focus-visible {
-    animation: none;
-  }
-}
+/* (The old `.akcija-link` shimmering-gradient text was removed with the navbar rework —
+   „Акција" is now a gold chip in its own font with a confetti burst, see Header/Confetti.) */
 
 /* --- Ink-bleed reveal (hero): the image soaks in like ink spreading on paper. An organic,
    rough-edged mask (white blobs displaced by turbulence, baked once in the SVG so it's cheap)

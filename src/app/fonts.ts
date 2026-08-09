@@ -2,6 +2,7 @@ import {
   Cormorant_Garamond,
   Alegreya,
   Lora,
+  Russo_One,
   Marck_Script,
   EB_Garamond,
   Playfair_Display,
@@ -75,6 +76,16 @@ export const philosopher = Philosopher({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "700"],
   variable: "--font-philosopher",
+  display: "swap",
+});
+
+// „Акција" only. Deliberately the one font on the site that does NOT belong to the ethno
+// world — a loud geometric slab, so the promo link reads as an interruption and catches the
+// eye (owner's ask #7). Never use it anywhere else; the whole effect is that it is alien.
+export const russo = Russo_One({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400"],
+  variable: "--font-russo",
   display: "swap",
 });
 

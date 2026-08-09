@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import Confetti from "@/components/site/Confetti";
 
 // Fixed header (ethno/vintage). A real Serbian embroidery (vez) band sits on top
 // (seamless mirror-tiled). No logo — the nav links are centered; language +
@@ -19,9 +20,24 @@ const NAV_ITEMS = [
 // two cream gaps, so it tiles across any width with NO breaks (cream meets cream at the seam).
 const TRAKA_VRH = "url(/traka-tile.png)";
 
+// One place for the link look, so desktop and the mobile sheet can never drift apart.
+// Hover is a filled parchment rectangle with a gold underline — it should read as a button,
+// not as a text link (owner's ask #6).
+const NAV_LINK =
+  "inline-block whitespace-nowrap rounded-sm px-3 py-2.5 font-nav text-[15px] font-bold uppercase tracking-[0.12em] transition-colors duration-200 hover:bg-greige hover:shadow-[inset_0_-2px_0_var(--c-gold)] xl:px-4";
+
+// „Акција" opts out of that treatment entirely: its own foreign font in a gold chip, plus
+// the confetti burst. It is meant to break the pattern, not follow it.
+const AKCIJA_LINK =
+  "inline-block whitespace-nowrap rounded-sm bg-gold px-4 py-2 font-akcija text-[17px] uppercase tracking-[0.04em] text-cream shadow-[0_2px_10px_rgba(176,141,87,0.5)] transition-colors duration-200 hover:bg-gold-deep";
+
 export default function Header() {
   const t = useTranslations("Nav");
   const reduce = useReducedMotion();
+  const pathname = usePathname();
+  // On the landing page „Почетна" points at the page you are already on — it only takes
+  // space in a bar that is already tight (owner's ask #4).
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -93,26 +109,26 @@ export default function Header() {
       />
 
       <nav className="relative mx-auto flex w-full max-w-[1440px] items-center px-5 py-3 md:px-8">
-        {/* Centered nav links (desktop) */}
-        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 text-[13px] text-ink-muted lg:flex">
-          {/* Home first — the site had no way back to the landing page from the nav; the
-              only one was a quiet link at the very bottom of the gallery pages. */}
+        {/* Desktop links — spread across the whole bar rather than clustered in the middle,
+            which left most of the width empty (owner's ask #5). */}
+        <ul className="hidden flex-1 items-center justify-between gap-1 text-ink lg:flex">
+          {!isHome && (
+            <li>
+              <Link href="/" className={NAV_LINK}>
+                {t("home")}
+              </Link>
+            </li>
+          )}
           <li>
-            <Link href="/" className="whitespace-nowrap transition-colors hover:text-forest">
-              {t("home")}
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/akcija"
-              className="akcija-link font-serif text-[15px] italic tracking-wide"
-            >
-              {t("akcija")}
-            </Link>
+            <Confetti>
+              <Link href="/akcija" className={AKCIJA_LINK}>
+                {t("akcija")}
+              </Link>
+            </Confetti>
           </li>
           {NAV_ITEMS.map((item) => (
             <li key={item.href}>
-              <Link href={item.href} className="whitespace-nowrap transition-colors hover:text-forest">
+              <Link href={item.href} className={NAV_LINK}>
                 {t(item.key)}
               </Link>
             </li>
@@ -121,7 +137,7 @@ export default function Header() {
 
         {/* Right cluster (desktop): CTA. Language moved out of the nav entirely — it now
             lives in the slip pinned to the bottom of the viewport (LanguageSlip). */}
-        <div className="ml-auto hidden items-center gap-4 lg:flex">
+        <div className="ml-6 hidden items-center gap-4 lg:flex">
           <Link
             href="/napravite-svoju"
             className="whitespace-nowrap rounded-sm bg-gold px-5 py-2 font-serif text-sm italic text-cream transition-colors hover:bg-gold-deep"
@@ -153,14 +169,20 @@ export default function Header() {
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
+            {!isHome && (
+              <Link
+                href="/"
+                onClick={close}
+                className="w-fit font-nav text-2xl font-bold uppercase tracking-[0.1em] text-ink"
+              >
+                {t("home")}
+              </Link>
+            )}
             <Link
-              href="/"
+              href="/akcija"
               onClick={close}
-              className="w-fit font-serif text-3xl text-ink transition-colors hover:text-forest"
+              className="w-fit rounded-sm bg-gold px-5 py-2.5 font-akcija text-xl uppercase tracking-[0.04em] text-cream"
             >
-              {t("home")}
-            </Link>
-            <Link href="/akcija" onClick={close} className="akcija-link w-fit font-serif text-3xl italic">
               {t("akcija")}
             </Link>
             <ul className="flex flex-col gap-5">
@@ -169,7 +191,7 @@ export default function Header() {
                   <Link
                     href={item.href}
                     onClick={close}
-                    className="font-serif text-2xl text-ink transition-colors hover:text-forest"
+                    className="font-nav text-2xl font-bold uppercase tracking-[0.1em] text-ink transition-colors hover:text-forest"
                   >
                     {t(item.key)}
                   </Link>
