@@ -17,20 +17,45 @@ const OPTIONS = [
   { locale: "en", label: "English" },
 ] as const;
 
+// Grace period before the slip closes on mouse-out. Without it, any moment the pointer is
+// over neither the tab nor a language (crossing a border, a slightly wobbly hand) closes the
+// menu mid-reach.
+const CLOSE_DELAY_MS = 400;
+
 export default function LanguageSlip() {
   const pathname = usePathname();
   const active = useLocale();
   const t = useTranslations("Common");
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+  };
+  const openNow = () => {
+    cancelClose();
+    setOpen(true);
+  };
+  const closeSoon = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => setOpen(false), CLOSE_DELAY_MS);
+  };
+  const closeNow = () => {
+    cancelClose();
+    setOpen(false);
+  };
+
+  useEffect(() => cancelClose, []);
 
   // Touch has no hover, so the tab is also a button. That means it needs the two escapes a
   // hover menu gets for free: Escape, and a tap anywhere outside.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeNow();
     const onDown = (e: PointerEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) closeNow();
     };
     window.addEventListener("keydown", onKey);
     window.addEventListener("pointerdown", onDown);
@@ -43,8 +68,8 @@ export default function LanguageSlip() {
   return (
     <div
       ref={ref}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={openNow}
+      onMouseLeave={closeSoon}
       className="fixed bottom-0 right-4 z-50 sm:right-8"
     >
       {/* The options are absolutely positioned ABOVE the tab rather than expanding it, so
@@ -52,7 +77,7 @@ export default function LanguageSlip() {
           and resolved to 0px here — the tab has no definite height to size the fr against.) */}
       <div className="relative">
         <ul
-          className={`absolute bottom-full right-0 mb-1 flex min-w-full flex-col gap-px rounded-md bg-slip p-1 shadow-[0_-6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 ease-out ${
+          className={`absolute bottom-full right-0 flex min-w-full flex-col gap-px rounded-t-md bg-slip px-1 pb-0 pt-1 shadow-[0_-6px_20px_rgba(0,0,0,0.35)] transition-all duration-200 ease-out ${
             open
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none translate-y-2 opacity-0"
@@ -65,7 +90,7 @@ export default function LanguageSlip() {
                 <Link
                   href={pathname}
                   locale={o.locale}
-                  onClick={() => setOpen(false)}
+                  onClick={closeNow}
                   tabIndex={open ? 0 : -1}
                   aria-current={isActive ? "true" : undefined}
                   className={`block whitespace-nowrap rounded-sm px-4 py-2 text-center font-body text-sm transition-colors ${
@@ -83,9 +108,15 @@ export default function LanguageSlip() {
 
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => (open ? closeNow() : openNow())}
           aria-expanded={open}
-          className="flex w-full items-center justify-center gap-2 rounded-t-md bg-slip px-5 py-2 font-sans text-[11px] uppercase tracking-[0.2em] text-cream shadow-[0_-6px_20px_rgba(0,0,0,0.3)]"
+          // Square top while open so the panel above reads as one continuous slip, not two
+          // stacked boxes — the gap between them is also what used to break the hover.
+          // px-7 (not px-5) makes the tab at least as wide as the widest language, so the
+          // panel's `min-w-full` matches it exactly and the two line up as one slip.
+          className={`flex w-full items-center justify-center gap-2 bg-slip px-7 py-2 font-sans text-[11px] uppercase tracking-[0.2em] text-cream shadow-[0_-6px_20px_rgba(0,0,0,0.3)] ${
+            open ? "rounded-t-none" : "rounded-t-md"
+          }`}
         >
           {t("language")}
           <span
