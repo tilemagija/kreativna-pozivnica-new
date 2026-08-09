@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cormorant, lora, marck, configuratorFontVars } from "../fonts";
+import { cormorant, alegreya, lora, marck, configuratorFontVars } from "../fonts";
 import "../globals.css";
 
 // Isolated root layout for the internal placement tool: brand fonts (incl. the full
@@ -13,7 +13,7 @@ export default function ToolLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="sr"
-      className={`${cormorant.variable} ${lora.variable} ${marck.variable} ${configuratorFontVars} antialiased`}
+      className={`${cormorant.variable} ${alegreya.variable} ${lora.variable} ${marck.variable} ${configuratorFontVars} antialiased`}
     >
       <body className="min-h-screen bg-cream font-body text-ink">{children}</body>
     </html>

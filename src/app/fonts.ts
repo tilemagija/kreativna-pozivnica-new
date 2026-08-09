@@ -1,5 +1,6 @@
 import {
   Cormorant_Garamond,
+  Alegreya,
   Lora,
   Marck_Script,
   EB_Garamond,
@@ -17,7 +18,19 @@ export const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-// Body / UI — warm readable serif with full Cyrillic.
+// Body / UI — literary humanist serif with full Cyrillic. Chosen over Lora (owner, Aug 2026):
+// Lora's Cyrillic read as too mechanical, "like a typewriter". 500 is loaded because body
+// copy is set in medium, not regular — see --font-body / About.
+export const alegreya = Alegreya({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  variable: "--font-alegreya",
+  display: "swap",
+});
+
+// Kept even though it is no longer the body font: Lora is one of the eight fonts the owner
+// can set ON an invitation (templateFonts.ts), so its variable must stay in the layouts.
 export const lora = Lora({
   subsets: ["latin", "cyrillic"],
   weight: ["400", "500"],

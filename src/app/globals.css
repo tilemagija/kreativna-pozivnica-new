@@ -38,7 +38,7 @@
   /* Fonts → utilities: font-serif (headings), font-body (text), font-script (accents).
      The --font-* vars are injected by next/font in the layout. */
   --font-serif: var(--font-cormorant), Georgia, serif;
-  --font-body: var(--font-lora), Georgia, serif;
+  --font-body: var(--font-alegreya), Georgia, serif;
   --font-script: var(--font-marck), cursive;
   --font-sans: ui-sans-serif, system-ui, sans-serif;
 }

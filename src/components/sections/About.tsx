@@ -47,7 +47,10 @@ export default async function About({ locale }: { locale: string }) {
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="whitespace-pre-line font-body leading-relaxed text-ink-muted">
+            {/* The story runs long, so it is set larger (+30% over base) and in medium rather
+                than regular — owner's call after seeing it at body size. Slightly gentler on
+                phones, where 1.3rem over a six-paragraph story gets tall. */}
+            <p className="whitespace-pre-line font-body text-[1.15rem] font-medium leading-relaxed text-ink-muted md:text-[1.3rem]">
               {text}
             </p>
           </Reveal>
