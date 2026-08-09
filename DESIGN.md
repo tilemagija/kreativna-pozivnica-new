@@ -52,6 +52,16 @@
 - **`Gallery.tsx`** (server, pozivnice) i **`ArtGallery.tsx`** (client, umetnost — lightbox NETAKNUT) sad grade `nodes[]` i prosleđuju `MasonryInfinite`. Slike „uramljene": `figure`/`button` = `rounded-sm border-line bg-cream p-1.5` + meka senka `shadow-[0_8px_22px_rgba(59,50,39,.18)]`, hover `-translate-y-1`.
 - **Bez footera na ove dve strane** (vlasnik): `components/site/ConditionalFooter.tsx` (client gate) prima **već-server-renderovan `<Footer/>` kao `children`** (NE uvozi Footer — inače server `getTranslations` upadne u client bundle i sruši build; naučeno u ovom krugu). Skriva na `/pozivnice` i `/umetnost` (`usePathname`). Strana se završava **`components/site/PageEndHome.tsx`** (lotos + „Почетна страна" link, `Common.backHome` u `messages`).
 
+**URAĐENO — KATALOG „Дизајнирајте сами" (`/napravite-svoju`) u etno (10.08):** poslednja velika strana koja je ispadala iz sveta. Strana umotana u `EtnoFrame` (isto laneno polje + vez kolone kao `/pozivnice`, `/umetnost`, `/dodaci`); sopstveni `pt-24` uklonjen jer okvir već čisti navbar.
+- **Kartice = uramljene fotografije** (isti jezik kao galerije): `border-line bg-cream p-1.5` paspartu + meka senka `0_8px_22px_rgba(59,50,39,.18)`, ime dizajna kao `figcaption` na paspartuu (serif, centrirano), cela kartica se podiže na hover (`group-hover:-translate-y-1`). Zamenjen raniji „obrub + hover promena boje ivice".
+- **OSTAJE MREŽA, ne mozaik** — svesna odluka: ovo su proizvodi koje mušterija **upoređuje**, jednake veličine tu pomažu. Etno dolazi kroz uramljivanje, ne kroz nemir. (Mozaik `MasonryInfinite` ostaje samo za showcase galerije.)
+- **Tabovi Штампане/Дигиталне:** aktivan = puna `bg-forest` pločica sa senkom, neaktivan = miran `bg-cream/70` sa `border-line`. Oba nose `border` da se ne pomeraju pri prebacivanju.
+- **Panel filtera:** `rounded-lg`→`rounded-sm`, `bg-cream/85` + ista meka senka kao kartice (čita se kao uokviren „prozor" na platnu), a između ТИП i КАТЕГОРИЈА **zlatni krstić** (`CrossDivider` + tanke linije) — samo kad obe grupe postoje.
+- **Ritam kolona premeren, ne pogođen:** ovde širinu jedu DVE stvari kojih na galerijama nema — sidebar 260px (od `md`) i EtnoFrame vez kolone 224px+ (od `lg`). Naivno `lg:grid-cols-4` davalo je kartice od **119-122px** (dizajn se ne vidi). Sad: 2 / `sm` 3 / `md` **nazad na 2** / `xl` 3 / `2xl` 4 → izmereno **189-247px** po kartici na 360/768/1024/1440/1680, bez horizontalnog skrola nigde.
+- **Tap-mete filtera na telefonu** `py-1.5`→`py-2.5` (32px→**40px**), na desktopu ostaje zbijeno (`md:py-1.5`) jer je tamo vertikalni meni.
+- **Footer OSTAJE** na ovoj strani (za razliku od galerija koje ga skrivaju): ovde se donosi odluka o kupovini, kontakt dugmad treba da su na dohvat. `ConditionalFooter` nije diran.
+- ⚠️ **Zamka merenja (potvrđena ponovo):** u skrivenom preview panelu `getComputedStyle` vraća **stare boje** — posle klika na tab klase su bile tačne (`bg-forest` na pritisnutom), a computed boje obrnute, jer tranzicije ne teku. **Klase su izvor istine, ne computed boje.** Screenshot i dalje puca („not compositing frames").
+
 **⚠️ VLASNIK DOSTAVLJA (u `public/`, javi ime) — bez ovoga ne liči na mokap:**
 - **Lotos SAMO, transparentno** (PNG/SVG) — trenutni `logo.png` ima „kutiju"; svakako nije u navbaru sad.
 - **Hi-res hero** ≥1920px (sad 1280×731 = mekano na velikim ekranima).
