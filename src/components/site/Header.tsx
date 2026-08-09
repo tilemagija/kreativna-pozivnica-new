@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link, usePathname } from "@/i18n/navigation";
 import Confetti from "@/components/site/Confetti";
+import DesignCta from "@/components/site/DesignCta";
 
 // Fixed header (ethno/vintage). A real Serbian embroidery (vez) band sits on top
 // (seamless mirror-tiled). No logo — the nav links are centered; language +
@@ -30,6 +31,14 @@ const NAV_LINK =
 // the confetti burst. It is meant to break the pattern, not follow it.
 const AKCIJA_LINK =
   "inline-block whitespace-nowrap rounded-sm bg-gold px-4 py-2 font-akcija text-[17px] uppercase tracking-[0.04em] text-cream shadow-[0_2px_10px_rgba(176,141,87,0.5)] transition-colors duration-200 hover:bg-gold-deep";
+
+// The main CTA gets „Акција"-level weight: same gold plaque, same size class, plus the idle
+// gilt-sweep (`.cta-gilt`). It keeps the elegant serif rather than borrowing Акција's Russo
+// One — that foreign face is deliberately Акција's alone, and this button gets its own
+// distinction from the sweep and the hover film instead. The shadow lives in `.cta-gilt`,
+// which animates it, so there is no Tailwind shadow class here to fight it.
+const CTA_LINK =
+  "inline-block whitespace-nowrap rounded-sm bg-gold px-5 py-2.5 font-serif text-[15px] italic text-cream transition-colors duration-200 hover:bg-gold-deep cta-gilt";
 
 export default function Header() {
   const t = useTranslations("Nav");
@@ -138,12 +147,7 @@ export default function Header() {
         {/* Right cluster (desktop): CTA. Language moved out of the nav entirely — it now
             lives in the slip pinned to the bottom of the viewport (LanguageSlip). */}
         <div className="ml-6 hidden items-center gap-4 lg:flex">
-          <Link
-            href="/napravite-svoju"
-            className="whitespace-nowrap rounded-sm bg-gold px-5 py-2 font-serif text-sm italic text-cream transition-colors hover:bg-gold-deep"
-          >
-            {t("configurator")}
-          </Link>
+          <DesignCta label={t("configurator")} className={CTA_LINK} />
         </div>
 
         {/* Hamburger (mobile) */}
@@ -198,13 +202,15 @@ export default function Header() {
                 </li>
               ))}
             </ul>
-            <Link
-              href="/napravite-svoju"
-              onClick={close}
-              className="mt-2 inline-block w-fit rounded-sm bg-gold px-6 py-3 font-serif text-lg italic text-cream"
-            >
-              {t("configurator")}
-            </Link>
+            {/* No hover on a phone → no film here, but the gilt still sweeps. */}
+            <span className="mt-2 w-fit">
+              <DesignCta
+                label={t("configurator")}
+                preview={false}
+                onClick={close}
+                className="inline-block w-fit rounded-sm bg-gold px-6 py-3 font-serif text-lg italic text-cream cta-gilt"
+              />
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
