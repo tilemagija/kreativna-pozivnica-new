@@ -96,6 +96,13 @@ export default function Header() {
       <nav className="relative mx-auto flex w-full max-w-[1440px] items-center px-5 py-3 md:px-8">
         {/* Centered nav links (desktop) */}
         <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 text-[13px] text-ink-muted lg:flex">
+          {/* Home first — the site had no way back to the landing page from the nav; the
+              only one was a quiet link at the very bottom of the gallery pages. */}
+          <li>
+            <Link href="/" className="whitespace-nowrap transition-colors hover:text-forest">
+              {t("home")}
+            </Link>
+          </li>
           <li>
             <Link
               href="/akcija"
@@ -147,6 +154,13 @@ export default function Header() {
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
           >
+            <Link
+              href="/"
+              onClick={close}
+              className="w-fit font-serif text-3xl text-ink transition-colors hover:text-forest"
+            >
+              {t("home")}
+            </Link>
             <Link href="/akcija" onClick={close} className="akcija-link w-fit font-serif text-3xl italic">
               {t("akcija")}
             </Link>
