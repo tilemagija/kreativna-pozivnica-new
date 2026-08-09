@@ -9,6 +9,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
 import ConditionalFooter from "@/components/site/ConditionalFooter";
+import LanguageSlip from "@/components/site/LanguageSlip";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
@@ -60,6 +61,8 @@ export default async function LocaleLayout({
           <ConditionalFooter>
             <Footer />
           </ConditionalFooter>
+          {/* Global, outside <main>: the slip is taped to the viewport, not to a page. */}
+          <LanguageSlip />
           <Analytics />
         </NextIntlClientProvider>
       </body>

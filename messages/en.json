@@ -232,7 +232,8 @@
     "close": "Close"
   },
   "Common": {
-    "backHome": "Home page"
+    "backHome": "Home page",
+    "language": "Language"
   },
   "Footer": {
     "tagline": "Handmade, with love",

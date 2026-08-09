@@ -17,6 +17,9 @@
   --c-ink-muted: #6b5e46; /* secondary text */
   --c-line: #cdbc98; /* dividers / soft borders on parchment */
   --c-forest: #204022; /* MAIN 2 — deep green: headings, bands, buttons, key lines */
+  --c-slip: #141210; /* near-black, ONLY for the language slip — owner asked for black so it
+                        stands out against the parchment. Warm-tinted rather than #000 so it
+                        reads as part of this palette and not a foreign element. */
 }
 
 @theme inline {
@@ -34,6 +37,7 @@
   --color-ink-muted: var(--c-ink-muted);
   --color-line: var(--c-line);
   --color-forest: var(--c-forest);
+  --color-slip: var(--c-slip);
 
   /* Fonts → utilities: font-serif (headings), font-body (text), font-script (accents).
      The --font-* vars are injected by next/font in the layout. */

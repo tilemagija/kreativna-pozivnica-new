@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
-import LocaleSwitcher from "@/components/LocaleSwitcher";
 
 // Fixed header (ethno/vintage). A real Serbian embroidery (vez) band sits on top
 // (seamless mirror-tiled). No logo — the nav links are centered; language +
@@ -120,9 +119,9 @@ export default function Header() {
           ))}
         </ul>
 
-        {/* Right cluster (desktop): language + CTA */}
+        {/* Right cluster (desktop): CTA. Language moved out of the nav entirely — it now
+            lives in the slip pinned to the bottom of the viewport (LanguageSlip). */}
         <div className="ml-auto hidden items-center gap-4 lg:flex">
-          <LocaleSwitcher />
           <Link
             href="/napravite-svoju"
             className="whitespace-nowrap rounded-sm bg-gold px-5 py-2 font-serif text-sm italic text-cream transition-colors hover:bg-gold-deep"
@@ -184,9 +183,6 @@ export default function Header() {
             >
               {t("configurator")}
             </Link>
-            <div className="mt-2">
-              <LocaleSwitcher />
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
