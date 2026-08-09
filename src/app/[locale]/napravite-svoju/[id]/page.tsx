@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { getTemplateByIdServer, getConfiguratorOptionsServer } from "@/sanity/serverQueries";
 import { getInstagramUrl, getDigitalPrice } from "@/sanity/queries";
+import { pickPlain } from "@/sanity/locale";
 import { Link } from "@/i18n/navigation";
 import { configuratorFontVars } from "../../../fonts";
 import SectionHeading from "@/components/sections/SectionHeading";
@@ -14,10 +15,10 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; id: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { locale, id } = await params;
   const template = await getTemplateByIdServer(id);
   const t = await getTranslations("Configurator");
-  return { title: template?.name || t("heading"), description: t("intro") };
+  return { title: pickPlain(template?.name, locale) || t("heading"), description: t("intro") };
 }
 
 // One design's configurator (printed = full flow; digital = placeholder until Phase 4).
@@ -36,7 +37,7 @@ export default async function DesignPage({
 
   const t = await getTranslations("Configurator");
   const g = await getTranslations("Catalog");
-  const name = template.name ?? "";
+  const name = pickPlain(template.name, locale);
 
   // Every design can be ordered printed OR digital — the customer's choice arrives as ?tip.
   if (tip === "digitalna") {

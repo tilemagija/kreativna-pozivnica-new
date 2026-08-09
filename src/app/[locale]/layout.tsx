@@ -20,12 +20,12 @@ export const metadata: Metadata = {
   },
   description:
     "Ручно илустроване позивнице по вашој причи, уметност и славски поклони. За најлепше успомене — ручно и са љубављу.",
-  alternates: { languages: { "sr-Cyrl": "/", en: "/en" } },
+  alternates: { languages: { "sr-Cyrl": "/", "sr-Latn": "/lat", en: "/en" } },
   openGraph: {
     type: "website",
     siteName: "Креативна позивница",
     locale: "sr_RS",
-    alternateLocale: "en_US",
+    alternateLocale: ["sr_Latn_RS", "en_US"],
   },
   twitter: { card: "summary_large_image" },
 };

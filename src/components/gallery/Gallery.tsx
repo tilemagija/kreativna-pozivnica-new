@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { GalleryTemplate, GalleryCategory, GalleryType } from "@/sanity/queries";
-import { pick } from "@/sanity/locale";
+import { pick, pickPlain } from "@/sanity/locale";
 
 // Design catalog (owner's sketch): tabs Штампане / Дигиталне on top, filters on the left,
 // a grid of designs on the right (~4/row). EVERY design can be ordered both printed and
@@ -130,7 +130,7 @@ export default function Gallery({
                   {d.imageUrl && (
                     <Image
                       src={d.imageUrl}
-                      alt={d.name ?? ""}
+                      alt={pickPlain(d.name, locale)}
                       fill
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
                       className="object-cover"
@@ -143,7 +143,7 @@ export default function Gallery({
                   )}
                 </span>
                 <span className="p-3 font-serif text-lg text-ink group-hover:text-gold-deep">
-                  {d.name}
+                  {pickPlain(d.name, locale)}
                 </span>
               </Link>
             ))}
